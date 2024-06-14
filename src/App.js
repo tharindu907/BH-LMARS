@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavigationBar from './Components/NavigationBar/NavigationBar';
 import Dashboard from './Components/Dashboard/Dashboard';
+import LoginPage from './Pages/LoginPage'; // Updated import path
 import { UserProvider } from './Context/UserContext';
 import './App.css';
 
@@ -37,12 +38,11 @@ function App() {
     <UserProvider value={{ isLoggedIn, userType, username, profilePic }}>
       <div className="app">
         <NavigationBar />
-        {isLoggedIn && <Dashboard />}
         <div className={`content ${isLoggedIn ? 'logged-in' : ''}`}>
           {isLoggedIn ? (
-            <h1>Welcome, {username}!</h1>
+            <Dashboard />
           ) : (
-            <h1>Please log in</h1>
+            <LoginPage />
           )}
         </div>
       </div>
