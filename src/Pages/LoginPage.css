@@ -1,133 +1,118 @@
-/* LoginPage.css */
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: #fff;
+}
 
-/* Shared styles for Navigation Bar and App */
-.App {
-    text-align: center;
-  }
-  
-  .navigation-bar {
-    background-color: #282c34;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-  }
-  
-  .navigation-bar .left-corner {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  /* Login Page Content */
-  .login-page-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .left-column {
-    flex: 1;
-    padding: 20px;
-    background-color: #f8f9fa;
-  }
-  
-  .left-column h1 {
-    font-size: 36px;
-    margin-bottom: 10px;
-  }
-  
-  .left-column h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .left-column p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #666;
-  }
-  
-  .right-column {
-    flex: 1;
-    padding: 20px;
-  }
-  
-  .login-window {
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .login-window h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .user-type-select {
-    margin-bottom: 10px;
-    padding: 8px;
-    font-size: 16px;
-  }
-  
-  input[type="text"],
-  input[type="password"] {
-    margin-bottom: 10px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .remember-me {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .remember-me label {
-    margin-left: 5px;
-  }
-  
-  button {
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .forgot-password {
-    margin-top: 10px;
-    text-align: right;
-  }
-  
-  .signup-link {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 16px;
-  }
-  
-  .signup-link a {
-    text-decoration: none;
-    color: #012970;
-  }
-  
-  .signup-link a:hover {
-    text-decoration: underline;
-  }
-  
+.left-column {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.left-column h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.left-column h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.left-column p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.right-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-window {
+  width: 500px;
+  padding: 20px;
+  background: #ffffff;
+  color: #333;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-window h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.user-type {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.user-type label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  color: #0056b3;
+}
+
+.login-window label {
+  display: block;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.login-window input[type="text"],
+.login-window input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.remember-me input {
+  margin-right: 10px;
+}
+
+.login-window button {
+  width: 100%;
+  padding: 10px;
+  background-color: #2575fc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-window button:hover {
+  background-color: #0056b3;
+}
+
+.forgot-password {
+  display: block;
+  margin-top: 10px;
+  color: #2575fc;
+  text-decoration: none;
+}

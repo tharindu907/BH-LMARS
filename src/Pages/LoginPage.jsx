@@ -1,57 +1,94 @@
-// LoginPage.jsx
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './LoginPage.css';
 
-import React from 'react';
-import './LoginPage.css'; // Create this CSS file for styling
+function LoginPage({ setIsLoggedIn, setUserType, setUsername, setProfilePic }) {
+  const [selectedUserType, setSelectedUserType] = useState('Admin');
+  const [inputUsername, setInputUsername] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
 
-const LoginPage = () => {
+  const handleLogin = () => {
+    // Simulate login process
+    setIsLoggedIn(true);
+    setUserType(selectedUserType);
+    setUsername(inputUsername || 'User');
+    setProfilePic('/Assets/default-profile-pic.png'); // Add logic to fetch user profile pic if available
+
+    // Navigate to the respective dashboard
+    navigate(`/${selectedUserType.toLowerCase()}`);
+  };
+
   return (
-    <div>
-      {/* Navigation Bar */}
-      <div className="navigation-bar">
-        <div className="left-corner">
-          Log in
-        </div>
+    <div className="login-page">
+      <div className="left-column">
+        <h1>Attendance</h1>
+        <h2>Bright Horizon Education Center</h2>
+        <p>
+          Bright Horizon Education Center is located in Idangoda Kiriella. It has OL classes, AL classes, other primary
+          classes, and other classes like dancing, art, etc.
+        </p>
       </div>
-
-      {/* Login Page Content */}
-      <div className="login-page-content">
-        {/* Left Column */}
-        <div className="left-column">
-          <h1>Attendance</h1>
-          <h2>Bright Horizon Education Center</h2>
-          <p>Bright Horizon Education Center is located in Idangoda Kiriella. It offers OL classes, AL classes, primary classes, as well as other classes like dancing and art.</p>
-        </div>
-
-        {/* Right Column */}
-        <div className="right-column">
-          <div className="login-window">
-            <h3>Log in</h3>
-            <form>
-              <select className="user-type-select">
-                <option value="admin">Admin</option>
-                <option value="teacher">Teacher</option>
-                <option value="accountant">Accountant</option>
-                <option value="staff">Staff</option>
-              </select>
-              <input type="text" placeholder="Username" />
-              <input type="password" placeholder="Password" />
-              <div className="remember-me">
-                <input type="checkbox" id="remember-me" />
-                <label htmlFor="remember-me">Remember me</label>
-              </div>
-              <button type="submit">Sign in</button>
-            </form>
-            <div className="forgot-password">
-              <a href="#">Forgot password?</a>
-            </div>
+      <div className="right-column">
+        <div className="login-window">
+          <h2>Login</h2>
+          <div className="user-type">
+            <label>
+              <input
+                type="radio"
+                value="Admin"
+                checked={selectedUserType === 'Admin'}
+                onChange={(e) => setSelectedUserType(e.target.value)}
+              />
+              Admin
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="Accountant"
+                checked={selectedUserType === 'Accountant'}
+                onChange={(e) => setSelectedUserType(e.target.value)}
+              />
+              Accountant
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="Teacher"
+                checked={selectedUserType === 'Teacher'}
+                onChange={(e) => setSelectedUserType(e.target.value)}
+              />
+              Teacher
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="Student"
+                checked={selectedUserType === 'Student'}
+                onChange={(e) => setSelectedUserType(e.target.value)}
+              />
+              Student
+            </label>
           </div>
-          <div className="signup-link">
-            Don't have an account? <a href="#"><span style={{ color: '#012970' }}>Signup here</span></a>
-          </div>
+          <label>
+            Username:
+            <input type="text" value={inputUsername} onChange={(e) => setInputUsername(e.target.value)} />
+          </label>
+          <label>
+            Password:
+            <input type="password" value={inputPassword} onChange={(e) => setInputPassword(e.target.value)} />
+          </label>
+          <label className="remember-me">
+            <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
+            Remember me
+          </label>
+          <button onClick={handleLogin}>Sign In</button>
+          <a href="#" className="forgot-password">Forgot password?</a>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default LoginPage;
