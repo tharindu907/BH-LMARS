@@ -24,15 +24,16 @@ function LoginPage({ setIsLoggedIn, setUserType, setUsername, setProfilePic }) {
     <div className="login-page">
       <div className="left-column">
         <h1>Attendance</h1>
-        <h2>Bright Horizon Education Center</h2>
+        <h1>Bright Horizon Education Center</h1>
         <p>
           Bright Horizon Education Center is located in Idangoda Kiriella. It has OL classes, AL classes, other primary
           classes, and other classes like dancing, art, etc.
+          Kiriella Bright Horizon Education Center Kiriella Bright Horizon Education Center 
+          Kiriella Bright Horizon Education Center
         </p>
       </div>
       <div className="right-column">
         <div className="login-window">
-          <h2>Login</h2>
           <div className="user-type">
             <label>
               <input
@@ -72,11 +73,11 @@ function LoginPage({ setIsLoggedIn, setUserType, setUsername, setProfilePic }) {
             </label>
           </div>
           <label>
-            Username:
+            Username
             <input type="text" value={inputUsername} onChange={(e) => setInputUsername(e.target.value)} />
           </label>
           <label>
-            Password:
+            Password
             <input type="password" value={inputPassword} onChange={(e) => setInputPassword(e.target.value)} />
           </label>
           <label className="remember-me">
@@ -84,7 +85,7 @@ function LoginPage({ setIsLoggedIn, setUserType, setUsername, setProfilePic }) {
             Remember me
           </label>
           <button onClick={handleLogin}>Sign In</button>
-          <a href="#" className="forgot-password">Forgot password?</a>
+          <a href="forgotpassword" className="forgot-password">Forgot password?</a>
         </div>
       </div>
     </div>
