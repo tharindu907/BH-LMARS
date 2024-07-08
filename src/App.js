@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavigationBar from './Components/NavigationBar/NavigationBar';
 import { UserProvider } from './Context/UserContext';
 import LoginPage from './Pages/LoginPage';
-import AdminPage from './Pages/AdminPage.jsx';
+import AdminPage from './Pages/AdminPage';
 import AccountantPage from './Pages/AccountantPage';
 import StudentPage from './Pages/StudentPage';
 import TeacherPage from './Pages/TeacherPage';
+import AdminStudentPage from './Pages/AdminStudentPage';
 import './App.css';
 
 function App() {
@@ -48,10 +49,21 @@ function App() {
               path="/"
               element={<LoginPage setIsLoggedIn={setIsLoggedIn} setUserType={setUserType} setUsername={setUsername} setProfilePic={setProfilePic} />}
             />
-            {isLoggedIn && <Route path="/admin" element={<AdminPage />} />}
-            {isLoggedIn && <Route path="/accountant" element={<AccountantPage />} />}
-            {isLoggedIn && <Route path="/student" element={<StudentPage />} />}
-            {isLoggedIn && <Route path="/teacher" element={<TeacherPage />} />}
+            {isLoggedIn && userType === 'Admin' && (
+              <Route path="/admin/*" element={<AdminPage />} />
+            )}
+            {isLoggedIn && userType === 'Admin' && (
+              <Route path="/admin/student" element={<AdminStudentPage />} />
+            )}
+            {isLoggedIn && userType === 'Accountant' && (
+              <Route path="/accountant" element={<AccountantPage />} />
+            )}
+            {isLoggedIn && userType === 'Student' && (
+              <Route path="/student" element={<StudentPage />} />
+            )}
+            {isLoggedIn && userType === 'Teacher' && (
+              <Route path="/teacher" element={<TeacherPage />} />
+            )}
           </Routes>
         </div>
       </Router>

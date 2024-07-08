@@ -1,36 +1,35 @@
+/* src/Components/Dashboard/Dashboard.css */
+
 .dashboard {
-    position: fixed;
-    top: 40px; /* To align below the navigation bar */
-    left: 0;
-    width: 200px; /* Adjust as necessary */
-    height: calc(100% - 40px); /* Full height minus the height of the navigation bar */
-    background-color: #f8f9fa;
-    border-right: 1px solid #ddd;
-    padding: 10px 0;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .dashboard-item {
-    width: 100%;
-    padding: 10px 20px;
-    border: none;
-    background: none;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #333;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .dashboard-item:hover {
-    background-color: #ddd;
-  }
-  
-  .icon {
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  width: 250px; /* Adjust the width as needed */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.dashboard-item:hover {
+  background-color: #e0e0e0;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
