@@ -14,7 +14,7 @@ const AdminClassesPage = () => {
       <NavigationBar />
       <Dashboard />
       <div className="content">
-        <h2>Classes Management</h2>
+        <h2>Home</h2>
         <div className="classes-management-grid">
           <Link to="/admin/classes/registration" className="management-card">
             <img src={registrationIcon} alt="Registration" />

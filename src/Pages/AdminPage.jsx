@@ -6,6 +6,7 @@ import Dashboard from '../Components/Dashboard/Dashboard';
 import AdminStudentPage from './AdminStudentPage';
 import AdminTeacherPage from './AdminTeacherPage';
 import AdminClassesPage from './AdminClassesPage';
+import AdminStaffPage from './AdminStaffPage';
 
 const AdminPage = () => {
   const location = useLocation();
@@ -90,7 +91,7 @@ const AdminPage = () => {
           <Route path="student" element={<AdminStudentPage />} />
           <Route path="teacher" element={<AdminTeacherPage />} />
           <Route path="classes" element={<AdminClassesPage />} />
-          <Route path="staff" element={<div>Manage Staff</div>} />
+          <Route path="staff" element={<AdminStaffPage />} />
         </Routes>
       </div>
     </div>

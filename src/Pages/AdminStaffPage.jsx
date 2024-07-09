@@ -4,29 +4,29 @@ import NavigationBar from '../Components/NavigationBar/NavigationBar';
 import Dashboard from '../Components/Dashboard/Dashboard';
 import registrationIcon from '../Components/Assets/registration-icon.png'
 import detailsIcon from '../Components/Assets/details-icon.png'
-import classIcon from '../Components/Assets/class-icon.png'
-import './AdminTeacherPage.css';
+import adminIcon from '../Components/Assets/admin-icon.png'
+import './AdminStaffPage.css';
 
 
-const AdminTeacherPage = () => {
+const AdminStaffPage = () => {
     return (
-      <div className="admin-teacher-page">
+      <div className="admin-staff-page">
         <NavigationBar />
         <Dashboard />
         <div className="content">
           <h2>Home</h2>
-          <div className="teacher-management-grid">
-            <Link to="/admin/teacher/registration" className="management-card">
+          <div className="staff-management-grid">
+            <Link to="/admin/staff/registration" className="management-card">
               <img src={registrationIcon} alt="Registration" />
               <div className="card-title">Registration</div>
             </Link>
-            <Link to="/admin/teacher/details" className="management-card">
+            <Link to="/admin/staff/details" className="management-card">
               <img src={detailsIcon} alt="Details" />
               <div className="card-title">Details</div>
             </Link>
-            <Link to="/admin/teacher/class" className="management-card">
-              <img src={classIcon} alt="Class" />
-              <div className="card-title">Class</div>
+            <Link to="/admin/staff/admin" className="management-card">
+              <img src={adminIcon} alt="Admin Privilage" />
+              <div className="card-title">Admin Privilage</div>
             </Link>
           </div>
         </div>
@@ -34,4 +34,4 @@ const AdminTeacherPage = () => {
     );
   };
 
-export default AdminTeacherPage
+export default AdminStaffPage
