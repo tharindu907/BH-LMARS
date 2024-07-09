@@ -65,11 +65,11 @@ function LoginPage({ setIsLoggedIn, setUserType, setUsername, setProfilePic }) {
             <label>
               <input
                 type="radio"
-                value="Student"
-                checked={selectedUserType === 'Student'}
+                value="Staff"
+                checked={selectedUserType === 'Staff'}
                 onChange={(e) => setSelectedUserType(e.target.value)}
               />
-              Student
+              Staff
             </label>
           </div>
           <label>

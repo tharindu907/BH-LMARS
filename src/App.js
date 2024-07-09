@@ -5,7 +5,7 @@ import { UserProvider } from './Context/UserContext';
 import LoginPage from './Pages/LoginPage';
 import AdminPage from './Pages/AdminPage';
 import AccountantPage from './Pages/AccountantPage';
-import StudentPage from './Pages/StudentPage';
+import StaffPage from './Pages/StaffPage';
 import TeacherPage from './Pages/TeacherPage';
 import './App.css';
 
@@ -22,7 +22,7 @@ function App() {
         const userData = await new Promise((resolve) => {
           setTimeout(() => {
             resolve({
-              userType: 'Student',
+              userType: 'Staff',
               username: 'John', // Replace with '' to test default username
               profilePic: '', // Replace with '' to test default profile picture
             });
@@ -54,8 +54,8 @@ function App() {
             {isLoggedIn && userType === 'Accountant' && (
               <Route path="/accountant" element={<AccountantPage />} />
             )}
-            {isLoggedIn && userType === 'Student' && (
-              <Route path="/student" element={<StudentPage />} />
+            {isLoggedIn && userType === 'Staff' && (
+              <Route path="/staff" element={<StaffPage />} />
             )}
             {isLoggedIn && userType === 'Teacher' && (
               <Route path="/teacher" element={<TeacherPage />} />
