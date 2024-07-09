@@ -5,6 +5,7 @@ import NavigationBar from '../Components/NavigationBar/NavigationBar';
 import Dashboard from '../Components/Dashboard/Dashboard';
 import AdminStudentPage from './AdminStudentPage';
 import AdminTeacherPage from './AdminTeacherPage';
+import AdminClassesPage from './AdminClassesPage';
 
 const AdminPage = () => {
   const location = useLocation();
@@ -88,7 +89,7 @@ const AdminPage = () => {
           <Route path="dashboard" element={<div />} />
           <Route path="student" element={<AdminStudentPage />} />
           <Route path="teacher" element={<AdminTeacherPage />} />
-          <Route path="classes" element={<div>Manage Classes</div>} />
+          <Route path="classes" element={<AdminClassesPage />} />
           <Route path="staff" element={<div>Manage Staff</div>} />
         </Routes>
       </div>
