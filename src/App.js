@@ -7,7 +7,6 @@ import AdminPage from './Pages/AdminPage';
 import AccountantPage from './Pages/AccountantPage';
 import StudentPage from './Pages/StudentPage';
 import TeacherPage from './Pages/TeacherPage';
-import AdminStudentPage from './Pages/AdminStudentPage';
 import './App.css';
 
 function App() {
@@ -51,9 +50,6 @@ function App() {
             />
             {isLoggedIn && userType === 'Admin' && (
               <Route path="/admin/*" element={<AdminPage />} />
-            )}
-            {isLoggedIn && userType === 'Admin' && (
-              <Route path="/admin/student" element={<AdminStudentPage />} />
             )}
             {isLoggedIn && userType === 'Accountant' && (
               <Route path="/accountant" element={<AccountantPage />} />

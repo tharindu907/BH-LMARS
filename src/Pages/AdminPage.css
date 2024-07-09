@@ -24,7 +24,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 20px;
     margin-top: 20px;
-    width: 50%;
+    width: 60%;
 }
 
 .summary-card {

@@ -15,7 +15,7 @@ const AdminStudentPage = () => {
       <NavigationBar />
       <Dashboard />
       <div className="content">
-        <h1>Student Management</h1>
+        <h2>Student Management</h2>
         <div className="student-management-grid">
           <Link to="/admin/student/attendance" className="management-card">
             <img src={attendanceIcon} alt="Attendance" />
