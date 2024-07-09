@@ -25,7 +25,7 @@ const AdminPage = () => {
       case 'staff':
         return 'Staff';
       default:
-        return 'Dashboard';
+        return '';
     }
   };
 
@@ -88,7 +88,7 @@ const AdminPage = () => {
         )}
         <Routes>
           <Route path="dashboard" element={<div />} />
-          <Route path="student" element={<AdminStudentPage />} />
+          <Route path="student/*" element={<AdminStudentPage />} />
           <Route path="teacher" element={<AdminTeacherPage />} />
           <Route path="classes" element={<AdminClassesPage />} />
           <Route path="staff" element={<AdminStaffPage />} />

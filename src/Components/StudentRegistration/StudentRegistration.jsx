@@ -1,81 +1,39 @@
+// src/Components/StudentRegistration.jsx
 import React from 'react';
-import './StudentRegistration.css'; // Import the CSS file
+import './StudentRegistration.css';
 
 const StudentRegistration = () => {
   return (
-    <div className="student-registration">
-      <h2>Student Registration</h2>
+    <div className="student-form">
       <form>
         <div className="form-section">
-          <div className="form-group">
-            <label>First Name</label>
-            <input type="text" />
-          </div>
-          <div className="form-group">
-            <label>Last Name</label>
-            <input type="text" />
-          </div>
-          <div className="form-group">
-            <label>Date of Birth</label>
-            <input type="date" />
-          </div>
-          <div className="form-group">
-            <label>Gender</label>
-            <select>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Mobile No</label>
-            <input type="text" />
-          </div>
-          <div className="form-group">
-            <label>Home Telephone No</label>
-            <input type="text" />
-          </div>
-          <div className="form-group">
-            <label>WhatsApp No</label>
-            <input type="text" />
-          </div>
-          <div className="form-group">
-            <label>Home Address</label>
-            <textarea></textarea>
-          </div>
-          <div className="form-group">
-            <label>School</label>
-            <input type="text" />
-          </div>
-          <div className="form-group">
-            <label>Add Photo</label>
-            <input type="file" />
-          </div>
-          <div className="form-group">
-            <label>Registered Date</label>
-            <input type="date" />
-          </div>
-          <div className="form-group">
-            <label>Registered By</label>
-            <input type="text" />
-          </div>
+          <h1>Add New Student</h1>
+          <input type="text" id="firstName" placeholder="First Name" required />
+          <input type="text" id="lastName" placeholder="Last Name" required />
+          <input type="date" id="dob" placeholder="Date of Birth" required />
+          <select id="gender" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <input type="tel" id="mobileNumber" placeholder="Mobile Number" required />
+          <input type="tel" id="homeTelephoneNumber" placeholder="Home Telephone Number" />
+          <input type="tel" id="whatsappNumber" placeholder="WhatsApp Number" />
+          <textarea id="address" placeholder="Home Address" required></textarea>
+          <textarea id="schoolAddress" placeholder="School Address"></textarea>
+          <input type="file" id="photoUpload" accept="image/*" required />
+          <input type="date" id="registeredDate" placeholder="Registered Date" required />
+          <input type="text" id="registeredBy" placeholder="Registered By" required />
         </div>
+        <hr />
         <div className="form-section">
-          <h3>Guardian Information</h3>
-          <div className="form-group">
-            <label>Guardian Name</label>
-            <input type="text" />
-          </div>
-          <div className="form-group">
-            <label>Guardian Address</label>
-            <textarea></textarea>
-          </div>
-          <div className="form-group">
-            <label>Guardian Contact No</label>
-            <input type="text" />
-          </div>
+          <input type="text" id="guardianName" placeholder="Guardian Name" required />
+          <textarea id="guardianAddress" placeholder="Guardian Address" required></textarea>
+          <input type="tel" id="guardianContactNumber" placeholder="Guardian Contact Number" required />
         </div>
-        <div className="form-group">
-          <button type="submit" className="save-button">Save</button>
+        <div className="form-buttons">
+          <button type="reset">Reset</button>
+          <button type="submit">Save</button>
         </div>
       </form>
     </div>
