@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
@@ -20,10 +21,16 @@ connection.once('open', ()=>{
 const studentRouter = require('./routes/student');
 const classesRouter = require('./routes/classes');
 const teacherRouter = require('./routes/teacher');
+const adminRouter = require('./routes/admin');
+const loginRouter = require('./login');
 
+app.use(bodyParser.json());
+app.use('/login', loginRouter);
 app.use('/student', studentRouter);
 app.use('/classes', classesRouter);
 app.use('/teacher', teacherRouter);
+app.use('/admin', adminRouter);
+
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

@@ -11,7 +11,7 @@ const teacherSchema = new mongoose.Schema({
     },
     nic_no: { type: String, required: true},
     date_of_birth: { type: Date, required: true}, // "YYYY-MM-DD" // Mongoose  converts this string into a JavaScript Date object when saving it in server
-    gender: {type: String, required: true, enum: ['male', 'female']},
+    gender: {type: String, required: true, enum: ['Male', 'Female']},
     personal_number: { type: String, validate: utils.mobileNumberValidator },
     whatsapp_number: { type: String, validate: utils.mobileNumberValidator },
     address: { type: String, required: true},
