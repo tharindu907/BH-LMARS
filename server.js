@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
@@ -24,7 +23,6 @@ const teacherRouter = require('./routes/teacher');
 const adminRouter = require('./routes/admin');
 const loginRouter = require('./login');
 
-app.use(bodyParser.json());
 app.use('/login', loginRouter);
 app.use('/student', studentRouter);
 app.use('/classes', classesRouter);

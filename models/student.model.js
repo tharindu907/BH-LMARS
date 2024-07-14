@@ -18,6 +18,7 @@ const studentSchema = new mongoose.Schema({
     registered_by: { type: String, required: true},
     guardian_name: { type: String, required: true},
     guardian_number: { type: String, validate: utils.mobileNumberValidator },
+    qr_url: { type: String, required: true}
 }, {
     timestamps: true,
 })

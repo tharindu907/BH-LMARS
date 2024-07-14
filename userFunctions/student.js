@@ -3,10 +3,11 @@ let Student = require('../models/student.model');
 
 async function addStudent(req, res){
     try {
-        const newstudentcode = await utils.getNextSequenceValue('studentid') + 1000;
+        const newstudentcode = 'S' + String(await utils.getNextSequenceValue('studentid') + 1000);
         
         const newStudent = new Student({
-            _id: 'S' + String(newstudentcode),
+            _id: newstudentcode,
+            qr_url: await utils.generateQRCodeWithText(newstudentcode, req.body.name.first_name + " " + req.body.name.last_name),
             ...req.body
         })
     
