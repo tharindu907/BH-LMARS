@@ -1,30 +1,15 @@
 const router = require('express').Router();
-let Teacher = require('./models/teacher.model');
-let Admin = require('./models/admin.model');
-let Accountant = require('./models/accountant.model');
-let Cashier = require('./models/cashier.model');
-
-const userTypeModels = {
-  Admin: Admin,
-  Accountant: Accountant,
-  Teacher: Teacher,
-  Staff: Cashier
-};
+const User = require('./models/user.model');
 
 router.route('/').post(async (req, res) => {
-    const { usertype, username, password } = req.body;
+    const { username, password } = req.body;
     
     try {
-      const UserType = userTypeModels[usertype];
-      if (!UserType) {
-        return res.status(400).json({ message: 'Invalid user type' });
-      }
-  
-      const user = await UserType.findOne({ username });
+      const user = await User.findOne({ username });
   
       if (user) {
         if (password === user.password) {
-          res.json(user);          
+          res.json({ username: user.username, role: user.role });         
         } else {
           return res.status(400).json({ message: 'Invalid password' });
         }
