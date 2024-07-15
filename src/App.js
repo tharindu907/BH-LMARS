@@ -17,24 +17,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      // Simulate fetching user data
-      const fetchUserData = async () => {
-        const userData = await new Promise((resolve) => {
-          setTimeout(() => {
-            resolve({
-              userType: 'Staff',
-              username: 'John', // Replace with '' to test default username
-              profilePic: '', // Replace with '' to test default profile picture
-            });
-          }, 1000);
-        });
-
-        setUserType(userData.userType);
-        setUsername(userData.username || 'User');
-        setProfilePic(userData.profilePic || '');
-      };
-
-      fetchUserData();
+      // Fetch user data from an actual API or local storage if needed
     }
   }, [isLoggedIn]);
 

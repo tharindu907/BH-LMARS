@@ -1,68 +1,85 @@
-/* src/Components/StudentRegistration.css */
-
 .student-form {
-  max-width: 600px;
-  margin: 0 auto;
+  width: 100%;
+  margin: auto;
   padding: 20px;
-  background-color: white;
+  background-color: #f3f4f8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
 
-.student-form form {
+.student-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 500; /* Medium weight for headings */
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.input-group {
   display: flex;
   flex-direction: column;
 }
 
-.student-form .form-section {
-  margin-bottom: 20px;
+.input-group label {
+  font-weight: 500; /* Medium weight for better readability */
+  margin-bottom: 5px;
 }
 
-.form-section h1{
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.student-form input,
-.student-form select,
-.student-form textarea {
-  width: 100%;
+.input-group input[type="text"],
+.input-group input[type="tel"],
+.input-group input[type="date"],
+.input-group select,
+.input-group textarea {
   padding: 10px;
-  margin-bottom: 10px;
+  height: 35px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 12px; /* Slightly larger font size for readability */
 }
 
-.student-form input[type="file"] {
-  padding: 5px;
+textarea {
+  resize: none; /* Prevents resizing of the textarea */
 }
 
-.student-form hr {
-  border: 0;
-  height: 1px;
-  background: #ccc;
-  margin-bottom: 20px;
+.input-group.wide {
+  grid-column: span 2;
+  height: auto;
 }
 
-.student-form .form-buttons {
+.form-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: end;
+  gap: 10px;
+  margin-top: 20px;
 }
 
-.student-form .form-buttons button {
+.form-buttons button {
   padding: 10px 20px;
-  margin-left: 10px;
-  border: none;
-  border-radius: 4px;
   background-color: #007bff;
   color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.student-form .form-buttons button[type="reset"] {
+.form-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.form-buttons button[type="button"] {
   background-color: #6c757d;
 }
 
-.student-form .form-buttons button[type="submit"] {
-  background-color: #0056b3;
+.form-buttons button[type="button"]:hover {
+  background-color: #5a6268;
+}
+
+.divider {
+  border: 1px solid gray;
+  margin: 20px 0;
 }
