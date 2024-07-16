@@ -8,9 +8,10 @@
 }
 
 .student-form h1 {
-  text-align: center;
+  text-align: start;
   margin-bottom: 20px;
-  font-weight: 500; /* Medium weight for headings */
+  font-size: 18px;
+  font-weight: 600; /* Medium weight for headings */
 }
 
 .form-row {

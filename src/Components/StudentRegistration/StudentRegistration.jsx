@@ -16,38 +16,50 @@ const initialState = {
   guardianContactNumber: '',
   registeredDate: new Date().toISOString().slice(0, 10),
   registeredBy: '',
+  studentImage: null, // Added field for student image
 };
 
 const StudentRegistration = () => {
   const [student, setStudent] = useState(initialState);
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    setStudent((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
+    const { id, value, files } = e.target;
+    if (id === 'studentImage') {
+      setStudent((prevState) => ({
+        ...prevState,
+        studentImage: files[0],
+      }));
+    } else {
+      setStudent((prevState) => ({
+        ...prevState,
+        [id]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
+    const formData = new FormData();
+    formData.append('first_name', student.firstName);
+    formData.append('last_name', student.lastName);
+    formData.append('date_of_birth', student.dob);
+    formData.append('gender', student.gender);
+    formData.append('personal_number', student.mobileNumber);
+    formData.append('whatsapp_number', student.whatsappNumber);
+    formData.append('address', student.address);
+    formData.append('school', student.school);
+    formData.append('grade', student.grade);
+    formData.append('guardian_name', student.guardianName);
+    formData.append('guardian_number', student.guardianContactNumber);
+    formData.append('registered_date', student.registeredDate);
+    formData.append('registered_by', student.registeredBy);
+    formData.append('student_image', student.studentImage);
+
     try {
-      const response = await axios.post('http://localhost:5000/student/add', {
-        name: {
-          first_name: student.firstName,
-          last_name: student.lastName,
+      const response = await axios.post('http://localhost:5000/student/add', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-        date_of_birth: student.dob,
-        gender: student.gender,
-        personal_number: student.mobileNumber,
-        whatsapp_number: student.whatsappNumber,
-        address: student.address,
-        school: student.school,
-        grade: student.grade,
-        guardian_name: student.guardianName,
-        guardian_number: student.guardianContactNumber,
-        registered_date: student.registeredDate,
-        registered_by: student.registeredBy,
       });
       console.log(response.data);
       alert('Student Added Successfully');
@@ -124,7 +136,10 @@ const StudentRegistration = () => {
         </div>
 
         <div className="form-row">
-          <div className="input-group"></div>
+          <div className="input-group">
+            <label htmlFor="studentImage">Student Image</label>
+            <input type="file" id="studentImage" accept="image/*" onChange={handleChange} />
+          </div>
           <div className="input-group"></div>
           <div className="input-group">
             <label htmlFor="registeredBy">Registered By</label>
