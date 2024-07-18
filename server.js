@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const dbConnect = require('./config/dbConnect');
+dbConnect();
 
 require('dotenv').config();
 
@@ -9,13 +10,6 @@ const port = process.env.PORT; // process.env provide access to assigned envirom
 
 app.use(cors());
 app.use(express.json());
-
-const uri = process.env.URI;
-mongoose.connect(uri);
-const connection = mongoose.connection;
-connection.once('open', ()=>{
-    console.log("MongoDB connection successful");
-})
 
 const userRouter = require('./routes/user');
 const studentRouter = require('./routes/student');
