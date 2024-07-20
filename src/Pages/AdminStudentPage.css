@@ -27,7 +27,7 @@
   }
   
   .student-management-card {
-    background: linear-gradient(180deg, #d0dcf0, rgb(175, 190, 238));
+    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
     padding: 20px;
     height: 30vh;
     box-shadow: 0 10px 12px rgba(0, 0, 0, 0.1);

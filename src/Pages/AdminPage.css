@@ -9,8 +9,9 @@
   
 .content {
     margin-left: 250px; /* Same width as the sidebar */
+    margin-right: 70px;
     padding: 20px;
-    width: calc(100% - 250px); /* Ensure content takes up the remaining space */
+    width: 100%; /* Ensure content takes up the remaining space */
     box-sizing: border-box;
     background-color: #d6e2f9; /* This will fill the content area with antiquewhite */
 }
@@ -21,30 +22,33 @@
 
 .summary-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
     margin-top: 20px;
-    width: 60%;
+    width: 100%;
 }
 
 .summary-card {
-    background-color: white;
+    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    text-align: left;
+    height: 30vh;
+    box-shadow: 0 10px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    align-content: center;
+    text-align: center;
 }
 
 .summary-title {
     display: flex;
-    justify-content: left;
-    align-items: baseline;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 10px;
 }
 
 .main-title {
-    font-size: 1.5em;
-    color: blue;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: rgb(84, 93, 184);
 }
 
 .sub-title {

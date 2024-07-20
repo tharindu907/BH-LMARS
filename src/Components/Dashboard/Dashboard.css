@@ -20,13 +20,23 @@
   padding: 10px 20px;
   font-size: 16px;
   border: none;
-  background-color: #f0f0f0;
+  background-color: #f8f9fa;
   cursor: pointer;
   margin-bottom: 10px;
 }
 
 .dashboard-item:hover {
-  background-color: #e0e0e0;
+  background-color: #f8f9fa;
+}
+
+.dashboard-item.active {
+  height: 8vh;
+  background-color: #d6e2f9; /* Highlight color for the active link */
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  color: rgb(12, 12, 114);
+  font-size: 20px;
+  font-weight: bold; /* Optional: Make the text bold */
 }
 
 .icon {
