@@ -15,7 +15,7 @@ const AdminTeacherPage = () => {
       <div className="admin-teacher-page">
         <NavigationBar />
         <Dashboard />
-        <div className="content">
+        <div className="teacher-content">
           <Routes>
             <Route
               path="/"
@@ -23,17 +23,17 @@ const AdminTeacherPage = () => {
                 <>
                   <h2>Home</h2>
                   <div className="teacher-management-grid">
-                    <Link to="/admin/teacher/registration" className="management-card">
+                    <Link to="/admin/teacher/registration" className="teacher-management-card">
                       <img src={registrationIcon} alt="Registration" />
-                      <div className="card-title">Registration</div>
+                      <div className="t-card-title">Registration</div>
                     </Link>
-                    <Link to="/admin/teacher/details" className="management-card">
+                    <Link to="/admin/teacher/details" className="teacher-management-card">
                       <img src={detailsIcon} alt="Details" />
-                      <div className="card-title">Details</div>
+                      <div className="t-card-title">Details</div>
                     </Link>
-                    <Link to="/admin/teacher/class" className="management-card">
+                    <Link to="/admin/teacher/class" className="teacher-management-card">
                       <img src={classIcon} alt="Class" />
-                      <div className="card-title">Class</div>
+                      <div className="t-card-title">Class</div>
                     </Link>
                   </div>
                 </>

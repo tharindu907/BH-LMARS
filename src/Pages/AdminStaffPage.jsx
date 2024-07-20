@@ -15,7 +15,7 @@ const AdminStaffPage = () => {
       <div className="admin-staff-page">
         <NavigationBar />
         <Dashboard />
-        <div className="content">
+        <div className="staff-content">
           <Routes>
             <Route
               path="/"
@@ -23,17 +23,17 @@ const AdminStaffPage = () => {
                 <>
                   <h2>Home</h2>
                   <div className="staff-management-grid">
-                    <Link to="/admin/staff/registration" className="management-card">
+                    <Link to="/admin/staff/registration" className="staff-management-card">
                       <img src={registrationIcon} alt="Registration" />
-                      <div className="card-title">Registration</div>
+                      <div className="st-card-title">Registration</div>
                     </Link>
-                    <Link to="/admin/staff/details" className="management-card">
+                    <Link to="/admin/staff/details" className="staff-management-card">
                       <img src={detailsIcon} alt="Details" />
-                      <div className="card-title">Details</div>
+                      <div className="st-card-title">Details</div>
                     </Link>
-                    <Link to="/admin/staff/admin" className="management-card">
+                    <Link to="/admin/staff/admin" className="staff-management-card">
                       <img src={adminIcon} alt="Admin Privilage" />
-                      <div className="card-title">Admin Privilage</div>
+                      <div className="st-card-title">Admin Privilage</div>
                     </Link>
                   </div>
                 </>

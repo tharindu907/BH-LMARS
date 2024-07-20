@@ -16,7 +16,7 @@ const AdminStudentPage = () => {
     <div className="admin-student-page">
       <NavigationBar />
       <Dashboard />
-      <div className="content">
+      <div className="student-content">
         <Routes>
           <Route
             path="/"
@@ -24,25 +24,25 @@ const AdminStudentPage = () => {
               <>
                 <h2>Home</h2>
                 <div className="student-management-grid">
-                  <Link to="attendance" className="management-card">
+                  <Link to="attendance" className="student-management-card">
                     <img src={attendanceIcon} alt="Attendance" />
-                    <div className="card-title">Attendance</div>
+                    <div className="s-card-title">Attendance</div>
                   </Link>
-                  <Link to="registration" className="management-card">
+                  <Link to="registration" className="student-management-card">
                     <img src={registrationIcon} alt="Registration" />
-                    <div className="card-title">Registration</div>
+                    <div className="s-card-title">Registration</div>
                   </Link>
-                  <Link to="details" className="management-card">
+                  <Link to="details" className="student-management-card">
                     <img src={detailsIcon} alt="Details" />
-                    <div className="card-title">Details</div>
+                    <div className="s-card-title">Details</div>
                   </Link>
-                  <Link to="payments" className="management-card">
+                  <Link to="payments" className="student-management-card">
                     <img src={paymentsIcon} alt="Payments" />
-                    <div className="card-title">Payments</div>
+                    <div className="s-card-title">Payments</div>
                   </Link>
-                  <Link to="class" className="management-card">
+                  <Link to="class" className="student-management-card">
                     <img src={classIcon} alt="Class" />
-                    <div className="card-title">Class</div>
+                    <div className="s-card-title">Class</div>
                   </Link>
                 </div>
               </>

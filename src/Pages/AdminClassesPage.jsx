@@ -13,24 +13,24 @@ const AdminClassesPage = () => {
     <div className="admin-classes-page">
       <NavigationBar />
       <Dashboard />
-      <div className="content">
+      <div className="classes-content">
         <h2>Home</h2>
         <div className="classes-management-grid">
-          <Link to="/admin/classes/registration" className="management-card">
+          <Link to="/admin/classes/registration" className="classes-management-card">
             <img src={registrationIcon} alt="Registration" />
-            <div className="card-title">Registration</div>
+            <div className="c-card-title">Registration</div>
           </Link>
-          <Link to="/admin/classes/details" className="management-card">
+          <Link to="/admin/classes/details" className="classes-management-card">
             <img src={detailsIcon} alt="Details" />
-            <div className="card-title">Details</div>
+            <div className="c-card-title">Details</div>
           </Link>
-          <Link to="/admin/classes/payments" className="management-card">
+          <Link to="/admin/classes/payments" className="classes-management-card">
             <img src={paymentsIcon} alt="Payments" />
-            <div className="card-title">Payments</div>
+            <div className="c-card-title">Payments</div>
           </Link>
-          <Link to="/admin/classes/timetable" className="management-card">
+          <Link to="/admin/classes/timetable" className="classes-management-card">
             <img src={timetableIcon} alt="Timetable" />
-            <div className="card-title">Timetable</div>
+            <div className="c-card-title">Timetable</div>
           </Link>
         </div>
       </div>
