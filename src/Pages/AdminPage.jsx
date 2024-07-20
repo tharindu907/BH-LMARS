@@ -14,6 +14,8 @@ const AdminPage = () => {
 
   const getTitle = () => {
     switch (path) {
+      case 'admin':
+        return 'Dashboard';
       case 'dashboard':
         return 'Dashboard';
       case 'student':
@@ -30,7 +32,7 @@ const AdminPage = () => {
   };
 
   const showSummaryGrid = () => {
-    return path === 'dashboard' || path === 'admin';
+    return path === '' || path === 'dashboard' || path === 'admin';
   };
 
   return (
@@ -87,6 +89,7 @@ const AdminPage = () => {
           </div>
         )}
         <Routes>
+          <Route path="/" element={<div />} />
           <Route path="dashboard" element={<div />} />
           <Route path="student/*" element={<AdminStudentPage />} />
           <Route path="teacher/*" element={<AdminTeacherPage />} />

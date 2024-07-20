@@ -15,11 +15,16 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isActive = (path) => location.pathname === path;
-
+  const isActive = (path) => {
+    if (path === '/admin') {
+      return location.pathname === '/admin' || location.pathname.startsWith('/admin/dashboard');
+    }
+    return location.pathname.startsWith(path);
+  };
+  
   return (
     <div className="dashboard">
-      <button className={`dashboard-item ${isActive('/admin/dashboard') ? 'active' : ''}`} onClick={() => navigate('/admin/dashboard')}>
+      <button className={`dashboard-item ${isActive('/admin/dashboard') ? 'active' : ''}`} onClick={() => navigate('/admin')}>
         <img src={dashboardIcon} alt="Dashboard" className="icon" />
         Dashboard
       </button>
