@@ -7,7 +7,7 @@ async function addUser(req, res){
         const usercode = await utils.getNextSequenceValue('user_id') + 100;
 
         const newUser = new User({
-            _id: (role === "Teacher" ? "A" : "N") + String(usercode),
+            _id: (role === "Teacher" ? "A" : "N") + String(usercode), // if role is teacher, "A" is assigned. Else "N" is assigned
             username: utils.generateUsername(req.body.name.first_name, req.body.name.last_name, usercode),
             password: utils.generatePassword(),
             ...req.body
