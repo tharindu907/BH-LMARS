@@ -3,21 +3,21 @@ const QRCode = require('qrcode');
 const { createCanvas, loadImage } = require('canvas');
 
 const mobileNumberValidator = {
-    validator: function(v) {
-      return /^\d{10}$/.test(v);
-    },
-    message: props => `${props.value} is not a valid 10-digit mobile number!`
-  };
+  validator: function(v) {
+    return /^\d{10}$/.test(v);
+  },
+  message: props => `${props.value} is not a valid 10-digit mobile number!`
+};
 
-  async function getNextSequenceValue(sequenceName) {
-    const sequenceDocument = await Counter.findByIdAndUpdate(
-        sequenceName,
-        { $inc: { seq: 1 } },
-        { new: true, upsert: true }
-    );
+async function getNextSequenceValue(sequenceName) {
+  const sequenceDocument = await Counter.findByIdAndUpdate(
+      sequenceName,
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+  );
 
-    return sequenceDocument.seq;
-  }
+  return sequenceDocument.seq;
+}
 
 function generateUsername(firstName, lastName, identifier){
   return `${firstName}${lastName[0]}${identifier}`;
@@ -64,10 +64,10 @@ async function generateQRCodeWithText(id, name) {
   return canvas.toDataURL();
 }
 
-  module.exports = {
-    generateQRCodeWithText,
-    mobileNumberValidator,
-    getNextSequenceValue,
-    generateUsername,
-    generatePassword
-  };
+module.exports = {
+  generateQRCodeWithText,
+  mobileNumberValidator,
+  getNextSequenceValue,
+  generateUsername,
+  generatePassword
+};
