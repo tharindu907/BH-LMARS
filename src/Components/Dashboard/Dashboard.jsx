@@ -24,7 +24,7 @@ const Dashboard = () => {
   
   return (
     <div className="dashboard">
-      <button className={`dashboard-item ${isActive('/admin/dashboard') ? 'active' : ''}`} onClick={() => navigate('/admin')}>
+      <button className={`dashboard-item ${isActive('/admin') ? 'active' : ''}`} onClick={() => navigate('/admin')}>
         <img src={dashboardIcon} alt="Dashboard" className="icon" />
         Dashboard
       </button>

@@ -31,7 +31,7 @@
 /* Styling for the dashboard */
 .dashboard {
   position: fixed;
-  top: 40px; /* To align below the navigation bar */
+  top: 30px; /* To align below the navigation bar */
   left: 0;
   width: 250x; /* Adjust as necessary */
   height: calc(100% - 40px); /* Full height minus the height of the navigation bar */

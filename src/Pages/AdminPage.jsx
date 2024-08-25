@@ -93,7 +93,7 @@ const AdminPage = () => {
           <Route path="dashboard" element={<div />} />
           <Route path="student/*" element={<AdminStudentPage />} />
           <Route path="teacher/*" element={<AdminTeacherPage />} />
-          <Route path="classes" element={<AdminClassesPage />} />
+          <Route path="classes/*" element={<AdminClassesPage />} />
           <Route path="staff/*" element={<AdminStaffPage />} />
         </Routes>
       </div>

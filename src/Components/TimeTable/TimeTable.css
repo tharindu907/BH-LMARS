@@ -1,0 +1,149 @@
+/* Container and Title Styles */
+.timetable-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .timetable-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #012970; /* Changed color */
+    margin: 0;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .year-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .year-selector span {
+    font-weight: bold;
+  }
+  
+  .year-selector select {
+    padding: 5px;
+    font-size: 16px;
+  }
+  
+  /* Top Filter Box Styles */
+  .filter-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-weight: bold;
+  }
+  
+  .filter-item select {
+    padding: 5px;
+  }
+  
+  .selected-value {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .view-btn {
+    margin-left: auto;
+    padding: 5px 15px;
+    border: none;
+    background-color: #4154f1; /* Blue color */
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .view-btn:hover {
+    opacity: 0.9;
+  }
+  
+  /* Table Styles */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .timetable-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .timetable-table tr:hover {
+    background-color: #eaeaea;
+  }
+  
+  /* Action Buttons Styles */
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .edit-btn,
+  .viewdetails-btn,
+  .remove-btn {
+    padding: 5px 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .edit-btn {
+    background-color: #4154f1; /* Edit button color */
+  }
+  
+  .viewdetails-btn {
+    background-color: #4154f1; /* View Details button color */
+  }
+  
+  .remove-btn {
+    background-color: #f16b41; /* Remove button color */
+  }
+  
+  .edit-btn:hover,
+  .viewdetails-btn:hover,
+  .remove-btn:hover {
+    opacity: 0.9;
+  }
