@@ -13,16 +13,14 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    }, 
+    first_name: {
+        type: String,
+        required: true
     },
-    name: { 
-        first_name: {
-            type: String,
-            required: true
-        },
-        last_name: {
-            type: String,
-            required: true
-        }
+    last_name: {
+        type: String,
+        required: true
     },
     role: {
         type: String,
@@ -40,6 +38,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['Male', 'Female']
+    },
+    email: {
+        type: String,
+        required: true
     },
     personal_number: {
         type: String,
