@@ -20,6 +20,16 @@ async function addUser(req, res){
     } 
 }
 
+const getAdmins = async (req, res) => {
+    try {
+        const admins = await User.find({ role: 'Admin' }, '_id first_name last_name');
+        res.json(admins);
+    } catch (err) {
+        res.status(400).json(`Error: ${err}`);
+    }
+}
+
 module.exports = {
-    addUser
+    addUser,
+    getAdmins
 }
