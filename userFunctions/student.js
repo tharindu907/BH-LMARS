@@ -45,7 +45,19 @@ function getStudent(req, res){
     .catch(err => res.status(400).json('Error: ' + err))
 }
 
+const countMaleandFemale = async (req, res) => {
+    try {
+        const maleCount = await Student.countDocuments({ gender: 'Male' });
+        const femaleCount = await Student.countDocuments({ gender: 'Female' });
+        res.json({ male: maleCount, female: femaleCount });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+
 module.exports = {
     addStudent,
-    getStudent
+    getStudent,
+    countMaleandFemale
 };

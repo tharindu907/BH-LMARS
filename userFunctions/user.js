@@ -29,7 +29,17 @@ const getAdmins = async (req, res) => {
     }
 }
 
+const countTeachers = async (req, res) => {
+    try {
+        const teacherCount = await User.countDocuments({ role: 'Teacher' });
+        res.json(teacherCount);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
 module.exports = {
     addUser,
-    getAdmins
+    getAdmins,
+    countTeachers
 }

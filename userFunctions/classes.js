@@ -18,6 +18,16 @@ async function addClass(req, res){
     }
 }
 
+const countClasses = async (req, res) => {
+    try {
+        const classCount = await Classes.countDocuments();
+        res.json(classCount);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
 module.exports = {
-    addClass
+    addClass,
+    countClasses
 }
