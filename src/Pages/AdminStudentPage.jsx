@@ -10,6 +10,7 @@ import detailsIcon from '../Components/Assets/details-icon.png';
 import paymentsIcon from '../Components/Assets/payments-icon.png';
 import classIcon from '../Components/Assets/class-icon.png';
 import './AdminStudentPage.css';
+import StudentDetails from '../Components/StudentDetails/StudentDetails';
 
 
 const AdminStudentPage = () => {
@@ -51,6 +52,7 @@ const AdminStudentPage = () => {
           />
           <Route path="attendance" element={<StudentAttendance />} />
           <Route path="registration" element={<StudentRegistration />} />
+          <Route path="details" element={<StudentDetails />} />
         </Routes>
       </div>
     </div>
