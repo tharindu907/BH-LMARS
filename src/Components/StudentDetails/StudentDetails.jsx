@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import searchIcon from '../Assets/serchicon.png'; // Adjust the path if necessary
 /*import axios from 'axios';*/
 import './StudentDetails.css';
 
-const StudentDetails = () => {
-    const [student, setStudent] = useState({
-      studentNumber: '2024-001',
-      firstName: 'John',
-      lastName: 'Doe',
-      mobileNumber: '0771234567',
-      dob: '2005-05-15',
-      gender: 'Male',
-      whatsappNumber: '0779876543',
-      address: '123, Main Street, Colombo',
-      school: 'Sivali Central College',
-      grade: '10',
-      guardianName: 'Jane Doe',
-      guardianContactNumber: '0777654321',
-      registeredDate: '2024-01-10',
-      registeredBy: 'Admin',
-      studentImage: 'https://via.placeholder.com/100', // Placeholder image
-    });
+const defaultStudent = {
+  firstName: 'John',
+  lastName: 'Doe',
+  mobileNumber: '123-456-7890',
+  dob: '2005-04-12',
+  gender: 'Male',
+  whatsappNumber: '123-456-7890',
+  address: '123 Main St, Springfield',
+  school: 'Springfield High',
+  grade: '10',
+  guardianName: 'Jane Doe',
+  guardianContactNumber: '987-654-3210',
+  registeredDate: '2023-09-01',
+  registeredBy: 'Admin',
+  studentImage: null, // Assume no image for the default
+};
 
 /*
 const StudentDetails = ({ studentId }) => {
@@ -44,80 +43,90 @@ const StudentDetails = ({ studentId }) => {
   }
 */
 
+
+const StudentDetails = () => {
+  const [student] = useState(defaultStudent);
+
   return (
     <div className="student-details">
-      <h1>Student Number: {student.studentNumber}</h1>
-      <div className="form-row">
-        <div className="input-group">
-          <label>First Name</label>
-          <div className="details-field">{student.firstName}</div>
-        </div>
-        <div className="input-group">
-          <label>Last Name</label>
-          <div className="details-field">{student.lastName}</div>
-        </div>
-        <div className="input-group">
-          <label>Mobile No.</label>
-          <div className="details-field">{student.mobileNumber}</div>
-        </div>
+      <div className="search-bar">
+        <input type="text" placeholder="Search Student..." />
+        <button type="submit">
+          <img src={searchIcon} alt="Search" />
+        </button>
       </div>
+      <form>
+        <div className="form-row">
+          <div className="input-group">
+            <label>First Name</label>
+            <div>{student.firstName}</div>
+          </div>
+          <div className="input-group">
+            <label>Last Name</label>
+            <div>{student.lastName}</div>
+          </div>
+          <div className="input-group">
+            <label>Mobile No.</label>
+            <div>{student.mobileNumber}</div>
+          </div>
+        </div>
 
-      <div className="form-row">
-        <div className="input-group">
-          <label>Date of Birth</label>
-          <div className="details-field">{student.dob}</div>
+        <div className="form-row">
+          <div className="input-group">
+            <label>Date of Birth</label>
+            <div>{student.dob}</div>
+          </div>
+          <div className="input-group">
+            <label>Gender</label>
+            <div>{student.gender}</div>
+          </div>
         </div>
-        <div className="input-group">
-          <label>Gender</label>
-          <div className="details-field">{student.gender}</div>
-        </div>
-      </div>
 
-      <div className="form-row">
-        <div className="input-group wide">
-          <label>Home Address</label>
-          <div className="details-field">{student.address}</div>
+        <div className="form-row">
+          <div className="input-group wide">
+            <label>Home Address</label>
+            <div>{student.address}</div>
+          </div>
+          <div className="input-group">
+            <label>WhatsApp No.</label>
+            <div>{student.whatsappNumber}</div>
+          </div>
         </div>
-        <div className="input-group">
-          <label>WhatsApp No.</label>
-          <div className="details-field">{student.whatsappNumber}</div>
-        </div>
-      </div>
 
-      <div className="form-row">
-        <div className="input-group">
-          <label>School</label>
-          <div className="details-field">{student.school}</div>
+        <div className="form-row">
+          <div className="input-group">
+            <label>School</label>
+            <div>{student.school}</div>
+          </div>
+          <div className="input-group">
+            <label>Grade</label>
+            <div>{student.grade}</div>
+          </div>
+          <div className="input-group">
+            <label>Registered Date</label>
+            <div>{student.registeredDate}</div>
+          </div>
         </div>
-        <div className="input-group">
-          <label>Grade</label>
-          <div className="details-field">{student.grade}</div>
-        </div>
-        <div className="input-group">
-          <label>Registered Date</label>
-          <div className="details-field">{student.registeredDate}</div>
-        </div>
-      </div>
 
-      <div className="form-row">
-        <div className="input-group wide">
-          <label>Guardian Name</label>
-          <div className="details-field">{student.guardianName}</div>
+        <div className="form-row">
+          <div className="input-group wide">
+            <label>Guardian Name</label>
+            <div>{student.guardianName}</div>
+          </div>
+          <div className="input-group">
+            <label>Guardian Contact No.</label>
+            <div>{student.guardianContactNumber}</div>
+          </div>
         </div>
-        <div className="input-group">
-          <label>Guardian Contact No.</label>
-          <div className="details-field">{student.guardianContactNumber}</div>
-        </div>
-      </div>
-
-      <div className="form-row">
-        <div className="input-group">
-          <label>Registered By</label>
-          <div className="details-field">{student.registeredBy}</div>
-        </div>
-      </div>
+      </form>
     </div>
   );
 };
 
 export default StudentDetails;
+
+
+
+
+
+
