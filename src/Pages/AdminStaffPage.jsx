@@ -7,6 +7,7 @@ import registrationIcon from '../Components/Assets/registration-icon.png'
 import detailsIcon from '../Components/Assets/details-icon.png'
 import adminIcon from '../Components/Assets/admin-icon.png'
 import './AdminStaffPage.css';
+import MembersList from '../Components/MembersList/MembersList';
 
 
 
@@ -31,7 +32,7 @@ const AdminStaffPage = () => {
                       <img src={detailsIcon} alt="Details" />
                       <div className="st-card-title">Details</div>
                     </Link>
-                    <Link to="/admin/staff/admin" className="staff-management-card">
+                    <Link to="/admin/staff/memberlist" className="staff-management-card">
                       <img src={adminIcon} alt="Admin Privilage" />
                       <div className="st-card-title">Admin Privilage</div>
                     </Link>
@@ -40,6 +41,7 @@ const AdminStaffPage = () => {
               }
             />
             <Route path="registration" element={<StaffRegistration />} />
+            <Route path="memberlist" element={<MembersList />} />
           </Routes>
         </div>
       </div>
