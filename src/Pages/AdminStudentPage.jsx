@@ -3,6 +3,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import NavigationBar from '../Components/NavigationBar/NavigationBar';
 import Dashboard from '../Components/Dashboard/Dashboard';
 import StudentRegistration from '../Components/StudentRegistration/StudentRegistration';
+import StudentAttendance from '../Components/StudentAttendance/StudentAttendance';
 import attendanceIcon from '../Components/Assets/attendance-icon.png';
 import registrationIcon from '../Components/Assets/registration-icon.png';
 import detailsIcon from '../Components/Assets/details-icon.png';
@@ -48,6 +49,7 @@ const AdminStudentPage = () => {
               </>
             }
           />
+          <Route path="attendance" element={<StudentAttendance />} />
           <Route path="registration" element={<StudentRegistration />} />
         </Routes>
       </div>
