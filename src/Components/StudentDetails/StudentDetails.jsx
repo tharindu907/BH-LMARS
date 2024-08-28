@@ -1,14 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+/*import axios from 'axios';*/
 import './StudentDetails.css';
 
+const StudentDetails = () => {
+    const [student, setStudent] = useState({
+      studentNumber: '2024-001',
+      firstName: 'John',
+      lastName: 'Doe',
+      mobileNumber: '0771234567',
+      dob: '2005-05-15',
+      gender: 'Male',
+      whatsappNumber: '0779876543',
+      address: '123, Main Street, Colombo',
+      school: 'Sivali Central College',
+      grade: '10',
+      guardianName: 'Jane Doe',
+      guardianContactNumber: '0777654321',
+      registeredDate: '2024-01-10',
+      registeredBy: 'Admin',
+      studentImage: 'https://via.placeholder.com/100', // Placeholder image
+    });
+
+/*
 const StudentDetails = ({ studentId }) => {
   const [student, setStudent] = useState(null);
 
   useEffect(() => {
     const fetchStudentDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/student/${studentId}`);
+        const response = await axios.get(`http://localhost:5000/student/${studentId}`); //endpoint for fetch data
         setStudent(response.data);
       } catch (error) {
         console.error('Failed to fetch student details:', error);
@@ -22,6 +42,7 @@ const StudentDetails = ({ studentId }) => {
   if (!student) {
     return <div>Loading...</div>;
   }
+*/
 
   return (
     <div className="student-details">
