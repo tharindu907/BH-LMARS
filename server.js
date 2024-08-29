@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const getdates = require('./userFunctions/dailyClassSchedule');
 const dbConnect = require('./config/dbConnect');
 dbConnect();
 
@@ -13,11 +14,16 @@ app.use(express.json());
 
 const userRouter = require('./routes/user');
 const studentRouter = require('./routes/student');
+const classRouter = require('./routes/classes')
 const loginRouter = require('./login');
 
 app.use('/login', loginRouter);
 app.use('/student', studentRouter);
 app.use('/user', userRouter);
+app.use('/class', classRouter);
+
+const date = '2024-08-28';
+getdates.updateDailyClassSchedule(date);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

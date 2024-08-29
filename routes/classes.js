@@ -3,11 +3,6 @@ const controller = require('../userFunctions/classes')
 
 router.post('/add', controller.addClass);
 router.get('/get/classcount', controller.countClasses);
-
-router.route('/').get((req, res) => {
-    Classes.find()
-    .then(classes => res.json(classes))
-    .catch(err => res.status(400).json('Error: ' + err))
-})
+router.get('/get/filterfortimetablehandler', controller.timetablehandlerfilter);
 
 module.exports = router;

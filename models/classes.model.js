@@ -5,10 +5,6 @@ const classesSchema = new mongoose.Schema({
         type: String, 
         required: true
     },
-    teacher: { 
-        type: String, 
-        required: true 
-    },
     teacherid: { 
         type: String, 
         required: true 
@@ -36,8 +32,8 @@ const classesSchema = new mongoose.Schema({
         enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] 
     },
     time: {
-        from: { type: String, required: true },  // 'HH:mm' format
-        to: { type: String, required: true }     // 'HH:mm' format
+        from: { type: Date, required: true },  // '1970-01-01T08:30:00Z'
+        to: { type: Date, required: true }     
     }
 }, {
     timestamps: true,

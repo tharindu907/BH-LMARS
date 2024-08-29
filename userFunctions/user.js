@@ -1,7 +1,7 @@
 const utils = require('../utils');
 let User = require('../models/user.model');
 
-async function addUser(req, res){
+const addUser = async (req, res) => {
     try {
         const role = req.body.role;
         const usercode = await utils.getNextSequenceValue('user_id') + 100;
