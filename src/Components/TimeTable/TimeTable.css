@@ -64,6 +64,9 @@
   
   .filter-item select {
     padding: 5px;
+    font-size: 12px;
+    width: 125px;
+    box-sizing: border-box;
   }
   
   .selected-value {

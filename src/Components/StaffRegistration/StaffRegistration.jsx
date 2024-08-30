@@ -1,43 +1,63 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './StaffRegistration.css';
 
 const initialState = {
   firstName: '',
   lastName: '',
-  mobileNumber: '',
+  nic: '',
   dob: '',
   gender: '',
+  mobileNumber: '',
   whatsappNumber: '',
   address: '',
-  workingRole: '', // Changed from 'email' to 'workingRole'
+  email: '',
+  role: '',
   registeredDate: new Date().toISOString().slice(0, 10),
   registeredBy: '',
-  staffImage: null, // Added field for staff image
 };
 
 const StaffRegistration = () => {
   const [staff, setStaff] = useState(initialState);
 
   const handleChange = (e) => {
-    const { id, value, files } = e.target;
-    if (id === 'staffImage') {
-      setStaff((prevState) => ({
-        ...prevState,
-        staffImage: files[0],
-      }));
-    } else {
-      setStaff((prevState) => ({
-        ...prevState,
-        [id]: value,
-      }));
-    }
+    const { id, value } = e.target;
+    setStaff((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', staff);
-    alert('Form submitted successfully');
-    setStaff(initialState);
+    const data = {
+      role: staff.role,
+      first_name: staff.firstName,
+      last_name: staff.lastName,
+      nic_no: staff.nic,
+      date_of_birth: staff.dob,
+      gender: staff.gender,
+      personal_number: staff.mobileNumber,
+      whatsapp_number: staff.whatsappNumber,
+      address: staff.address,
+      email: staff.email,
+      registered_date: staff.registeredDate,
+      registered_by: staff.registeredBy,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/user/add', data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(response.data);
+      alert('User Added Successfully');
+      setStaff(initialState);
+    } catch (error) {
+      console.error('Failed to add user:', error);
+      alert('Error adding user');
+    }
   };
 
   const handleReset = () => {
@@ -58,8 +78,12 @@ const StaffRegistration = () => {
             <input type="text" id="lastName" required value={staff.lastName} onChange={handleChange} />
           </div>
           <div className="input-group">
-            <label htmlFor="mobileNumber">Mobile No.</label>
-            <input type="tel" id="mobileNumber" required value={staff.mobileNumber} onChange={handleChange} />
+            <label htmlFor="gender">Gender</label>
+            <select id="gender" required value={staff.gender} onChange={handleChange}>
+              <option value="" disabled>Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
           </div>
         </div>
 
@@ -69,47 +93,47 @@ const StaffRegistration = () => {
             <input type="date" id="dob" required value={staff.dob} onChange={handleChange} />
           </div>
           <div className="input-group">
-            <label htmlFor="gender">Gender</label>
-            <select id="gender" required value={staff.gender} onChange={handleChange}>
-              <option value="" disabled>Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
-          <div className="input-group"></div>
-        </div>
-
-        <div className="form-row">
-          <div className="input-group wide">
-            <label htmlFor="address">Home Address</label>
-            <textarea id="address" required value={staff.address} onChange={handleChange}></textarea>
+            <label htmlFor="mobileNumber">Mobile Number</label>
+            <input type="tel" id="mobileNumber" required value={staff.mobileNumber} onChange={handleChange} />
           </div>
           <div className="input-group">
-            <label htmlFor="whatsappNumber">WhatsApp No.</label>
+            <label htmlFor="whatsappNumber">WhatsApp Number</label>
             <input type="tel" id="whatsappNumber" value={staff.whatsappNumber} onChange={handleChange} />
           </div>
         </div>
 
         <div className="form-row">
-          <div className="input-group wide">
-            <label htmlFor="workingRole">Working Role</label>
-            <input type="text" id="workingRole" required value={staff.workingRole} onChange={handleChange} />
+          <div className="input-group">
+            <label htmlFor="nic">NIC</label>
+            <input type="text" id="nic" required value={staff.nic} onChange={handleChange} />
+          </div>
+          <div className="input-group">
+            <label htmlFor="address">Home Address</label>
+            <textarea id="address" required value={staff.address} onChange={handleChange}></textarea>
+          </div>
+          <div className="input-group">
+            <label htmlFor="email">Email</label>
+            <input type="email" id="email" required value={staff.email} onChange={handleChange} />
+          </div>
+        </div>
+  
+        <div className="form-row">
+          <div className="input-group">
+            <label htmlFor="role">Role</label>
+            <select id="role" required value={staff.role} onChange={handleChange}>
+              <option value="" disabled>Select Role</option>
+              <option value="Admin">Admin</option>
+              <option value="Cashier">Cashier</option>
+              <option value="Accountant">Accountant</option>
+            </select>
+          </div>
+          <div className="input-group">
+            <label htmlFor="registeredBy">Registered By</label>
+            <input type="text" id="registeredBy" required value={staff.registeredBy} onChange={handleChange} />
           </div>
           <div className="input-group">
             <label htmlFor="registeredDate">Registered Date</label>
             <input type="date" id="registeredDate" required value={staff.registeredDate} onChange={handleChange} />
-          </div>
-        </div>
-
-        <div className="form-row">
-          <div className="input-group">
-            <label htmlFor="staffImage">Staff Image</label>
-            <input type="file" id="staffImage" accept="image/*" onChange={handleChange} />
-          </div>
-          <div className="input-group"></div>
-          <div className="input-group">
-            <label htmlFor="registeredBy">Registered By</label>
-            <input type="text" id="registeredBy" required value={staff.registeredBy} onChange={handleChange} />
           </div>
         </div>
 

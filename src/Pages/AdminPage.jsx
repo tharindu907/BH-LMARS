@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState }  from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import './AdminPage.css'; // Import the CSS file
 import NavigationBar from '../Components/NavigationBar/NavigationBar';
@@ -7,10 +7,47 @@ import AdminStudentPage from './AdminStudentPage';
 import AdminTeacherPage from './AdminTeacherPage';
 import AdminClassesPage from './AdminClassesPage';
 import AdminStaffPage from './AdminStaffPage';
+import axios from 'axios';
 
 const AdminPage = () => {
   const location = useLocation();
   const path = location.pathname.split('/').pop();
+  const [studentCounts, setStudentCounts] = useState({ male: 0, female: 0 });
+  const [teacherCount, setTeacherCount] = useState(0);
+  const [classCount, setClassCount] = useState(0);
+
+  useEffect(() => {
+    const fetchStudentCounts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/student/get/malefemalecount');
+        setStudentCounts(response.data);
+      } catch (err) {
+        console.error('Failed to fetch student counts:', err);
+      }
+    };
+
+    const fetchTeacherCounts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/user/get/teachercount');
+        setTeacherCount(response.data);
+      } catch (err) {
+        console.error('Failed to fetch teacher counts:', err);
+      }
+    };
+
+    const fetchClassCounts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/class/get/classcount');
+        setClassCount(response.data);
+      } catch (err) {
+        console.error('Failed to fetch class counts:', err);
+      }
+    };
+
+    fetchStudentCounts();
+    fetchTeacherCounts();
+    fetchClassCounts();
+  }, [location.pathname]); // location.pathname enables to update the data from backend when the user navigates to different pages. Unless the data is updated when the page is mounted
 
   const getTitle = () => {
     switch (path) {
@@ -46,46 +83,34 @@ const AdminPage = () => {
           <div className="summary-grid">
             <div className="summary-card">
               <div className="summary-title">
-                <span className="main-title">Student</span>
+                <span className="main-title">Students</span>
                 <span className="sub-title"> | Male</span>
               </div>
-              <div className="summary-number">50</div>
+              <div className="summary-number">{studentCounts.male}</div>
             </div>
+
             <div className="summary-card">
               <div className="summary-title">
-                <span className="main-title">Student</span>
+                <span className="main-title">Students</span>
                 <span className="sub-title"> | Female</span>
               </div>
-              <div className="summary-number">60</div>
+              <div className="summary-number">{studentCounts.female}</div>
             </div>
+
             <div className="summary-card">
               <div className="summary-title">
-                <span className="main-title">Teacher</span>
-                <span className="sub-title"> | Male</span>
+                <span className="main-title">Teachers</span>
               </div>
-              <div className="summary-number">20</div>
+              <div className="summary-number">{teacherCount}</div>
             </div>
-            <div className="summary-card">
-              <div className="summary-title">
-                <span className="main-title">Teacher</span>
-                <span className="sub-title"> | Female</span>
-              </div>
-              <div className="summary-number">30</div>
-            </div>
+
             <div className="summary-card">
               <div className="summary-title">
                 <span className="main-title">Classes</span>
-                <span className="sub-title"> | Sinhala Medium</span>
               </div>
-              <div className="summary-number">10</div>
+              <div className="summary-number">{classCount}</div>
             </div>
-            <div className="summary-card">
-              <div className="summary-title">
-                <span className="main-title">Classes</span>
-                <span className="sub-title"> | English Medium</span>
-              </div>
-              <div className="summary-number">15</div>
-            </div>
+
           </div>
         )}
         <Routes>

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./TimeTable.css";
+import axios from 'axios';
 
 const TimeTable = () => {
   const [selectedYear, setSelectedYear] = useState("2024");
@@ -21,9 +22,48 @@ const TimeTable = () => {
   ];
 
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const subjects = ["Mathematics", "Art", "Science", "History", "English"];
-  const grades = ["Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10"];
-  const teachers = ["John", "Smith", "Lee", "Taylor", "Adams"];
+  const [subjects, setSubjects] = useState([]);
+  const [grades, setGrades] = useState([]);
+  const [teachers, setTeachers] = useState([]);
+
+  const fetchFilters = async (currentGrade, currentSubject, currentTeacher) => {
+    try {
+      const queryParams = new URLSearchParams({
+        grade: currentGrade || '',
+        subject: currentSubject || '',
+        teacher: currentTeacher || ''
+      });
+
+      console.log(queryParams);
+
+      const response = await axios.get(`http://localhost:5000/class/get/filterfortimetablehandler/?${queryParams.toString()}`);
+  
+      setSubjects(response.data.subjects);
+      setGrades(response.data.grades.map(String)); // Convert grades to strings to match the select input format
+      setTeachers(response.data.teachers);
+    } catch (error) {
+      console.error("Failed to fetch filters:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFilters(grade, subject, teacher);
+  }, [grade, subject, teacher]);
+  
+  const handleGradeChange = (e) => {
+    const selectedGrade = e.target.value;
+    setGrade(selectedGrade);
+  };
+  
+  const handleSubjectChange = (e) => {
+    const selectedSubject = e.target.value;
+    setSubject(selectedSubject);
+  };
+  
+  const handleTeacherChange = (e) => {
+    const selectedTeacher = e.target.value;
+    setTeacher(selectedTeacher);
+  };
 
   const handleViewClick = () => {
     if (viewAs && month) {
@@ -156,6 +196,7 @@ const TimeTable = () => {
           </div>
         </div>
       </div>
+
       <div className="filter-box">
         <div className="filter-item">
           <div>View as:</div>
@@ -173,6 +214,7 @@ const TimeTable = () => {
             <option value="Grade">Grade</option>
           </select>
         </div>
+
         <div className="filter-item">
           <div>Month:</div>
           <select 
@@ -191,50 +233,12 @@ const TimeTable = () => {
             ))}
           </select>
         </div>
-        <div className="filter-item">
-          <div>Subject:</div>
-          <select 
-            value={subject} 
-            onChange={(e) => {
-              setSubject(e.target.value);
-              setShowTable(false); // Hide table when changing subject
-            }}
-            disabled={!viewAs}
-          >
-            <option value="">All</option>
-            {subjects.map((value, index) => (
-              <option key={index} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="filter-item">
-          <div>Teacher:</div>
-          <select 
-            value={teacher} 
-            onChange={(e) => {
-              setTeacher(e.target.value);
-              setShowTable(false); // Hide table when changing teacher
-            }}
-            disabled={!viewAs}
-          >
-            <option value="">All</option>
-            {teachers.map((value, index) => (
-              <option key={index} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
-        </div>
+
         <div className="filter-item">
           <div>Grade:</div>
           <select 
             value={grade} 
-            onChange={(e) => {
-              setGrade(e.target.value);
-              setShowTable(false); // Hide table when changing grade
-            }}
+            onChange={handleGradeChange}
             disabled={!viewAs}
           >
             <option value="">All</option>
@@ -245,6 +249,39 @@ const TimeTable = () => {
             ))}
           </select>
         </div>
+
+        <div className="filter-item">
+          <div>Subject:</div>
+          <select 
+            value={subject} 
+            onChange={handleSubjectChange}
+            disabled={!viewAs}
+          >
+            <option value="">All</option>
+            {subjects.map((value, index) => (
+              <option key={index} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="filter-item">
+          <div>Teacher:</div>
+          <select 
+            value={teacher} 
+            onChange={handleTeacherChange}
+            disabled={!viewAs}
+          >
+            <option value="">All</option>
+            {teachers.map((value, index) => (
+              <option key={index} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <button className="view-btn" onClick={handleViewClick}>
           View
         </button>
