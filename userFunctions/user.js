@@ -38,8 +38,42 @@ const countTeachers = async (req, res) => {
     }
 }
 
+async function getTeacherIdFromName(teacherName) {
+    const [firstName, lastName] = teacherName.split(' ');
+    
+    try {
+        const teacherID = await User.findOne({ 
+            first_name: firstName, 
+            last_name: lastName,
+            role: 'Teacher'
+        }).select('_id');
+
+        return teacherID._id;
+
+    } catch (error) {
+        console.error('Error getting the teacherID :', error);
+        throw error;
+    }
+    
+}
+
+async function getNameFromTeacherId(teacherID) {
+    try {
+        const teacherName = await User.findOne({ _id: teacherID}).select('first_name last_name');
+
+        return `${teacherName.first_name} ${teacherName.last_name}`;
+
+    } catch (error) {
+        console.error('Error getting the teacherName :', error);
+        throw error;
+    }
+    
+}
+
 module.exports = {
     addUser,
     getAdmins,
-    countTeachers
+    countTeachers,
+    getTeacherIdFromName,
+    getNameFromTeacherId
 }

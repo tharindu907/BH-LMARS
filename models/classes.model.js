@@ -32,8 +32,8 @@ const classesSchema = new mongoose.Schema({
         enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] 
     },
     time: {
-        from: { type: Date, required: true },  // '1970-01-01T08:30:00Z'
-        to: { type: Date, required: true }     
+        from: { type: String, required: true },  // "0830"
+        to: { type: String, required: true }     
     }
 }, {
     timestamps: true,

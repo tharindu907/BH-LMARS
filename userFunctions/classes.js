@@ -1,5 +1,6 @@
 const utils = require('../utils');
 let Classes = require('../models/classes.model');
+const userFunctions = require('./user');
 
 const addClass = async (req, res) => {
     try{
@@ -7,7 +8,10 @@ const addClass = async (req, res) => {
 
         const newClasses = new Classes({
             _id: (req.body.medium[0] + (req.body.subject).substring(0, 3)).toUpperCase() + String(newclasscode),
-            ...req.body
+            ...req.body 
+            // time should be "1200" (HHMM) 
+            // 1970-01-01T11:00:00.000+00:00 <- 'Date' format
+            // to convert data format to required format .toTimeString().split(' ')[0].replace(/:/g, '').substring(0, 4)
         })
 
         await newClasses.save();
@@ -27,28 +31,35 @@ const countClasses = async (req, res) => {
     }
 }
 
-const timetablehandlerfilter = async (req,res) => {
-    const { grade, subject, teacher } = req.query;
-    // req.query contains the query parameters sent by the client. If any of these parameters are included in the request, they will be assigned to the corresponding variables
+async function getDetialsForTimeTable({classIDs, subject = null, grade = null, teacher = null}){
 
-    const query = {};
+    const query = {
+        _id: { $in: classIDs }
+    };
     if (grade) query.grade = grade;
     if (subject) query.subject = subject;
-    if (teacher) query.teacherid = teacher;
+    if (teacher) {
+        query.teacherid = await userFunctions.getTeacherIdFromName(teacher);
+    }
 
-    try {
-        const subjects = await Classes.distinct('subject', query);
-        const grades = await Classes.distinct('grade', query);
-        const teachers = await Classes.distinct('teacherid', query);
-        // For example, if query is { grade: '10', subject: 'Math' }, this will return the IDs of all unique teachers who teach Math in grade 10.
+    try{
+        const details = await Classes.find(query).select('_id subject grade teacherid');
 
-        res.json({ subjects, grades, teachers });
+        const results = details.map(cls => ({
+            _id: cls._id,
+            subject: cls.subject,
+            grade: cls.grade,
+            teacher: userFunctions.getNameFromTeacherId(cls.teacherid)
+        }))
+        return results;
+
     } catch (error) {
-        res.status(500).json({ message: "Error updating query based on the user's selected criteria ", error });
+        console.error('Error getting details for the classes:', error);
+        throw error;
     }
 }
 
-async function getClassesForDay(dayOfWeek) {
+async function getClassesForDay(date, dayOfWeek) {
     try {
         // Query the database for classes on the same day
         const classes = await Classes.find({ day: dayOfWeek }).exec(); // ".exec()" returns a promise and async/await will handle the asynchronous operation.
@@ -57,7 +68,7 @@ async function getClassesForDay(dayOfWeek) {
             classId: cls._id,
             startTime: cls.time.from,
             endTime: cls.time.to,
-            _id: cls._id + cls.time.from.getTime() // getTime() converts to the number of milliseconds from January 1, 1970, 00:00:00 UTC
+            classCode: cls._id + "." + date + "." + cls.time.from
         }));
     } catch (err) {
         console.error('Error fetching class for ', dayOfWeek, ' : ', err);
@@ -68,6 +79,6 @@ async function getClassesForDay(dayOfWeek) {
 module.exports = {
     addClass,
     countClasses,
-    timetablehandlerfilter,
-    getClassesForDay
+    getClassesForDay,
+    getDetialsForTimeTable
 }

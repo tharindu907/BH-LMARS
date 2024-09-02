@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const dailyClassScheduleSchema = new mongoose.Schema({
-    _id: { // this saves the date, as date is unique
+    _id: { // this saves the date, as date is unique ''yyyy-mm-dd"
         type: String, 
         required: true
     },
     classes: [{
-        _id:{
+        classCode:{ // "ESIN106.2024-08-28.1000"
             type: String,
             required: true
         },
@@ -15,11 +15,11 @@ const dailyClassScheduleSchema = new mongoose.Schema({
             required: true 
         },
         startTime: { 
-            type: Date, 
+            type: String, 
             required: true 
         },
         endTime: { 
-            type: Date, 
+            type: String, 
             required: true 
         }
     }]
@@ -27,4 +27,4 @@ const dailyClassScheduleSchema = new mongoose.Schema({
     timestamps: true  
 });
 
-module.exports = mongoose.model('DailyClassSchedule', dailyClassScheduleSchema);
+module.exports = mongoose.model('dailyClassSchedule', dailyClassScheduleSchema);
