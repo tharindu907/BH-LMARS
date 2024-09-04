@@ -8,6 +8,7 @@ import paymentsIcon from '../Components/Assets/payments-icon.png';
 import timetableIcon from '../Components/Assets/timetable-icon.png';
 import TimeTable from '../Components/TimeTable/TimeTable'; // Import the TimeTable component
 import './AdminClassesPage.css';
+import ClassRegistration from '../Components/ClassRegistration/ClassRegistration';
 
 const AdminClassesPage = () => {
   return (
@@ -42,6 +43,7 @@ const AdminClassesPage = () => {
               </>
             }
           />
+          <Route path="registration" element={<ClassRegistration />} />
           <Route path="timetable" element={<TimeTable />} /> {/* Mount the TimeTable component */}
         </Routes>
       </div>

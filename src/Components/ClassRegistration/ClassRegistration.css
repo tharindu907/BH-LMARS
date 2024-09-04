@@ -1,0 +1,147 @@
+/* General Form Styling */
+.class-registration-form {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .class-registration-form h1 {
+    text-align: start;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600; /* Medium weight for headings */
+  }
+  
+  /* Grid Layout for Form Rows with Three Columns */
+  .class-registration-form-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+    gap: 20px;
+    margin-bottom: 15px;
+  }
+  
+  /* Input Group Styling */
+  .class-registration-input-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .class-registration-input-group label {
+    font-weight: 500; /* Medium weight for better readability */
+    margin-bottom: 5px;
+  }
+  
+  .class-registration-form select {
+    font-size: 12px;
+    padding: 5px;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .class-registration-input-group input[type="text"],
+  .class-registration-input-group input[type="tel"],
+  .class-registration-input-group input[type="date"],
+  .class-registration-input-group input[type="number"],
+  .class-registration-input-group input[type="time"] {
+    padding: 10px;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px; /* Slightly larger font size for readability */
+  }
+  
+  .class-registration-textarea {
+    resize: none; /* Prevents resizing of the textarea */
+  }
+  
+  /* Half-width Input Group Styling */
+  .class-registration-input-group.half-width {
+    grid-column: span 1; /* Span 1 column */
+  }
+  
+  /* Wide Input Group Styling */
+  .class-registration-input-group.wide {
+    grid-column: span 3; /* Span all three columns */
+    height: auto;
+  }
+  
+  /* Divider for visual separation if needed */
+  .class-registration-divider {
+    border: 1px solid gray;
+    margin: 20px 0;
+  }
+  
+  /* Additional Button Styling */
+  .class-registration-add-time-button {
+    padding: 10px 20px;
+    background-color: #022c7a;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+  }
+  
+  .class-registration-add-time-button:hover {
+    background-color: #2351f9;
+  }
+  
+  .class-registration-save-button {
+    padding: 10px 20px;
+    background-color: #022c7a;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .class-registration-save-button:hover {
+    background-color: #2351f9;
+  }
+  
+  
+  
+  .class-registration-reset-button {
+    padding: 10px 20px;
+    background-color: #a37179;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px; 
+  }
+  
+  
+  .class-registration-reset-button:hover {
+    background-color: #df7d90;
+  }
+  
+  .class-registration-view-time-table-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .class-registration-view-time-table-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  /* Button Container Styling */
+  .class-registration-form-buttons {
+    display: flex;
+    justify-content: space-between; /* Align buttons to left and right */
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px;
+  }
+  
