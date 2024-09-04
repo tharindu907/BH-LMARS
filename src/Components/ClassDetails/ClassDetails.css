@@ -1,0 +1,227 @@
+/* General Form Styling for Class Details */
+.class-details-form {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .class-details-form h1 {
+    text-align: start;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600; /* Medium weight for headings */
+  }
+  
+  /* Grid Layout for Form Rows */
+  .class-details-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+    gap: 20px;
+    margin-bottom: 15px;
+  }
+  
+  /* Input Group Styling */
+  .class-details-input-details-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .class-details-input-details-group label {
+    font-weight: 500; /* Medium weight for better readability */
+    margin-bottom: 5px;
+  }
+  
+  .class-details-input-details-group select,
+  .class-details-input-details-group input,
+  .class-details-input-details-group textarea {
+    font-size: 12px;
+    padding: 5px; /* Consistent padding for readability */
+    height: 35px; /* Consistent height for all input fields */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .class-details-textarea {
+    resize: none; /* Prevents resizing of the textarea */
+  }
+  
+  /* Wide Input Group Styling */
+  .class-details-input-details-group.full-width {
+    grid-column: span 3;
+    height: auto;
+  }
+  
+  /* Divider for visual separation if needed */
+  .class-details-divider {
+    border: 1px solid gray;
+    margin: 20px 0;
+  }
+  
+  .class-details-view-student-list-button {
+    padding: 10px 20px;
+    background-color: #022c7a;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto; /* Aligns button to the right */
+  }
+  
+  
+  /* Add Time Slot Button */
+  .class-details-add-time-slot-button {
+    padding: 10px 20px;
+    background-color: #022c7a;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+  }
+  
+  .class-details-add-time-slot-button:hover {
+    background-color: #2351f9;
+  }
+  
+  /* Button Styling */
+  .class-details-reset-button,
+  .class-details-save-button,
+  .class-details-edit-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .class-details-reset-button {
+    background-color: #a37179;
+    color: white;
+  }
+  
+  .class-details-reset-button:hover {
+    background-color: #df7d90;
+  }
+  
+  .class-details-save-button {
+    background-color: #022c7a;
+    color: white;
+  }
+  
+  .class-details-save-button:hover {
+    background-color: #2351f9;
+  }
+  
+  .class-details-edit-button {
+    background-color: #022c7a;
+    color: white;
+  }
+  
+  .class-details-edit-button:hover {
+    background-color: #2351f9;
+  }
+  
+  /* Button Container Styling */
+  .class-details-form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px;
+  }
+  
+  /* Form Buttons */
+  .class-details-form-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .class-details-form-buttons .class-details-save-button,
+  .class-details-form-buttons .class-details-reset-button,
+  .class-details-form-buttons .class-details-cancel-button {
+    color: white;
+  }
+  
+  .class-details-form-buttons .class-details-save-button {
+    background-color: #022c7a; /* Blue for save */
+  }
+  
+  .class-details-form-buttons .class-details-save-button:hover {
+    background-color: #2351f9; /* Darker blue on hover */
+  }
+  
+  .class-details-form-buttons .class-details-reset-button {
+    background-color: #a37179; /* Pink for reset */
+  }
+  
+  .class-details-form-buttons .class-details-reset-button:hover {
+    background-color: #df7d90; /* Darker pink on hover */
+  }
+  
+  .class-details-form-buttons .class-details-cancel-button {
+    background-color: #d32f2f; /* Red for cancel */
+  }
+  
+  .class-details-form-buttons .class-details-cancel-button:hover {
+    background-color: #c62828; /* Darker red on hover */
+  }
+  
+  .class-details-form-buttons .class-details-edit-button {
+    background-color: #022c7a; /* Blue for edit */
+  }
+  
+  .class-details-form-buttons .class-details-edit-button:hover {
+    background-color: #2351f9; /* Darker blue on hover */
+  }
+  
+  
+  /* Additional Buttons */
+  .class-details-form-details-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Align buttons to left and right */
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px;
+  }
+  
+  .class-details-view-time-table-button,
+  .class-details-view-payment-button,
+  .class-details-view-attendance-button,
+  .class-details-new-class-button,
+  .class-details-remove-class-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .class-details-view-time-table-button,
+  .class-details-view-payment-button,
+  .class-details-view-attendance-button,
+  .class-details-new-class-button {
+    background-color: #4CAF50; /* Green background */
+  }
+  
+  .class-details-view-time-table-button:hover,
+  .class-details-view-payment-button:hover,
+  .class-details-view-attendance-button:hover,
+  .class-details-new-class-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  .class-details-remove-class-button {
+    background-color: red; /* Red background */
+  }
+  
+  .class-details-remove-class-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+  }
+  
