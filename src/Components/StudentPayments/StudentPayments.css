@@ -13,6 +13,13 @@
     margin-bottom: 20px;
   }
 
+  .button-window {
+    background-color: #d6e2f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+  }
+
   .payment-search-bar {
     display: flex;
     align-items: center;
@@ -150,3 +157,5 @@
     background-color: #0056b3
 
   }
+
+ 

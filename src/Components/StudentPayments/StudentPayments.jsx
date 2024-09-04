@@ -127,7 +127,7 @@ const StudentPayments = () => {
       </div>
 
       {/* Action Buttons Container */}
-      <div className="window">
+      <div className="button-window">
         <div className="action-buttons">
           <Link to="/admin/student/attendance">
             <button>View Attendance</button>

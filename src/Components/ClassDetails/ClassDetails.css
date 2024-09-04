@@ -207,14 +207,14 @@
   .class-details-view-payment-button,
   .class-details-view-attendance-button,
   .class-details-new-class-button {
-    background-color: #4CAF50; /* Green background */
+    background-color: #65d07e; /* Green background */
   }
   
   .class-details-view-time-table-button:hover,
   .class-details-view-payment-button:hover,
   .class-details-view-attendance-button:hover,
   .class-details-new-class-button:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #0fee77; /* Darker green on hover */
   }
   
   .class-details-remove-class-button {
