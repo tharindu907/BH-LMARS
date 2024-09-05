@@ -83,7 +83,8 @@
     border: none;
     border-radius: 15px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     display: block;
   }
   
@@ -125,7 +126,7 @@
   .class-registration-view-time-table-button {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #4CAF50; /* Green background */
+    background-color: #4CAF50; 
     color: white;
     border: none;
     border-radius: 15px;
@@ -134,13 +135,13 @@
   }
   
   .class-registration-view-time-table-button:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #45a049;
   }
   
   /* Button Container Styling */
   .class-registration-form-buttons {
     display: flex;
-    justify-content: space-between; /* Align buttons to left and right */
+    justify-content: end; /* Align buttons to left and right */
     gap: 10px; /* Space between buttons */
     margin-top: 20px;
   }

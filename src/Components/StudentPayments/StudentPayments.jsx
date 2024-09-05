@@ -36,7 +36,7 @@ const StudentPayments = () => {
       {/* Student Details Bar Container */}
       <div className="window">
         <div className="student-details-bar">
-          <span className="student-info">Student ID: 123456 | Student name: John Doe</span>
+          <span className="student-info">Student ID: 123456 | Student name: Dion Ariyawansa</span>
           <Link to="/admin/student/payments" className="view-details-button">
             View Details
           </Link>

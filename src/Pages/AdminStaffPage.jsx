@@ -41,7 +41,7 @@ const AdminStaffPage = () => {
               }
             />
             <Route path="registration" element={<StaffRegistration />} />
-            <Route path="memberlist" element={<MembersList />} />
+            <Route path="details" element={<MembersList />} />
           </Routes>
         </div>
       </div>

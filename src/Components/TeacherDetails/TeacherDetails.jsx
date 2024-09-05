@@ -3,8 +3,8 @@ import './TeacherDetails.css';
 
 const TeacherDetails = () => {
   const [teacher, setTeacher] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
+    firstName: 'Dion',
+    lastName: 'Ariyawansa',
     nic: '123456789V',
     dob: '1990-05-10',
     gender: 'Male',
