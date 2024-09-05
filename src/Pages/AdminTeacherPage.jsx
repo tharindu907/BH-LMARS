@@ -7,6 +7,7 @@ import registrationIcon from '../Components/Assets/registration-icon.png'
 import detailsIcon from '../Components/Assets/details-icon.png'
 import classIcon from '../Components/Assets/class-icon.png'
 import './AdminTeacherPage.css';
+import TeacherDetails from '../Components/TeacherDetails/TeacherDetails';
 
 
 
@@ -40,6 +41,7 @@ const AdminTeacherPage = () => {
               }
             />
             <Route path="registration" element={<TeacherRegistration />} />
+            <Route path="details" element={<TeacherDetails />} />
           </Routes>
         </div>
       </div>
