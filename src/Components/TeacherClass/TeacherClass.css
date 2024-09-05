@@ -1,0 +1,168 @@
+.teacher-class-class-list-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .teacher-class-table-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #012970; /* Changed color */
+    margin: 0;
+  }
+  
+  .teacher-class-filter-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .teacher-class-filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-weight: bold;
+  }
+  
+  .teacher-class-filter-item select {
+    padding: 5px;
+    width: 160px;
+  }
+  
+  .teacher-class-view-btn {
+    padding: 8px 20px;
+    border: none;
+    background-color: #4154f1;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+  }
+  
+  .teacher-class-view-btn:hover {
+    opacity: 0.9;
+  }
+
+  .teacher-class-details-bar {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .teacher-class-details {
+    margin-right: 20px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .teacher-class-details-btn {
+    margin-left: auto;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .teacher-class-details-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .teacher-class-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .teacher-class-table th, 
+  .teacher-class-table td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .teacher-class-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .teacher-class-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .teacher-class-table tr:hover {
+    background-color: #eaeaea;
+  }
+  
+  .teacher-class-action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .teacher-class-edit-btn,
+  .teacher-class-remove-btn {
+    padding: 5px 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .teacher-class-edit-btn {
+    background-color: #4154f1;
+  }
+  
+  .teacher-class-remove-btn {
+    background-color: #f16b41;
+  }
+  
+  .teacher-class-edit-btn:hover,
+  .teacher-class-remove-btn:hover {
+    opacity: 0.9;
+  }
+  
+  .teacher-class-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .teacher-class-prev-btn, 
+  .teacher-class-next-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .teacher-class-prev-btn:hover, 
+  .teacher-class .next-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .teacher-class-page-info {
+    font-weight: bold;
+  }
+  
+
+  
