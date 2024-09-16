@@ -32,25 +32,24 @@ const countClasses = async (req, res) => {
 }
 
 async function getDetialsForTimeTable({classIDs, subject = null, grade = null, teacher = null}){
-
-    const query = {
-        _id: { $in: classIDs }
-    };
-    if (grade) query.grade = grade;
-    if (subject) query.subject = subject;
-    if (teacher) {
-        query.teacherid = await userFunctions.getTeacherIdFromName(teacher);
-    }
-
     try{
+        const query = {
+            _id: { $in: classIDs }
+        };
+        if (grade) query.grade = grade;
+        if (subject) query.subject = subject;
+        if (teacher) {
+            query.teacherid = await userFunctions.getTeacherIdFromName(teacher);
+        }
+
         const details = await Classes.find(query).select('_id subject grade teacherid');
 
-        const results = details.map(cls => ({
+        const results = await Promise.all(details.map(async cls => ({ //Promise.all to handle the asynchronous function inside the map function
             _id: cls._id,
             subject: cls.subject,
             grade: cls.grade,
-            teacher: userFunctions.getNameFromTeacherId(cls.teacherid)
-        }))
+            teacher: await userFunctions.getNameFromTeacherIdforBackend(cls.teacherid)
+        })));
         return results;
 
     } catch (error) {
@@ -62,14 +61,20 @@ async function getDetialsForTimeTable({classIDs, subject = null, grade = null, t
 async function getClassesForDay(date, dayOfWeek) {
     try {
         // Query the database for classes on the same day
-        const classes = await Classes.find({ day: dayOfWeek }).exec(); // ".exec()" returns a promise and async/await will handle the asynchronous operation.
-        
-        return  classSchedule = classes.map(cls => ({
-            classId: cls._id,
-            startTime: cls.time.from,
-            endTime: cls.time.to,
-            classCode: cls._id + "." + date + "." + cls.time.from
-        }));
+        const classes = await Classes.find({ 'schedule.day': dayOfWeek }).exec(); // ".exec()" returns a promise and async/await will handle the asynchronous operation.
+
+        const classSchedule = classes.map(cls => {
+            const scheduleForDay = cls.schedule.find(sch => sch.day === dayOfWeek); // Find the specific schedule for the day
+
+            return {
+                classId: cls._id,
+                startTime: scheduleForDay.from,
+                endTime: scheduleForDay.to,
+                classCode: `${cls._id}.${date}.${scheduleForDay.from}`
+            };
+        });
+
+        return classSchedule;
     } catch (err) {
         console.error('Error fetching class for ', dayOfWeek, ' : ', err);
         throw err;

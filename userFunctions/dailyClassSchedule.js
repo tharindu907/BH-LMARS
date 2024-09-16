@@ -4,19 +4,20 @@ let dailyClassSchedule = require('../models/dailyClassSchedule.model');
 async function updateDailyClassSchedule(date, { classId, startTime, endTime } = {}) { // '2024-08-26'
     try {     
         // Check if the date exists in the database
-        let isDateExists = await dailyClassSchedule.findOne({ _id: date });
+        const result = await dailyClassSchedule.findOneAndUpdate(
+            { _id: date },
+            {},
+            { upsert: true, new: true, setDefaultsOnInsert: true }
+        );
 
-        if (!isDateExists) {
+        if (result.classes.length === 0) {
             const day = new Date(date).toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
-        
-            // Get the list of classes for the specific day
             const classSchedule = await classFunctions.getClassesForDay(date, day);
 
-            // If the date doesn't exist, create a new record
-            await dailyClassSchedule.create({
-                _id: date,
-                classes: classSchedule
-            });
+            await dailyClassSchedule.updateOne(
+                { _id: date },
+                { $set: { classes: classSchedule } }
+            );
             
         } else if (classId && startTime && endTime) {
 
@@ -42,14 +43,15 @@ async function updateDailyClassSchedule(date, { classId, startTime, endTime } = 
 }
 
 const timetablehandlerfilter = async (req,res) => {
-    const { date, grade, subject, teacher } = req.query;
+    const { selectedDate, grade, subject, teacher } = req.query;
     // req.query contains the query parameters sent by the client. If any of these parameters are included in the request, they will be assigned to the corresponding variables
 
-    updateDailyClassSchedule(date);
+    await updateDailyClassSchedule(selectedDate);
 
     try{
-        const schedule = await dailyClassSchedule.findOne({ _id: date });
-        const classIDs = schedule.classes.map(cls => cls.classes.classId);
+        const schedule = await dailyClassSchedule.findOne({ _id: selectedDate });
+
+        const classIDs = schedule.classes.map(cls => cls.classId);
 
         // Call the getDetialsForTimeTable function with the extracted parameters
         const filter = await classFunctions.getDetialsForTimeTable({
@@ -59,7 +61,7 @@ const timetablehandlerfilter = async (req,res) => {
             teacher: teacher
         });
 
-        console.log(filter);
+        res.json(filter);
 
     } catch (error) {
         res.status(500).json({ message: "Error updating query based on the user's selected criteria ", error });

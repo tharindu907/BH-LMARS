@@ -1,4 +1,4 @@
-const studentsInClass = require('../models/studentsInClass');
+const studentsInClass = require('../models/studentsInClass.model');
 
 async function getClassesForStudent(studentID) { // this will return the classes to which the student has registered
     try {

@@ -57,17 +57,28 @@ async function getTeacherIdFromName(teacherName) {
     
 }
 
-async function getNameFromTeacherId(teacherID) {
+async function getNameFromTeacherIdforBackend(teacherID) {
     try {
-        const teacherName = await User.findOne({ _id: teacherID}).select('first_name last_name');
+        const teacherName = await User.findOne({ _id: teacherID, role: 'Teacher'}).select('first_name last_name');
+        
+        if (!teacherName) {
+            return "Invalid TeacherID";
+        }
 
         return `${teacherName.first_name} ${teacherName.last_name}`;
 
     } catch (error) {
-        console.error('Error getting the teacherName :', error);
         throw error;
     }
-    
+}
+
+const getNameFromTeacherIdforFrontend = async (req, res) => {
+    try {
+        const teacherName = await getNameFromTeacherIdforBackend(req.query.teacherID);
+        res.json({ teacherName });
+      } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch teacher name' });
+      }
 }
 
 module.exports = {
@@ -75,5 +86,6 @@ module.exports = {
     getAdmins,
     countTeachers,
     getTeacherIdFromName,
-    getNameFromTeacherId
+    getNameFromTeacherIdforBackend,
+    getNameFromTeacherIdforFrontend
 }

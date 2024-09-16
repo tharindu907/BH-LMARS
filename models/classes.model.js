@@ -24,16 +24,24 @@ const classesSchema = new mongoose.Schema({
     medium: { 
         type: String, 
         required: true, 
-        enum: ['english', 'sinhala', 'tamil']
+        enum: ['English', 'Sinhala', 'Tamil']
     },
-    day: { 
-        type: String, 
-        required: true, 
-        enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] 
-    },
-    time: {
+    schedule: [{
+        day: { 
+            type: String, 
+            required: true, 
+            enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] 
+        },
         from: { type: String, required: true },  // "0830"
         to: { type: String, required: true }     
+    }],
+    registered_date: {
+        type: Date,
+        required: true
+    },
+    registered_by: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true,
