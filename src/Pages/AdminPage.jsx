@@ -1,6 +1,6 @@
 import React, { useEffect, useState }  from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import './AdminPage.css'; 
+import './AdminPage.css'; // Import the CSS file
 import NavigationBar from '../Components/NavigationBar/NavigationBar';
 import Dashboard from '../Components/Dashboard/Dashboard';
 import AdminStudentPage from './AdminStudentPage';

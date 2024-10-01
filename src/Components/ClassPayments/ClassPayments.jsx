@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import serchIcon from '../Assets/serchicon.png';
-import './StudentPayments.css';
+import searchIcon from '../Assets/serchicon.png';
+import './ClassPayments.css';
 
-const StudentPayments = () => {
+const ClassPayments = () => {
   const [paymentsData, setPaymentsData] = useState([]);
 
   const handleSearch = (e) => {
-    // Logic to handle search and fetch the student details and payments data
+    // Logic to handle search and fetch the class details and payments data
   };
 
   const months = [
@@ -17,7 +17,7 @@ const StudentPayments = () => {
   ];
 
   return (
-    <div className="student-payments">
+    <div className="class-payments">
       
       {/* Search Bar Container */}
       <div className="window">
@@ -25,19 +25,19 @@ const StudentPayments = () => {
           <input
             type="text"
             className="search-input"
-            placeholder="Search Student"
+            placeholder="Search Class"
           />
           <button className="search-button">
-            <img src={serchIcon} alt="Search" />
+            <img src={searchIcon} alt="Search" />
           </button>
         </div>
       </div>
 
-      {/* Student Details Bar Container */}
+      {/* Class Details Bar Container */}
       <div className="window">
-        <div className="student-details-bar">
-          <span className="student-info">Student ID: 123456 | Student name: John Doe</span>
-          <Link to="/admin/student/payments" className="view-details-button">
+        <div className="class-details-bar">
+          <span className="class-info">Class ID: ABC123 | Class name: Advanced Mathematics</span>
+          <Link to="/admin/class/payments" className="view-details-button">
             View Details
           </Link>
         </div>
@@ -55,7 +55,6 @@ const StudentPayments = () => {
                   <option value="History">History</option>
                   <option value="Commerce">Commerce</option>
                   <option value="Sinhala">Sinhala</option>
-                  {/* Add more subjects as needed */}
               </select>
           </div>
     
@@ -79,7 +78,7 @@ const StudentPayments = () => {
                   <option value="Anushani Pathirana">Anushani Pathirana</option>
                   <option value="Prasanna Silva">Prasanna Silva</option>
                   <option value="Pawan Karunarathna">Pawan Karunarathna</option>
-                  </select>
+              </select>
           </div>
 
           <div className="filter-group">
@@ -120,7 +119,6 @@ const StudentPayments = () => {
                   <button className="change-payment-button">Change Payment</button>
                 </td>
               </tr>
-              {/* Add more rows as needed */}
             </tbody>
           </table>
         </div>
@@ -129,7 +127,7 @@ const StudentPayments = () => {
       {/* Action Buttons Container */}
       <div className="button-window">
         <div className="action-buttons">
-          <Link to="/admin/student/attendance">
+          <Link to="/admin/class/attendance">
             <button>View Attendance</button>
           </Link>
           <button>Free Card Activate</button>
@@ -140,4 +138,4 @@ const StudentPayments = () => {
   );
 };
 
-export default StudentPayments;
+export default ClassPayments;

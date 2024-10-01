@@ -10,6 +10,7 @@ import TimeTable from '../Components/TimeTable/TimeTable'; // Import the TimeTab
 import './AdminClassesPage.css';
 import ClassRegistration from '../Components/ClassRegistration/ClassRegistration';
 import ClassDetails from '../Components/ClassDetails/ClassDetails';
+import ClassPayments from '../Components/ClassPayments/ClassPayments';
 
 const AdminClassesPage = () => {
   return (
@@ -46,6 +47,7 @@ const AdminClassesPage = () => {
           />
           <Route path="registration" element={<ClassRegistration />} />
           <Route path="details" element={<ClassDetails />} />
+          <Route path="payments" element={<ClassPayments />} /> 
           <Route path="timetable" element={<TimeTable />} /> 
         </Routes>
       </div>

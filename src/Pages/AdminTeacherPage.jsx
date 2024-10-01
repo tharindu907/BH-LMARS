@@ -3,12 +3,12 @@ import { Link, Route, Routes } from 'react-router-dom';
 import NavigationBar from '../Components/NavigationBar/NavigationBar';
 import Dashboard from '../Components/Dashboard/Dashboard';
 import TeacherRegistration from '../Components/TeacherRegistration/TeacherRegistration';
+import TeacherDetails from '../Components/TeacherDetails/TeacherDetails';
+import TeacherClass from '../Components/TeacherClass/TeacherClass';
 import registrationIcon from '../Components/Assets/registration-icon.png'
 import detailsIcon from '../Components/Assets/details-icon.png'
 import classIcon from '../Components/Assets/class-icon.png'
 import './AdminTeacherPage.css';
-import TeacherDetails from '../Components/TeacherDetails/TeacherDetails';
-import TeacherClass from '../Components/TeacherClass/TeacherClass';
 
 
 
