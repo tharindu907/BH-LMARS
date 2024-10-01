@@ -47,48 +47,15 @@ const ClassPayments = () => {
       <div className="window">
         <div className="filters">
           <div className="filter-group">
-              <label htmlFor="subject">Subject</label>
-              <select id="subject">
-                  <option value="Mathematics">Mathematics</option>
-                  <option value="English">English</option>
-                  <option value="Science">Science</option>
-                  <option value="History">History</option>
-                  <option value="Commerce">Commerce</option>
-                  <option value="Sinhala">Sinhala</option>
-              </select>
-          </div>
-    
-          <div className="filter-group">
-              <label htmlFor="grade">Grade</label>
-              <select id="grade">
-                  <option value="6">Grade 6</option>
-                  <option value="7">Grade 7</option>
-                  <option value="8">Grade 8</option>
-                  <option value="9">Grade 9</option>
-                  <option value="10">Grade 10</option>
-                  <option value="11">Grade 11</option>
-              </select>
-          </div>
-
-          <div className="filter-group">
-              <label htmlFor="teacher">Teacher</label>
-              <select id="teacher">
-                  <option value="Nadeera Gunarathna">Nadeera Gunarathna</option>
-                  <option value="Kasuni Bhagya">Kasuni Bhagya</option>
-                  <option value="Anushani Pathirana">Anushani Pathirana</option>
-                  <option value="Prasanna Silva">Prasanna Silva</option>
-                  <option value="Pawan Karunarathna">Pawan Karunarathna</option>
-              </select>
-          </div>
-
-          <div className="filter-group">
               <label htmlFor="month">Month</label>
               <select id="month">
-               {months.map((month, index) => (
-                  <option key={index} value={month}>{month}</option>
-               ))}
+                  <option value="All">All</option> {/* Add the "All" option */}
+                  {months.map((month, index) => (
+                      <option key={index} value={month}>{month}</option>
+                  ))}
               </select>
           </div>
+
 
           <button>View Payment</button>
         </div>
