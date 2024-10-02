@@ -11,9 +11,9 @@ async function updateDailyClassSchedule(date, { classId, startTime, endTime } = 
         );
 
         if (result.classes.length === 0) {
+            
             const day = new Date(date).toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
             const classSchedule = await classFunctions.getClassesForDay(date, day);
-
             await dailyClassSchedule.updateOne(
                 { _id: date },
                 { $set: { classes: classSchedule } }
@@ -50,18 +50,26 @@ const timetablehandlerfilter = async (req,res) => {
 
     try{
         const schedule = await dailyClassSchedule.findOne({ _id: selectedDate });
-
         const classIDs = schedule.classes.map(cls => cls.classId);
 
         // Call the getDetialsForTimeTable function with the extracted parameters
-        const filter = await classFunctions.getDetialsForTimeTable({
+        const detDetails = await classFunctions.getDetialsForTimeTable({
             classIDs: classIDs,
             grade: grade,
             subject: subject,
             teacher: teacher
         });
 
-        res.json(filter);
+        const enrichedFilter = detDetails.map(cls => {
+            const scheduleClass = schedule.classes.find(schClass => schClass.classId === cls._id);
+            return {
+                ...cls,
+                startTime: scheduleClass.startTime,
+                endTime: scheduleClass.endTime
+            };
+        });
+
+        res.json(enrichedFilter);
 
     } catch (error) {
         res.status(500).json({ message: "Error updating query based on the user's selected criteria ", error });

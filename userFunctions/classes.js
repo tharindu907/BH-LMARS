@@ -62,18 +62,15 @@ async function getClassesForDay(date, dayOfWeek) {
     try {
         // Query the database for classes on the same day
         const classes = await Classes.find({ 'schedule.day': dayOfWeek }).exec(); // ".exec()" returns a promise and async/await will handle the asynchronous operation.
-
-        const classSchedule = classes.map(cls => {
-            const scheduleForDay = cls.schedule.find(sch => sch.day === dayOfWeek); // Find the specific schedule for the day
-
+        const classSchedule = classes.flatMap(cls => {
+            const schedulesForDay = cls.schedule.filter(sch => sch.day === dayOfWeek);
             return {
                 classId: cls._id,
-                startTime: scheduleForDay.from,
-                endTime: scheduleForDay.to,
-                classCode: `${cls._id}.${date}.${scheduleForDay.from}`
+                startTime: schedulesForDay[0]['from'],
+                endTime: schedulesForDay[0]['to'],
+                classCode: `${cls._id}.${date}.${schedulesForDay[0]['from']}`
             };
         });
-
         return classSchedule;
     } catch (err) {
         console.error('Error fetching class for ', dayOfWeek, ' : ', err);
