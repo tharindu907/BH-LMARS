@@ -72,7 +72,8 @@ const TimeTable = () => {
 
   const renderTableHeaders = () => (
     <>
-      <th>Index</th>
+      <th>Start Time</th>
+      <th>End Time</th>
       <th>Subject</th>
       <th>Grade</th>
       <th>Teacher</th>
@@ -82,10 +83,11 @@ const TimeTable = () => {
   const renderTableRows = () => {
     return timetableData.map((item, index) => (
       <tr key={index}>
-        <td>{index + 1}</td>
+        <td>{item.startTime}</td>
+        <td>{item.endTime}</td>   
         <td>{item.subject}</td>
-        <td>{item.grade}</td>
-        <td>{item.teacher}</td>
+        <td>{item.grade}</td>     
+        <td>{item.teacher}</td>      
       </tr>
     ));
   };

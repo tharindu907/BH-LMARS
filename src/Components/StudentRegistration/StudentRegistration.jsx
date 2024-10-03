@@ -20,7 +20,7 @@ const initialState = {
 
 const StudentRegistration = () => {
   const [student, setStudent] = useState(initialState);
-  const [admins, setAdmins] = useState([]); // State to store the admin users
+  const [admins, setAdmins] = useState([]);
 
   useEffect(() => {
     const fetchAdmins = async () => {
@@ -44,7 +44,7 @@ const StudentRegistration = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
     const data = {
       first_name: student.firstName,
       last_name: student.lastName,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './TeacherRegistration.css';
 
@@ -18,6 +18,20 @@ const initialState = {
 
 const TeacherRegistration = () => {
   const [teacher, setTeacher] = useState(initialState);
+  const [admins, setAdmins] = useState([]);
+
+  useEffect(() => {
+    const fetchAdmins = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/user/get/admin');
+        setAdmins(response.data);
+      } catch (error) {
+        console.error('Failed to fetch admins:', error);
+      }
+    };
+
+    fetchAdmins();
+  }, []);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -119,7 +133,14 @@ const TeacherRegistration = () => {
         <div className="form-row">
           <div className="input-group">
             <label htmlFor="registeredBy">Registered By</label>
-            <input type="text" id="registeredBy" required value={teacher.registeredBy} onChange={handleChange} />
+            <select id="registeredBy" required value={teacher.registeredBy} onChange={handleChange}>
+              <option value="" disabled>Select Admin</option>
+              {admins.map(admin => (
+                <option key={admin._id} value={admin._id}>
+                  {admin.first_name + " " + admin.last_name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="input-group">
             <label htmlFor="registeredDate">Registered Date</label>
