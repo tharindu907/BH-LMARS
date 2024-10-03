@@ -39,10 +39,16 @@ const addStudent = async (req, res) => {
     }
 };
 
-function getStudent(req, res){
-    Student.find()
-    .then(student => res.json(student))
-    .catch(err => res.status(400).json('Error: ' + err))
+const getStudent = async (req,res) => {
+    try {
+        const studentId = req.params.id;
+
+        const student = await Student.findById(studentId);
+
+        return res.status(200).json(student);
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
 }
 
 const countMaleandFemale = async (req, res) => {
@@ -59,5 +65,6 @@ const countMaleandFemale = async (req, res) => {
 module.exports = {
     addStudent,
     getStudent,
-    countMaleandFemale
+    countMaleandFemale,
+    getStudent
 };
