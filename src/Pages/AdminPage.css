@@ -1,5 +1,4 @@
-/* src/Pages/AdminPage.css */
-
+/* General Admin Page Styles */
 .admin-page {
     display: flex;
     width: 100%;
@@ -13,7 +12,7 @@
     padding: 20px;
     width: 100%; /* Ensure content takes up the remaining space */
     box-sizing: border-box;
-    background-color: #d6e2f9; /* This will fill the content area with antiquewhite */
+    background-color: #d6e2f9;
 }
 
 .content h1 {
@@ -61,4 +60,92 @@
 .summary-number {
     font-size: 2em;
     font-weight: bold;
+}
+
+/* Responsive Styles */
+
+/* Adjust layout for tablets and smaller screens */
+@media (max-width: 1024px) {
+    .content {
+        margin-left: 250px;
+        margin-right: 40px;
+        padding: 15px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr; /* Stack grid items vertically */
+        grid-gap: 15px;
+        margin-left: 0;
+    }
+
+    .summary-card {
+        height: auto; /* Allow height to adjust based on content */
+    }
+}
+
+/* Adjust layout for mobile devices */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        margin-right: 20px;
+        padding: 10px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr; /* Keep grid items stacked */
+        grid-gap: 10px;
+    }
+
+    .summary-card {
+        padding: 15px;
+        height: auto;
+    }
+
+    .main-title {
+        font-size: 1.6em;
+    }
+
+    .sub-title {
+        font-size: 1em;
+    }
+
+    .summary-number {
+        font-size: 1.6em;
+    }
+}
+
+/* Extra small screens (mobile phones) */
+@media (max-width: 480px) {
+    .content {
+        margin-left: 0;
+        margin-right: 10px;
+        padding: 10px;
+    }
+
+    .summary-grid {
+        grid-gap: 10px;
+    }
+
+    .summary-card {
+        padding: 10px;
+    }
+
+    .main-title {
+        font-size: 1.4em;
+    }
+
+    .summary-number {
+        font-size: 1.4em;
+    }
+
+    /* Hide the sidebar for small screens */
+    .sidebar {
+        display: none;
+    }
+
+    /* Adjust content width when sidebar is hidden */
+    .content {
+        width: 100%;
+        margin-left: 0;
+    }
 }
