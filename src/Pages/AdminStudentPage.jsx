@@ -9,9 +9,10 @@ import registrationIcon from '../Components/Assets/registration-icon.png';
 import detailsIcon from '../Components/Assets/details-icon.png';
 import paymentsIcon from '../Components/Assets/payments-icon.png';
 import classIcon from '../Components/Assets/class-icon.png';
-import './AdminStudentPage.css';
 import StudentDetails from '../Components/StudentDetails/StudentDetails';
 import StudentPayments from '../Components/StudentPayments/StudentPayments';
+import StudentClass from '../Components/StudentClass/StudentClass';
+import './AdminStudentPage.css';
 
 
 const AdminStudentPage = () => {
@@ -55,6 +56,7 @@ const AdminStudentPage = () => {
           <Route path="registration" element={<StudentRegistration />} />
           <Route path="details" element={<StudentDetails />} />
           <Route path="payments" element={<StudentPayments />} />
+          <Route path="class" element={<StudentClass />} />
         </Routes>
       </div>
     </div>
