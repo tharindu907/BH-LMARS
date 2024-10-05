@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import logoIcon from '../Components/Assets/bg.png';
 import './LoginPage.css';
 
 function LoginPage({ setIsLoggedIn, setUserType, setUsername, setProfilePic }) {
@@ -33,12 +34,11 @@ function LoginPage({ setIsLoggedIn, setUserType, setUsername, setProfilePic }) {
   return (
     <div className="login-page">
       <div className="left-column">
+        <img src={logoIcon} alt="Logo" />
         <h1>Bright Horizon Education Center</h1>
         <p>
           Bright Horizon Education Center is located in Idangoda Kiriella. It has OL classes, AL classes, other primary
           classes, and other classes like dancing, art, etc.
-          Kiriella Bright Horizon Education Center Kiriella Bright Horizon Education Center 
-          Kiriella Bright Horizon Education Center
         </p>
       </div>
       <div className="right-column">
