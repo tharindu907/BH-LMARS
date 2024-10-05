@@ -18,25 +18,17 @@ const studentRouter = require('./routes/student');
 const classRouter = require('./routes/classes')
 const loginRouter = require('./login');
 const dailyClassScheduleRouter = require('./routes/dailyClassSchedule');
-const { getDetialsForTimeTable } = require('./userFunctions/classes');
-const { getTeacherIdFromName } = require('./userFunctions/user');
+const studentsInClassRouter = require('./routes/studentsInClass');
+const classAttendanceRouter = require('./routes/classAttendance');
+
 
 app.use('/login', loginRouter);
 app.use('/student', studentRouter);
 app.use('/user', userRouter);
 app.use('/class', classRouter);
 app.use('/dailyClassSchedule', dailyClassScheduleRouter)
-
-// func.updateDailyClassSchedule("2024-09-02", { classId: "EENG108", startTime: "0700", endTime: "1000"} );
-// func1.addStudentToClass("SSCI103", "ASIRI");
-// func1.getClassesForStudent("ASIRI");
-// func1.isStudentEnrolledToClass("SSCI103", "ASIRI");
-// func1.addMonthlyPayment("SSCI103", "ASIRI", "2024-10")
-
-// getDetialsForTimeTable({classIDs:['SMAT101','SSIN102',"EHIS105"]});
-
-// getTeacherIdFromName("Prabath Sampath");
-// func.timetablehandlerfilter("2024-09-03", null, null, null);
+app.use('/studentsInClass', studentsInClassRouter)
+app.use('/classAttendance', classAttendanceRouter)
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

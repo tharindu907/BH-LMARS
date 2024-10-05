@@ -58,6 +58,34 @@ async function getDetialsForTimeTable({classIDs, subject = null, grade = null, t
     }
 }
 
+const getSubjectNamesOfAllClasses = async (req, res) =>{
+    try {
+        const classes = await Classes.find({}, 'subject');
+        
+        const subjects = [...new Set(classes.map(cls => cls.subject))];
+
+        res.json(subjects);
+
+    } catch (err) {
+        console.error('Error retrieving subjects:', err);
+        throw err;
+    }
+}
+
+const getGradesOfAllClasses = async (req, res) =>{
+    try {
+        const classes = await Classes.find({}, 'grade');
+        
+        const grades = [...new Set(classes.map(cls => cls.grade))];
+
+        res.json(grades);
+        
+    } catch (err) {
+        console.error('Error retrieving subjects:', err);
+        throw err;
+    }
+}
+
 async function getClassesForDay(date, dayOfWeek) {
     try {
         // Query the database for classes on the same day
@@ -78,9 +106,32 @@ async function getClassesForDay(date, dayOfWeek) {
     }
 }
 
+const getClassByDetails = async (req, res) => {
+    const { subject, grade, medium, teacher } = req.body;
+    
+    try {
+        const teacherID = await userFunctions.getTeacherIdFromName(teacher);
+
+        const classData = await Classes.findOne({
+            subject: subject,
+            grade: grade,
+            medium: medium,
+            teacherid: teacherID
+        }, '_id');
+
+        res.json(classData ? classData._id : null);
+    } catch (err) {
+        console.error('Error fetching class by details:', err);
+        throw err; // Handle errors properly in your implementation
+    }
+}
+
 module.exports = {
     addClass,
     countClasses,
     getClassesForDay,
-    getDetialsForTimeTable
+    getDetialsForTimeTable,
+    getSubjectNamesOfAllClasses,
+    getGradesOfAllClasses,
+    getClassByDetails
 }

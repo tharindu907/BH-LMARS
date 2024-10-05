@@ -81,11 +81,26 @@ const getNameFromTeacherIdforFrontend = async (req, res) => {
       }
 }
 
+const getTeacherNames = async (req, res) => {
+    try {
+        const teachers = await User.find({ role: 'Teacher' }, 'first_name last_name');
+        
+        const teacherNames = [...new Set(teachers.map(teacher => `${teacher.first_name} ${teacher.last_name}`))];
+        
+        res.json(teacherNames);
+        
+    } catch (err) {
+        console.error('Error retrieving teacher names:', err);
+        res.status(500).json({ error: 'Failed to retrieve teacher names' });
+    }
+}
+
 module.exports = {
     addUser,
     getAdmins,
     countTeachers,
     getTeacherIdFromName,
     getNameFromTeacherIdforBackend,
-    getNameFromTeacherIdforFrontend
+    getNameFromTeacherIdforFrontend,
+    getTeacherNames
 }

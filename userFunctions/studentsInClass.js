@@ -18,27 +18,24 @@ async function getClassesForStudent(studentID) { // this will return the classes
     }
 };
 
-async function isStudentEnrolledToClass(classID, studentID) { // checks whether the student is enrolled in the given class
+const isStudentEnrolledToClass = async (req, res) => {
+    const { classID, studentID, year } = req.body;
     try {
-        // Check if the class exists in the database
-        const isClassExists = await studentsInClass.findOne({ _id: classID });
+        const isClassExists = await studentsInClass.findOne({ _id: classID + year});
 
         if (!isClassExists) {
-            console.log(`Alert: No students are enrolled to the class with ID ${classID}.`);
-            return false;
+            return res.json(null);
         }
-        // Check if the student is enrolled in the class
+
         const isStudentEnrolled = isClassExists.studentsRegistered.find(
             student => student.studentId === studentID
         );
 
         if (!isStudentEnrolled) {
-            console.log(`Alert: The student ${studentID} is not enrolled in the class ${classID}.`);
-            return false;
+            return res.json(null);
         }
 
-        console.log(`The student ${studentID} is enrolled in the class ${classID}.`);
-        return true;
+        res.json(true);
     } catch (err) {
         console.error("Error checking student enrollment:", err);
     }

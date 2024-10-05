@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const studentsInClassSchema = new mongoose.Schema({
-    _id: { // classID
+    _id: { // 'classID'+'academic year'
         type: String,
         required: true
     },
