@@ -1,4 +1,5 @@
 const studentsInClass = require('../models/studentsInClass.model');
+const studentcontroller = require('../userFunctions/student');
 
 async function getClassesForStudent(studentID) { // this will return the classes to which the student has registered
     try {
@@ -141,10 +142,61 @@ async function addStudentToClass(classId, studentId) {
     }
 }
 
+const getStudentsByClassId = async (req, res) => {
+    try {
+        const { searchId, year } = req.body;
+        
+        const classData = await studentsInClass.findOne({ _id: `${searchId}.${year}` });
+    
+        if (!classData) {
+            return res.json(null);
+        }
+
+        // Map through the studentsRegistered to fetch student names
+        const studentsWithNames = await Promise.all(classData.studentsRegistered.map(async (student) => {
+            const name = await studentcontroller.getStudentNameFromStudentID(student.studentId);
+            return {
+                studentId: student.studentId,
+                name // Append the name to the student data
+            };
+        }));
+
+        // Return the updated list with names
+        res.json(studentsWithNames);
+
+    } catch (error) {
+        console.error('Error fetching students:', error);
+        throw error;
+    }
+};
+
+const addNewStudenttoClass = async (req, res) => {
+    try {
+        const { searchId, year, newStudentId} = req.body;
+    
+        const result = await studentsInClass.findOneAndUpdate(
+            { _id: `${searchId}.${year}` }, 
+            { $push: { studentsRegistered: {
+                studentId: newStudentId,
+                registeredDate: new Date(),
+                payments: []
+            }}},
+            { upsert: true, new: true } // If the document doesn't exist, create it (upsert)
+        );
+  
+        res.json(result);
+    } catch (error) {
+        console.error('Error adding new student:', error);
+        throw error;
+    }
+  };
+
 module.exports = {
     getClassesForStudent,
     isStudentEnrolledToClass,
     addMonthlyPayment,
     isPaymentDone,
-    addStudentToClass
+    addStudentToClass,
+    getStudentsByClassId,
+    addNewStudenttoClass
 }

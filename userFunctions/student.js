@@ -51,6 +51,20 @@ const getStudent = async (req,res) => {
     }
 }
 
+async function getStudentNameFromStudentID(studentid) {
+    try{
+        const name = await Student.findOne({ _id: studentid}).select('first_name last_name');
+
+        if (!name) {
+            return "Invalid StudentID";
+        }
+
+        return `${name.first_name} ${name.last_name}`;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const countMaleandFemale = async (req, res) => {
     try {
         const maleCount = await Student.countDocuments({ gender: 'Male' });
@@ -65,5 +79,6 @@ module.exports = {
     addStudent,
     getStudent,
     countMaleandFemale,
-    getStudent
+    getStudent,
+    getStudentNameFromStudentID
 };
