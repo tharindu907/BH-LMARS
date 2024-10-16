@@ -126,6 +126,28 @@ const getClassByDetails = async (req, res) => {
     }
 }
 
+const getClass = async(req, res) => {
+    try {
+
+        const classId = req.params.id;
+
+        const classdetails = await Classes.findById(classId);
+
+        if (!classdetails){
+            return res.json(null);
+        }
+
+        const teacherName = await userFunctions.getNameFromTeacherIdforBackend(classdetails.teacherid);
+        
+        res.json({
+            classdetails,
+            teacherName
+        });
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
 module.exports = {
     addClass,
     countClasses,
@@ -133,5 +155,6 @@ module.exports = {
     getDetialsForTimeTable,
     getSubjectNamesOfAllClasses,
     getGradesOfAllClasses,
-    getClassByDetails
+    getClassByDetails,
+    getClass
 }

@@ -61,7 +61,6 @@ const countMaleandFemale = async (req, res) => {
     }
 }
 
-
 module.exports = {
     addStudent,
     getStudent,

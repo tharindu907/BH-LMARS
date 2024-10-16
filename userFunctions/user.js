@@ -20,6 +20,19 @@ const addUser = async (req, res) => {
     } 
 }
 
+const getTeacher = async (req, res) => {
+    try {
+        const teacherId = req.params.id;
+
+        const teacher = await User.findOne({ _id: teacherId, role: 'Teacher' });
+
+        res.json(teacher);
+    } catch (error) {
+        // Handle server errors
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
 const getAdmins = async (req, res) => {
     try {
         const admins = await User.find({ role: 'Admin' }, '_id first_name last_name');
@@ -59,8 +72,9 @@ async function getTeacherIdFromName(teacherName) {
 
 async function getNameFromTeacherIdforBackend(teacherID) {
     try {
+
         const teacherName = await User.findOne({ _id: teacherID, role: 'Teacher'}).select('first_name last_name');
-        
+
         if (!teacherName) {
             return "Invalid TeacherID";
         }
@@ -102,5 +116,6 @@ module.exports = {
     getTeacherIdFromName,
     getNameFromTeacherIdforBackend,
     getNameFromTeacherIdforFrontend,
-    getTeacherNames
+    getTeacherNames,
+    getTeacher
 }

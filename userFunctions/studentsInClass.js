@@ -21,7 +21,7 @@ async function getClassesForStudent(studentID) { // this will return the classes
 const isStudentEnrolledToClass = async (req, res) => {
     const { classID, studentID, year } = req.body;
     try {
-        const isClassExists = await studentsInClass.findOne({ _id: classID + year});
+        const isClassExists = await studentsInClass.findOne({ _id: `${classID}.${year}`});
 
         if (!isClassExists) {
             return res.json(null);
@@ -35,7 +35,13 @@ const isStudentEnrolledToClass = async (req, res) => {
             return res.json(null);
         }
 
-        res.json(true);
+        const paymentsInfo = isStudentEnrolled.payments.map(payment => ({
+            month: payment.month,
+            paymentStatus: payment.paymentStatus,
+            paymentDate: payment.paymentDate
+        }));
+
+        res.json(paymentsInfo);
     } catch (err) {
         console.error("Error checking student enrollment:", err);
     }

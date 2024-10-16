@@ -6,5 +6,6 @@ router.post('/add', controller.addUser);
 router.get('/get/teachercount', controller.countTeachers)
 router.get('/get/nameFromTeacherId', controller.getNameFromTeacherIdforFrontend)
 router.get('/get/teachernames', controller.getTeacherNames);
+router.get('/get/teacherdetails/:id', controller.getTeacher);
 
 module.exports = router;
