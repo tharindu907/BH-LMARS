@@ -1,52 +1,93 @@
 .admin-classes-page {
-    display: flex;
-    width: 100%;
-    background-color: #d6e2f9;
+  display: flex;
+  width: 100%;
+  background-color: #d6e2f9;
+}
+
+.classes-content {
+  margin-left: 0px; /* Adjust if needed */
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #d6e2f9;
+}
+
+.classes-content h2 {
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: -11px;
+}
+
+.classes-management-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.classes-management-card {
+  background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
+  padding: 20px;
+  height: 30vh;
+  box-shadow: 0 10px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 18px;
+  align-content: center;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+.classes-management-card img {
+  width: 70px;
+  height: 70px;
+}
+
+.c-card-title {
+  margin-top: 10px;
+  font-size: 1.5em;
+  font-weight: 600;
+  color: rgb(0, 0, 0);
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1024px) {
+  .classes-management-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .classes-content {
-    margin-left: 0px; /* Adjust if needed */
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-    background-color: #d6e2f9;
+}
+
+@media (max-width: 768px) {
+  .classes-management-grid {
+    grid-template-columns: repeat(1, 1fr);
   }
 
-  .classes-content h2 {
-    font-size: 18px;
-    font-weight: 400;
-    margin-top: -11px;
-  }
-  
-  .classes-management-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 20px;
-    margin-top: 20px;
-    width: 100%;
-  }
-  
   .classes-management-card {
-    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
-    padding: 20px;
-    height: 30vh;
-    box-shadow: 0 10px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 18px;
-    align-content: center;
-    text-align: center;
-    text-decoration: none;
-    color: black;
+    padding: 15px;
+    height: auto;
   }
-  
+
   .classes-management-card img {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
   }
-  
+
   .c-card-title {
-    margin-top: 10px;
-    font-size: 1.5em;
-    font-weight: 600;
-    color: rgb(0, 0, 0);
+    font-size: 1.2em;
   }
-  
+}
+
+@media (max-width: 480px) {
+  .classes-content h2 {
+    font-size: 16px;
+  }
+
+  .classes-management-card img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .c-card-title {
+    font-size: 1em;
+  }
+}
