@@ -12,7 +12,6 @@
   padding: 60px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .left-column h1 {
