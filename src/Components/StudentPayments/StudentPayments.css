@@ -1,0 +1,161 @@
+.student-payments {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 20px;
+    background-color: #d6e2f9; /* Light blue background */
+  }
+
+  .window {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+
+  .button-window {
+    background-color: #d6e2f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+  }
+
+  .payment-search-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px 50px 10px 15px; /* Add padding-right to make space for the icon */
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .search-button {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .search-button img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .student-details-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .student-details-bar .student-info {
+    font-weight: bold;
+  }
+  
+  .student-details-bar .view-details-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+  
+  .student-details-bar .view-details-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .filters {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: flex-end;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+ .filter-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .filters select,
+  .filters input[type="date"] {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: white;
+  }
+  
+  .filters button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .filters button:hover {
+    background-color: #0056b3;
+  }
+  
+  .payments-table {
+    margin-top: 20px;
+  }
+  
+  .payments-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+  }
+  
+  .payments-table th,
+  .payments-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .payments-table th {
+    background-color: #e9f1f7;
+    color: #007bff;
+  }
+  
+  .payments-table td input[type="checkbox"] {
+    transform: scale(1.5);
+    margin-right: 10px;
+  }
+  
+  .payments-table .change-payment-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+ .payments-table .change-payment-button:hover {
+    background-color: #0056b3
+
+  }
+
+ 

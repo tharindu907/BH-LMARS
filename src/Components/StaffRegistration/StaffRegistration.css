@@ -1,0 +1,94 @@
+.staff-form {
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.staff-form h1 {
+  text-align: start;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 600; /* Medium weight for headings */
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-weight: 500; /* Medium weight for better readability */
+  margin-bottom: 5px;
+}
+
+.staff-form select {
+  font-size: 12px;
+  padding: 5px;
+  height: 35px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="tel"],
+.input-group input[type="date"],
+.input-group input[type="email"],
+.input-group textarea {
+  padding: 10px;
+  height: 35px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px; /* Slightly larger font size for readability */
+}
+
+textarea {
+  resize: none; /* Prevents resizing of the textarea */
+}
+
+.input-group.wide {
+  grid-column: span 2;
+  height: auto;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-buttons button {
+  padding: 10px 20px;
+  background-color: #022c7a;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.form-buttons button:hover {
+  background-color: #2351f9;
+}
+
+.form-buttons button[type="button"] {
+  background-color: #a37179;
+}
+
+.form-buttons button[type="button"]:hover {
+  background-color: #df7d90;
+}
+
+.divider {
+  border: 1px solid gray;
+  margin: 20px 0;
+}
