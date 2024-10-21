@@ -17,7 +17,7 @@ const addClass = async (req, res) => {
         await newClasses.save();
         res.json('Class Added');
     }
-    catch (err){
+    catch (err) {
         res.status(400).json(`Error: ${err}`);
     }
 }
@@ -128,7 +128,6 @@ const getClassByDetails = async (req, res) => {
 
 const getClass = async(req, res) => {
     try {
-
         const classId = req.params.id;
 
         const classdetails = await Classes.findById(classId);
@@ -143,8 +142,46 @@ const getClass = async(req, res) => {
             classdetails,
             teacherName
         });
+
     } catch (error) {
         return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+const getAllClassesForTeacher = async(req, res) => {
+    try {
+        const teacherId = req.params.id;
+
+        const classes = await Classes.find({ teacherid: teacherId });
+
+        res.json(classes);
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+const updateClassDetails = async(req, res) => {
+    const id = req.params.id;
+    const { fee, schedule } = req.body; 
+
+    try {
+
+        await Classes.findByIdAndUpdate(
+          id,
+          {
+            $set: { 
+              fee: fee,
+              schedule: schedule
+            }
+          },
+          { new: true } 
+        );
+
+        res.status(200).json({ message: 'Class updated successfully'});
+
+    } catch (error) {
+        console.error('Error updating class:', error);
+        res.status(500).json({ message: 'Server error occurred' });
     }
 }
 
@@ -156,5 +193,7 @@ module.exports = {
     getSubjectNamesOfAllClasses,
     getGradesOfAllClasses,
     getClassByDetails,
-    getClass
+    getClass,
+    getAllClassesForTeacher,
+    updateClassDetails
 }

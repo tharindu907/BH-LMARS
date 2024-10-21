@@ -6,6 +6,8 @@ router.get('/get/classcount', controller.countClasses);
 router.get('/get/subjectnamesforallclasses', controller.getSubjectNamesOfAllClasses);
 router.get('/get/classdetails/:id', controller.getClass);
 router.get('/get/gradesforallclasses', controller.getGradesOfAllClasses);
-router.post('/get/classIdbyDetails', controller.getClassByDetails) // eventhough it is a post and get function, post is better then get
+router.get('/get/allclassesforteacher/:id', controller.getAllClassesForTeacher);
+router.put('/update/classdetails/:id', controller.updateClassDetails);
+router.post('/get/classIdbyDetails', controller.getClassByDetails);
 
 module.exports = router;
