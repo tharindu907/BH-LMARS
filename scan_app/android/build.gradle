@@ -1,0 +1,29 @@
+allprojects {
+    ext {
+        kotlin_version = '2.0.21' // Ensure the Kotlin version is set globally
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            // Force all dependencies to use the specified Kotlin version
+            force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        }
+    }
+}
+
+rootProject.buildDir = "../build"
+
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}" // Set each subproject's build directory
+    project.evaluationDependsOn(":app") // Ensure ":app" is evaluated before others
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir // Clean the build directory
+}
+
+// Optional: Additional tasks or custom configurations can go here

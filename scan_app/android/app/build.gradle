@@ -1,0 +1,48 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    // Ensure the namespace is defined correctly
+    namespace = "com.example.scan_app"  // Your application's namespace
+
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId = "com.example.scan_app"  // Unique Application ID
+        minSdk = flutter.minSdkVersion           // Minimum SDK version
+        targetSdk = flutter.targetSdkVersion     // Target SDK version
+        versionCode = flutter.versionCode         // Version code
+        versionName = flutter.versionName         // Version name
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug // Use debug signing for now
+        }
+    }
+
+    // Add this block to include QR Code Scanner dependencies
+    dependencies {
+        // QR Code Scanner dependency
+        implementation 'com.google.mlkit:barcode-scanning:17.0.0'
+    }
+}
+
+// Specify the Flutter source
+flutter {
+    source = "../.."  // Adjust if your Flutter module is located elsewhere
+}
