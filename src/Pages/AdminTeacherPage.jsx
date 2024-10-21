@@ -8,7 +8,10 @@ import TeacherClass from '../Components/TeacherClass/TeacherClass';
 import registrationIcon from '../Components/Assets/registration-icon.png'
 import detailsIcon from '../Components/Assets/details-icon.png'
 import classIcon from '../Components/Assets/class-icon.png'
+import listIcon from '../Components/Assets/listIcon.png'
+import TeacherList from '../Components/TeacherList/TeacherList';
 import './AdminTeacherPage.css';
+
 
 
 
@@ -37,6 +40,10 @@ const AdminTeacherPage = () => {
                       <img src={classIcon} alt="Class" />
                       <div className="t-card-title">Class</div>
                     </Link>
+                    <Link to="/admin/teacher/list" className="teacher-management-card">
+                      <img src={listIcon} alt="List" />
+                      <div className="t-card-title">List</div>
+                    </Link>
                   </div>
                 </>
               }
@@ -44,6 +51,7 @@ const AdminTeacherPage = () => {
             <Route path="registration" element={<TeacherRegistration />} />
             <Route path="details" element={<TeacherDetails />} />
             <Route path="class" element={<TeacherClass />} />
+            <Route path="list" element={<TeacherList />} />
           </Routes>
         </div>
       </div>
