@@ -70,6 +70,12 @@ class LoginPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
+                // Add the logo image
+                Image.asset(
+                  'assets/images/logo.jpeg',
+                  height: 200, // Adjust height
+                ),
+                const SizedBox(height: 16),
                 const Text(
                   'Login to continue',
                   style: TextStyle(
