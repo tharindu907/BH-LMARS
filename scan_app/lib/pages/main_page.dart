@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scan_app/components/bottom_navigation_item.dart';
-import 'package:scan_app/config/app_icons.dart';
-import 'package:scan_app/pages/home_page.dart'; // Ensure HomePage is imported
+import 'package:scan_app/pages/home_page.dart';
+import 'package:scan_app/components/app_bar.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -14,6 +14,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(title: 'Your App Title'), // Use the custom app bar
       body: const SafeArea(
         child: HomePage(), // Initial page displayed
       ),
@@ -32,7 +33,7 @@ class _MainPageState extends State<MainPage> {
 }
 
 class MyBottomNavigation extends StatelessWidget {
-  final VoidCallback onTap; // Change this to VoidCallback
+  final VoidCallback onTap;
 
   const MyBottomNavigation({super.key, required this.onTap});
 
@@ -64,10 +65,10 @@ class MyBottomNavigation extends StatelessWidget {
                 children: [
                   Expanded(
                     child: BottomNavigationItem(
-                      onPressed: onTap, // Directly use the onTap function
-                      icon: AppIcons.icHome,
-                      current: Menus.home, // Set current menu
-                      name: Menus.home, // Set name to home
+                      onPressed: onTap,
+                      icon: Icons.home,
+                      current: Menus.home,
+                      name: Menus.home,
                     ),
                   ),
                 ],

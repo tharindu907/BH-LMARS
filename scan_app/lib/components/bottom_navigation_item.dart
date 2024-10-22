@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+enum Menus {
+  home,
+}
 
 class BottomNavigationItem extends StatelessWidget {
   final VoidCallback onPressed;
-  final String icon;
   final Menus current;
   final Menus name;
+  final IconData icon;
 
   const BottomNavigationItem({
     super.key,
     required this.onPressed,
-    required this.icon,
     required this.current,
     required this.name,
+    required this.icon,
   });
 
   @override
@@ -20,21 +23,18 @@ class BottomNavigationItem extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: current == name ? Colors.amber : Colors.white, // Yellow background when selected
-        foregroundColor: Colors.black, // Icon color
-        shape: const CircleBorder(), // Added const to make it a compile-time constant
-        padding: const EdgeInsets.all(12), // Added const to make it a compile-time constant
+        backgroundColor: current == name ? const Color.fromARGB(255, 21, 0, 255) : Colors.white,
+        foregroundColor: Colors.black,
+        shape: const CircleBorder(),
+        padding: const EdgeInsets.all(20),
+        elevation: 5,
       ),
-      child: SvgPicture.asset(
-        icon,
-        colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn), // Added const to make it a compile-time constant
-        height: 24, // Optional: set height of the icon
-        width: 24, // Optional: set width of the icon
+      child: Center( // Center the icon inside the button
+        child: Icon(
+          icon,
+          color: current == name ? Colors.white : const Color.fromARGB(255, 21, 0, 255),
+        ),
       ),
     );
   }
-}
-
-enum Menus {
-  home,
 }
