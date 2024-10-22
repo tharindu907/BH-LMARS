@@ -14,9 +14,9 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Your App Title'), // Use the custom app bar
+      appBar: const CustomAppBar(title: 'Your App Title'), // Use app bar
       body: const SafeArea(
-        child: HomePage(), // Initial page displayed
+        child: HomePage(),
       ),
       bottomNavigationBar: MyBottomNavigation(
         onTap: () {
@@ -41,7 +41,7 @@ class MyBottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 87,
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16), // Adjust margins
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Stack(
         children: [
           Positioned(

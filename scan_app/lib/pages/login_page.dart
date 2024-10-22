@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert'; // For JSON encoding/decoding
+import 'dart:convert';
 import 'package:scan_app/provider/login_provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -28,7 +28,7 @@ class LoginPage extends StatelessWidget {
         // Check if the widget is still mounted before using the context
         if (!context.mounted) return; // Added check for mounted
         // Login successful, navigate to the next page
-        Navigator.of(context).pushReplacementNamed('/home'); // Update with the correct route
+        Navigator.of(context).pushReplacementNamed('/home');
       } else {
         // Check if the widget is still mounted before showing SnackBar
         if (!context.mounted) return; // Added check for mounted
@@ -63,23 +63,22 @@ class LoginPage extends StatelessWidget {
                 const Text(
                   'Welcome to Scan App',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color(0xFF042357),
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
-                // Add the logo image
                 Image.asset(
                   'assets/images/logo.jpeg',
-                  height: 200, // Adjust height
+                  height: 200,
                 ),
                 const SizedBox(height: 16),
                 const Text(
                   'Login to continue',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color(0xFF666978), 
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -89,6 +88,7 @@ class LoginPage extends StatelessWidget {
                   onChanged: (value) {
                     context.read<LoginProvider>().username = value;
                   },
+                  style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     hintText: 'Username',
                     border: const OutlineInputBorder(
@@ -104,6 +104,7 @@ class LoginPage extends StatelessWidget {
                   onChanged: (value) {
                     context.read<LoginProvider>().password = value;
                   },
+                  style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     hintText: 'Password',
                     border: const OutlineInputBorder(
@@ -119,10 +120,10 @@ class LoginPage extends StatelessWidget {
                   height: 48,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => handleLogin(context), // Call the login handler
+                    onPressed: () => handleLogin(context),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber,
-                      foregroundColor: Colors.black,
+                      backgroundColor: const Color(0xFF042357),
+                      foregroundColor: Colors.white,
                     ),
                     child: const Text('Login'),
                   ),
