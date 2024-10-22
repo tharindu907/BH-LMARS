@@ -18,7 +18,7 @@ class ConfirmationPage extends StatefulWidget {
   final String guardianName;
 
   const ConfirmationPage({
-    Key? key,
+    super.key,
     required this.scannedData,
     required this.classId,
     required this.firstName,
@@ -29,7 +29,7 @@ class ConfirmationPage extends StatefulWidget {
     required this.school,
     required this.address,
     required this.guardianName,
-  }) : super(key: key);
+  });
 
   @override
   ConfirmationPageState createState() => ConfirmationPageState();
@@ -38,8 +38,8 @@ class ConfirmationPage extends StatefulWidget {
 class ConfirmationPageState extends State<ConfirmationPage> {
   List<String> attendees = [];
   bool _isLoading = false;
-  bool _isRegistered = true; // Assume registration is confirmed
-  bool _isPaid = true; // Assume payment is confirmed
+  final bool _isRegistered = true; // Assume registration is confirmed
+  final bool _isPaid = true; // Assume payment is confirmed
 
   Future<void> _addAttendee() async {
     if (!_isRegistered || !_isPaid) {
@@ -197,13 +197,13 @@ Widget build(BuildContext context) {
                 ? const Center(child: CircularProgressIndicator())
                 : ElevatedButton(
                     onPressed: _addAttendee,
-                    child: const Text('OK'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 15.0),
                       textStyle: const TextStyle(fontSize: 18),
                     ),
+                    child: const Text('OK'),
                   ),
             const SizedBox(height: 20), // Add space here
             BottomNavigationItem(

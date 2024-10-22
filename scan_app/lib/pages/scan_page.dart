@@ -80,7 +80,7 @@ Future<void> _fetchStudentDetails(String studentId) async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: 'Scan QR Code', // Title for the custom app bar
         actions: [], // Add any actions if needed
       ),
