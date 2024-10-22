@@ -1,19 +1,58 @@
 import React, { useState } from 'react';
+import searchIcon from '../Assets/serchicon.png';
+import axios from 'axios';
 import './TeacherDetails.css';
 
+const defaultTeacher = {
+  teacherid: '',
+  firstname: '',
+  lastname: '',
+  nic: '',
+  dob: '',
+  gender: '',
+  email: '',
+  mobilenumber: '',
+  whatsappnumber: '',
+  address: '',
+  registeredDate: '',
+  registeredBy: ''
+};
+
 const TeacherDetails = () => {
-  const [teacher, setTeacher] = useState({
-    firstName: 'Pathuni',
-    lastName: 'Lakshani',
-    nic: '123456789V',
-    dob: '1990-05-10',
-    gender: 'Male',
-    mobileNumber: '0771234567',
-    whatsappNumber: '0779876543',
-    address: '123, ABC Street, Colombo',
-    registeredDate: '2023-01-01',
-    updatedBy: 'Admin',
-  });
+  const [teacher, setTeacher] = useState( defaultTeacher );
+  const [searchId, setSearchId] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/user/get/teacherdetails/${searchId}`);
+      if (response.data === null) {
+        setErrorMessage('Invalid TeacherID');
+        setTeacher(defaultTeacher);
+
+      } else {
+        setErrorMessage('');
+        setTeacher({
+          teacherid: response.data._id,
+          firstname: response.data.first_name,
+          lastname: response.data.last_name,
+          mobilenumber: response.data.personal_number,
+          dob: response.data.date_of_birth.slice(0, 10),
+          gender: response.data.gender,
+          whatsappnumber: response.data.whatsapp_number,
+          address: response.data.address,
+          email: response.data.email,
+          nic: response.data.nic_no,
+          registeredDate: response.data.registered_date.slice(0, 10),
+          registeredBy: response.data.registered_by,
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching teacher data:', error);
+      setErrorMessage('Server error occurred');  // Handle server errors
+      setTeacher(defaultTeacher);  // Reset student data
+    }
+  };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -31,111 +70,95 @@ const TeacherDetails = () => {
 
   return (
     <div className="teacher-details-form">
-      <h1>Teacher Details</h1>
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search Teacher..."
+          value={searchId}
+          onChange={(e) => setSearchId(e.target.value)} 
+        />
+        <button type="button" onClick={handleSearch}>
+          <img src={searchIcon} alt="Search" />
+        </button>
+      </div>
+      {errorMessage && <div className="error">{errorMessage}</div>}
       <form onSubmit={handleSave}>
         <div className="form-row">
+
           <div className="input-group">
-            <label htmlFor="firstName">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              value={teacher.firstName}
-              onChange={handleChange}
-            />
+            <label>Teacher ID</label>
+            <div>{teacher.teacherid}</div>
           </div>
+
           <div className="input-group">
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              type="text"
-              id="lastName"
-              value={teacher.lastName}
-              onChange={handleChange}
-            />
+            <label>First Name</label>
+            <div>{teacher.firstname}</div>
           </div>
+
           <div className="input-group">
-            <label htmlFor="gender">Gender</label>
-            <select
-              id="gender"
-              value={teacher.gender}
-              onChange={handleChange}
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
+            <label>Last Name</label>
+            <div>{teacher.lastname}</div>
           </div>
         </div>
 
         <div className="form-row">
+
           <div className="input-group">
-            <label htmlFor="dob">Date of Birth</label>
-            <input
-              type="date"
-              id="dob"
-              value={teacher.dob}
-              onChange={handleChange}
-            />
+            <label>NIC</label>
+            <div>{teacher.nic}</div>
           </div>
+
           <div className="input-group">
-            <label htmlFor="mobileNumber">Mobile Number</label>
-            <input
-              type="tel"
-              id="mobileNumber"
-              value={teacher.mobileNumber}
-              onChange={handleChange}
-            />
+            <label>Date of Birth</label>
+            <div>{teacher.dob}</div>
           </div>
+          
           <div className="input-group">
-            <label htmlFor="whatsappNumber">WhatsApp Number</label>
-            <input
-              type="tel"
-              id="whatsappNumber"
-              value={teacher.whatsappNumber}
-              onChange={handleChange}
-            />
+              <label>Gender</label>
+              <div>{teacher.gender}</div>
           </div>
+
         </div>
 
         <div className="form-row">
+
           <div className="input-group">
-            <label htmlFor="nic">NIC</label>
-            <input
-              type="text"
-              id="nic"
-              value={teacher.nic}
-              onChange={handleChange}
-            />
+              <label>Email</label>
+              <div>{teacher.email}</div>
           </div>
+
           <div className="input-group">
-            <label htmlFor="address">Home Address</label>
-            <textarea
-              id="address"
-              value={teacher.address}
-              onChange={handleChange}
-            />
+              <label>Mobile Number</label>
+              <div>{teacher.mobilenumber}</div>
           </div>
+
+          <div className="input-group">
+              <label>WhatsApp Number</label>
+              <div>{teacher.whatsappnumber}</div>
+          </div>
+
         </div>
 
         <div className="form-row">
-          <div className="input-group">
-            <label htmlFor="registeredDate">Registered Date</label>
-            <input
-              type="date"
-              id="registeredDate"
-              value={teacher.registeredDate}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="updatedBy">Updated By</label>
-            <input
-              type="text"
-              id="updatedBy"
-              value={teacher.updatedBy}
-              onChange={handleChange}
-            />
-          </div>
+
+            <div className="input-group">
+              <label>Home Address</label>
+              <div>{teacher.address}</div>
+            </div>
+
+            <div className="input-group">
+              <label>Registered By</label>
+              <div>{teacher.registeredBy}</div>
+            </div>
+
+            <div className="input-group">
+              <label>Registered Date</label>
+              <div>{teacher.registeredDate}</div>
+            </div>
+
         </div>
 
+      
         <div className="form-buttons">
           <button type="submit">Save Changes</button>
         </div>

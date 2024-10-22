@@ -25,7 +25,7 @@ const TimeTable = () => {
 
       const response = await axios.get(`http://localhost:5000/dailyClassSchedule/get/filterfortimetable/?${queryParams.toString()}`);
 
-      setTimetableData(response.data); // Update the timetableData with the response
+      setTimetableData(response.data);
 
       const subjects = [...new Set(response.data.map(item => item.subject))];
       const grades = [...new Set(response.data.map(item => String(item.grade)))];

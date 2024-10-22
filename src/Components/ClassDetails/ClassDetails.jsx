@@ -1,43 +1,66 @@
 import React, { useState } from 'react';
+import searchIcon from '../Assets/serchicon.png';
+import axios from 'axios';
 import './ClassDetails.css';
 
 const initialState = {
   teacherName: '',
-  teacherId: 'T1',
+  teacherId: '',
   subject: '',
-  subjectId: 'S1',
+  classId: '',
   grade: '',
-  totalStudents: '30',
-  day: '',
+  medium: '',
+  schedule: [],
   fee: '',
-  registeredDate: new Date().toISOString().slice(0, 10),
-  registeredBy: 'Admin',
-  updatedBy: 'Admin',
+  registeredDate: '',
+  registeredBy: ''
 };
 
-const defaultTeachers = [
-  { id: 'T1', name: 'Teacher One' },
-  { id: 'T2', name: 'Teacher Two' },
-];
-
-const defaultSubjects = [
-  { id: 'S1', name: 'Math' },
-  { id: 'S2', name: 'Science' },
-  { id: 'S3', name: 'History' },
-  { id: 'S4', name: 'English' },
-];
-
-const defaultGrades = ['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'];
-const defaultDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const ClassDetails = () => {
   const [formData, setFormData] = useState(initialState);
+  const [searchId, setSearchId] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');  
   const [times, setTimes] = useState([{ day: '', from: '', to: '' }]);
-  const [teachers] = useState(defaultTeachers);
-  const [subjects] = useState(defaultSubjects);
-  const [grades] = useState(defaultGrades);
-  const [days] = useState(defaultDays);
-  const [isEditing, setIsEditing] = useState(false);
+  const [editEnabled, setEditEnabled] = useState(false);
+
+  const handleSearch = async () => {
+    try {
+      if (searchId) {
+        const responsefordetails = await axios.get(`http://localhost:5000/class/get/classdetails/${searchId}`);
+
+        if (!responsefordetails.data) {
+          setErrorMessage('Invalid ClassID');
+          setFormData(initialState)
+
+        } else {
+          setErrorMessage('');
+          setFormData({
+            teacherName: responsefordetails.data.teacherName,
+            teacherId: responsefordetails.data.classdetails.teacherid,
+            subject: responsefordetails.data.classdetails.subject,
+            classId: responsefordetails.data.classdetails._id,
+            grade: responsefordetails.data.classdetails.grade,
+            medium: responsefordetails.data.classdetails.medium,
+            schedule: responsefordetails.data.classdetails.schedule,
+            fee: responsefordetails.data.classdetails.fee,
+            registeredDate: responsefordetails.data.classdetails.registered_date.slice(0, 10),
+            registeredBy: responsefordetails.data.classdetails.registered_by
+          });
+
+          setTimes(responsefordetails.data.classdetails.schedule);
+        }
+      } else {
+        setErrorMessage('Enter a ClassID');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setErrorMessage('Server error occurred');
+      setFormData(initialState);
+      setTimes([{ day: '', from: '', to: '' }]);
+    }
+  }
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -47,11 +70,10 @@ const ClassDetails = () => {
     }));
   };
 
-  const handleTimeChange = (index, e) => {
-    const { id, value } = e.target;
+  const handleTimeChange = (index, field, value) => {
     setTimes((prevTimes) => {
       const newTimes = [...prevTimes];
-      newTimes[index][id] = value;
+      newTimes[index][field] = value;
       return newTimes;
     });
   };
@@ -60,145 +82,116 @@ const ClassDetails = () => {
     setTimes([...times, { day: '', from: '', to: '' }]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert('Class Updated Successfully');
+
+    try {
+      const response = await axios.put(`http://localhost:5000/class/update/classdetails/${formData.classId}`, {
+        fee: formData.fee,
+        schedule: times
+      });
+
+      if (response.status === 200) {
+        alert('Class Updated Successfully');
+        setEditEnabled(false);
+        handleSearch(); // Re-fetch the updated class details
+      } else {
+        setErrorMessage('Failed to update class');
+      }
+    } catch (error) {
+      console.error('Error updating class:', error);
+      setErrorMessage('Server error occurred');
+    }
   };
 
-  const handleReset = () => {
-    setFormData(initialState);
-    setTimes([{ day: '', from: '', to: '' }]);
+  const toggleEditMode = (e) => {
+    e.preventDefault();
+    if (!editEnabled && Array.isArray(formData.schedule)) {
+      setTimes(formData.schedule);
+    }
+    setEditEnabled(!editEnabled);
   };
 
-  const toggleEditMode = () => {
-    setIsEditing(!isEditing);
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setEditEnabled(false);
+    handleSearch(); // Exit edit mode
   };
 
   return (
     <div className="class-details-form">
-      <h1>Class ID: 12345</h1>
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search Class"
+          value={searchId}
+          onChange={(e) => setSearchId(e.target.value)} 
+        />
+        <button type="button" onClick={handleSearch}>
+          <img src={searchIcon} alt="Search" />
+        </button>
+      </div>
 
-      <form onSubmit={handleSubmit}>
+      <form>
         {/* First Row */}
         <div className="class-details-row">
           <div className="class-details-input-details-group">
+              <label htmlFor="subjectId">ClassID</label>
+              <input 
+                type="text" 
+                id="subjectId" 
+                value={formData.classId} 
+                readOnly />
+          </div>
+
+          <div className="class-details-input-details-group">
             <label htmlFor="teacherName">Teacher Name</label>
-            {isEditing ? (
-              <select
-                id="teacherName"
-                value={formData.teacherName}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>Select Teacher</option>
-                {teachers.map((teacher) => (
-                  <option key={teacher.id} value={teacher.name}>{teacher.name}</option>
-                ))}
-              </select>
-            ) : (
-              <input
+            <input
                 type="text"
                 id="teacherName"
                 value={formData.teacherName}
                 readOnly
               />
-            )}
           </div>
+
           <div className="class-details-input-details-group">
-            <label htmlFor="subject">Subject</label>
-            {isEditing ? (
-              <select
-                id="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>Select Subject</option>
-                {subjects.map((subject) => (
-                  <option key={subject.id} value={subject.name}>{subject.name}</option>
-                ))}
-              </select>
-            ) : (
-              <input
-                type="text"
-                id="subject"
-                value={formData.subject}
-                readOnly
-              />
-            )}
+            <label htmlFor="teacherId">TeacherID</label>
+            <input 
+              type="text" 
+              id="teacherId" 
+              value={formData.teacherId} 
+              readOnly 
+            />
           </div>
-          <div className="class-details-input-details-group">
-            <label htmlFor="grade">Grade</label>
-            {isEditing ? (
-              <select
-                id="grade"
-                value={formData.grade}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>Select Grade</option>
-                {grades.map((grade) => (
-                  <option key={grade} value={grade}>{grade}</option>
-                ))}
-              </select>
-            ) : (
-              <input
-                type="text"
-                id="grade"
-                value={formData.grade}
-                readOnly
-              />
-            )}
-          </div>
+
         </div>
 
         {/* Second Row */}
         <div className="class-details-row">
-          <div className="class-details-input-details-group">
-            <label htmlFor="teacherId">Teacher ID</label>
-            <input type="text" id="teacherId" value={formData.teacherId} readOnly />
-          </div>
-          <div className="class-details-input-details-group">
-            <label htmlFor="subjectId">Subject ID</label>
-            <input type="text" id="subjectId" value={formData.subjectId} readOnly />
-          </div>
-          <div className="class-details-input-details-group">
-            <label htmlFor="totalStudents">Total Students</label>
-            <input
-              type="number"
-              id="totalStudents"
-              value={formData.totalStudents}
-              readOnly
-            />
-          </div>
-        </div>
 
-        {/* Third Row */}
-        <div className="class-details-row">
           <div className="class-details-input-details-group">
-            <label htmlFor="registeredBy">Registered By</label>
-            <input type="text" id="registeredBy" value={formData.registeredBy} readOnly />
+              <label htmlFor="subject">Subject</label>
+              <input
+                  type="text"
+                  id="subject"
+                  value={formData.subject}
+                  readOnly
+              />
           </div>
-          <div className="class-details-input-details-group">
-            <label htmlFor="registeredDate">Registered Date</label>
-            <input
-              type="date"
-              id="registeredDate"
-              value={formData.registeredDate}
-              readOnly
-            />
-          </div>
-          <div className="class-details-input-details-group">
-            <label htmlFor="updatedBy">Updated By</label>
-            <input type="text" id="updatedBy" value={formData.updatedBy} readOnly />
-          </div>
-        </div>
 
-        {/* Fourth Row */}
-        <div className="class-details-row">
+          <div className="class-details-input-details-group">
+            <label htmlFor="grade">Grade</label>
+            <input
+                type="text"
+                id="grade"
+                value={formData.grade}
+                readOnly
+             />
+          </div>
+
           <div className="class-details-input-details-group">
             <label htmlFor="fee">Fee (Rs.)</label>
-            {isEditing ? (
+            {editEnabled ? (
               <input
                 type="number"
                 id="fee"
@@ -215,23 +208,42 @@ const ClassDetails = () => {
               />
             )}
           </div>
-          <div className="class-details-form-details-buttons">
-            <button type="button" className="class-details-view-student-list-button">
-              View Student List
-            </button>
+        </div>
+
+        {/* Third Row */}
+        <div className="class-details-row">
+
+          <div className="class-details-input-details-group">
+            <label htmlFor="registeredBy">Registered By</label>
+            <input 
+              type="text" 
+              id="registeredBy" 
+              value={formData.registeredBy} 
+              readOnly 
+            />
+          </div>
+
+          <div className="class-details-input-details-group">
+            <label htmlFor="registeredDate">Registered Date</label>
+            <input
+              type="date"
+              id="registeredDate"
+              value={formData.registeredDate}
+              readOnly
+            />
           </div>
         </div>
 
         {/* Time Slots */}
         {times.map((time, index) => (
           <div key={index} className="class-details-row">
+
             <div className="class-details-input-details-group">
               <label htmlFor={`day-${index}`}>Day</label>
-              {isEditing ? (
+              {editEnabled ? (
                 <select
-                  id={`day-${index}`}
                   value={time.day}
-                  onChange={(e) => handleTimeChange(index, e)}
+                  onChange={(e) => handleTimeChange(index, 'day', e.target.value)}
                   required
                 >
                   <option value="" disabled>Select Day</option>
@@ -248,14 +260,14 @@ const ClassDetails = () => {
                 />
               )}
             </div>
+
             <div className="class-details-input-details-group">
-              <label htmlFor={`from-${index}`}>Class Time From</label>
-              {isEditing ? (
+              <label htmlFor={`from-${index}`}>From</label>
+              {editEnabled ? (
                 <input
                   type="time"
-                  id={`from-${index}`}
                   value={time.from}
-                  onChange={(e) => handleTimeChange(index, e)}
+                  onChange={(e) => handleTimeChange(index, 'from', e.target.value)}
                   required
                 />
               ) : (
@@ -267,14 +279,14 @@ const ClassDetails = () => {
                 />
               )}
             </div>
+
             <div className="class-details-input-details-group">
-              <label htmlFor={`to-${index}`}>Class Time To</label>
-              {isEditing ? (
+              <label htmlFor={`to-${index}`}>To</label>
+              {editEnabled ? (
                 <input
                   type="time"
-                  id={`to-${index}`}
                   value={time.to}
-                  onChange={(e) => handleTimeChange(index, e)}
+                  onChange={(e) => handleTimeChange(index, 'to', e.target.value)}
                   required
                 />
               ) : (
@@ -290,7 +302,7 @@ const ClassDetails = () => {
         ))}
 
         {/* Add Time Slot Button */}
-        {isEditing && (
+        {editEnabled && (
           <button
             type="button"
             className="class-details-add-time-slot-button"
@@ -302,16 +314,13 @@ const ClassDetails = () => {
 
         {/* Form Buttons */}
         <div className="class-details-form-buttons">
-          {isEditing ? (
+          {editEnabled ? (
             <>
-              <button type="submit" className="class-details-save-button">
+              <button type="submit" className="class-details-save-button" onClick={handleSubmit}>
                 Save
               </button>
-              <button type="button" className="class-details-cancel-button" onClick={toggleEditMode}>
+              <button type="button" className="class-details-cancel-button" onClick={handleCancel}>
                 Cancel
-              </button>
-              <button type="button" className="class-details-reset-button" onClick={handleReset}>
-                Reset
               </button>
             </>
           ) : (
@@ -322,25 +331,6 @@ const ClassDetails = () => {
 
         </div>
       </form>
-
-      {/* Additional Buttons */}
-      <div className="class-details-form-details-buttons">
-        <button type="button" className="class-details-view-time-table-button">
-          View Time Table
-        </button>
-        <button type="button" className="class-details-view-payment-button">
-          View Payment
-        </button>
-        <button type="button" className="class-details-view-attendance-button">
-          View Attendance
-        </button>
-        <button type="button" className="class-details-new-class-button">
-          + New Class
-        </button>
-        <button type="button" className="class-details-remove-class-button">
-          - Remove Class
-        </button>
-      </div>
     </div>
   );
 };

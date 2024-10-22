@@ -248,9 +248,6 @@ const ClassRegistration = () => {
           </button>
         </div>
       </form>
-      <button type="button" className="class-registration-view-time-table-button">
-        View Time Table
-      </button>
     </div>
   );
 };
