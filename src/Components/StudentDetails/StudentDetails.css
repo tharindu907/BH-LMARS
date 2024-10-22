@@ -18,7 +18,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px 0 0 4px;
-    font-size: 12px;
+    font-size: 13px;
   }
   
   .search-bar button {
@@ -54,9 +54,10 @@
   .input-group div {
     padding: 6px;
     height: 35px;
-    background-color: #f1f1f1;
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 13px;
   }
   
   .input-group.wide {
@@ -72,3 +73,24 @@
     margin: 20px 0;
   }
   
+  .qr-code-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+  }
+
+  .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+  }

@@ -9,9 +9,11 @@ import registrationIcon from '../Components/Assets/registration-icon.png';
 import detailsIcon from '../Components/Assets/details-icon.png';
 import paymentsIcon from '../Components/Assets/payments-icon.png';
 import classIcon from '../Components/Assets/class-icon.png';
+import listIcon from '../Components/Assets/listIcon.png';
 import StudentDetails from '../Components/StudentDetails/StudentDetails';
 import StudentPayments from '../Components/StudentPayments/StudentPayments';
 import StudentClass from '../Components/StudentClass/StudentClass';
+import StudentList from '../Components/StudentList/StudentList';
 import './AdminStudentPage.css';
 
 
@@ -48,6 +50,10 @@ const AdminStudentPage = () => {
                     <img src={classIcon} alt="Class" />
                     <div className="s-card-title">Class</div>
                   </Link>
+                  <Link to="list" className="student-management-card">
+                    <img src={listIcon} alt="List" />
+                    <div className="s-card-title">List</div>
+                  </Link>
                 </div>
               </>
             }
@@ -57,6 +63,7 @@ const AdminStudentPage = () => {
           <Route path="details" element={<StudentDetails />} />
           <Route path="payments" element={<StudentPayments />} />
           <Route path="class" element={<StudentClass />} />
+          <Route path="lsit" element={<StudentList />} />
         </Routes>
       </div>
     </div>

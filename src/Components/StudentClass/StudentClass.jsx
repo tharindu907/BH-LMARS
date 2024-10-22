@@ -1,40 +1,84 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import searchIcon from '../Assets/serchicon.png';
+import axios from 'axios';
 import './StudentClass.css';
+
+const defaultClass = {
+  classid: '',
+  subject: '',
+  teacher: '',
+  grade: '',
+  medium: ''
+}
 
 const StudentClass = () => {
   const [classData, setClassData] = useState([]);
+  const [searchId, setSearchId] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [currentClass, setCurrentClass] = useState(defaultClass);
+  const [year, setYear] = useState('');
+  const [showAddStudentModal, setShowAddStudentModal] = useState(false);
+  const [newStudentId, setNewStudentId] = useState('');
 
-  const handleSearch = (e) => {
-    // Logic to handle search and fetch the class details
+  const handleSearch = async () => {
+    try {
+      const responseForClassDetails = await axios.get(`http://localhost:5000/class/get/classdetails/${searchId}`);
+      if (!responseForClassDetails.data) {
+        setErrorMessage('Invalid ClassID');
+        setCurrentClass(defaultClass);
+      } else {
+        setErrorMessage('');
+        setCurrentClass({
+          classid: responseForClassDetails.data.classdetails._id,
+          subject: responseForClassDetails.data.classdetails.subject,
+          grade: responseForClassDetails.data.classdetails.grade,
+          medium: responseForClassDetails.data.classdetails.medium,
+          teacher: responseForClassDetails.data.teacherName
+        });
+      }
+
+      const responseForStudentList = await axios.post('http://localhost:5000/studentsInClass/get/studentsbyclassid', {
+        searchId,
+        year
+      });
+
+      if (!responseForStudentList.data) {
+        setClassData([]);
+      } else {
+        setErrorMessage('');
+        setClassData(responseForStudentList.data);
+      }
+    } catch (error) {
+      console.error('Error fetching student data:', error);
+      setErrorMessage('Server error occurred');
+      setCurrentClass(defaultClass);
+    }
   };
 
-  const handleAddClass = () => {
-    setClassData([...classData, { no: classData.length + 1, subject: '', grade: '', teacher: '' }]);
+  const handleAddStudent = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/studentsInClass/post/newstudentstoclass', {
+        searchId,
+        year,
+        newStudentId
+      });
+
+      if (response.data) {
+        setNewStudentId('');
+        setShowAddStudentModal(false);
+        setErrorMessage('');
+      } else {
+        setErrorMessage('Error adding student');
+      }
+    } catch (error) {
+      console.error('Error adding student:', error);
+      setErrorMessage('Server error occurred while adding student');
+    }
   };
-
-  const handleRemoveClass = (index) => {
-    const newClassData = [...classData];
-    newClassData.splice(index, 1);
-    setClassData(newClassData);
-  };
-
-  const subjects = [
-    "Mathematics", "English", "Science", "History", "Commerce", "Sinhala"
-  ];
-
-  const grades = [
-    "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11"
-  ];
-
-  const teachers = [
-    "Nadeera Gunarathna", "Kasuni Bhagya", "Anushani Pathirana", "Prasanna Silva", "Pawan Karunarathna"
-  ];
 
   return (
     <div className="student-class">
-      
       {/* Search Bar Container */}
       <div className="window">
         <div className="class-search-bar">
@@ -42,102 +86,114 @@ const StudentClass = () => {
             type="text"
             className="search-input"
             placeholder="Search Class"
+            value={searchId}
+            onChange={(e) => setSearchId(e.target.value)}
           />
-          <button className="search-button">
+          <button className="search-button" onClick={handleSearch}>
             <img src={searchIcon} alt="Search" />
           </button>
         </div>
-      </div>
-
-      {/* Class Details Bar Container */}
-      <div className="window">
-        <div className="class-details-bar">
-          <span className="class-info">Class ID: 001 | Class Name: Mathematics A</span>
-          <Link to="/admin/class/view" className="view-details-button">
-            View Class Details
-          </Link>
+        <div className="class-search-bar">
+          <label htmlFor="year">Year</label>
+          <select
+            id="year"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+          >
+            <option value="" disabled>
+              Select Year
+            </option>
+            {["2023", "2024"].map((year, index) => (
+              <option key={index} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
-      {/* Filters Container */}
-      <div className="window">
-        <div className="filters">
-          <div className="filter-group">
-              <label htmlFor="subject">Subject</label>
-              <select id="subject">
-                {subjects.map((subject, index) => (
-                  <option key={index} value={subject}>{subject}</option>
-                ))}
-              </select>
-          </div>
-    
-          <div className="filter-group">
-              <label htmlFor="grade">Grade</label>
-              <select id="grade">
-                {grades.map((grade, index) => (
-                  <option key={index} value={grade}>{grade}</option>
-                ))}
-              </select>
-          </div>
+      {errorMessage && <div className="error">{errorMessage}</div>}
 
-          <div className="filter-group">
-              <label htmlFor="teacher">Teacher</label>
-              <select id="teacher">
-                {teachers.map((teacher, index) => (
-                  <option key={index} value={teacher}>{teacher}</option>
-                ))}
-              </select>
+      {!errorMessage && (
+        <form>
+          {/* Class Details Bar Container */}
+          <div className="window">
+            <div className="class-details-bar">
+              <span className="class-info">
+                ClassID: {currentClass.classid} | Subject: {currentClass.subject} | Grade: {currentClass.grade} | Medium: {currentClass.medium} | Teacher: {currentClass.teacher}
+              </span>
+              <Link to="/admin/class/view" className="view-details-button">
+                More Details
+              </Link>
+            </div>
           </div>
 
-          <button>View Class</button>
-        </div>
-      </div>
+          {/* Class List Table Container */}
+          <div className="window">
+            <div className="class-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>StudentID</th>
+                    <th>Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {classData.map((classRow, index) => (
+                    <tr key={index}>
+                      <td>{classRow.studentId}</td>
+                      <td>{classRow.name}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-      {/* Class List Table Container */}
-      <div className="window">
-        <div className="class-table">
-          <table>
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Subject</th>
-                <th>Grade</th>
-                <th>Teacher</th>
-                <th>
-                  <button className="add-class-button" onClick={handleAddClass}>Add Class</button>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {classData.map((classRow, index) => (
-                <tr key={index}>
-                  <td>{classRow.no}</td>
-                  <td>{classRow.subject}</td>
-                  <td>{classRow.grade}</td>
-                  <td>{classRow.teacher}</td>
-                  <td>
-                    <button className="remove-class-button" onClick={() => handleRemoveClass(index)}>
-                      Remove Class
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+          {/* Action Buttons Container */}
+          <div className="button-window">
+            <div className="action-buttons">
+              <Link to="/admin/class/payments">
+                <button>View Payments</button>
+              </Link>
+              <Link to="/admin/class/attendance">
+                <button>View Attendance</button>
+              </Link>
+            </div>
+          </div>
 
-      {/* Action Buttons Container */}
-      <div className="button-window">
-        <div className="action-buttons">
-          <Link to="/admin/class/payments">
-            <button>View Payments</button>
-          </Link>
-          <Link to="/admin/class/attendance">
-            <button>View Attendance</button>
-          </Link>
+          {/* Add Student Button */}
+          <div className="button-window">
+            <div className="action-buttons">  
+              <button onClick={(e) => { 
+                e.preventDefault(); // Prevent form submission
+                setShowAddStudentModal(true); 
+              }}>
+                Add Student
+              </button>
+            </div>
+          </div>
+        </form>
+      )}
+
+      {/* Add Student Modal */}
+      {showAddStudentModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowAddStudentModal(false)}>
+              &times;
+            </span>
+            <h2>Add Student</h2>
+            <input
+              type="text"
+              placeholder="Enter Student ID"
+              value={newStudentId}
+              onChange={(e) => setNewStudentId(e.target.value)}
+            />
+            <button onClick={handleAddStudent}>Submit</button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

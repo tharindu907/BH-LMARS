@@ -91,10 +91,19 @@
 
 .filter-group label {
   margin-bottom: 5px;
+  font-size: 12px !important;
   font-weight: bold;
 }
 
-.filters select,
+.filters select{
+  padding: 5px;
+  font-size: 11px !important;
+  width: 125px;
+  box-sizing: border-box;
+  border: 1px solid #ddd; /* Add a border similar to the select box */
+  border-radius: 4px; /* Add border radius for consistency */
+}
+
 .filters input[type="date"] {
   padding: 10px;
   border-radius: 10px;
@@ -185,3 +194,4 @@
 .action-buttons a button:hover {
   background-color: #218838;
 }
+

@@ -7,6 +7,32 @@
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
   }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    font-size: 13px;
+  }
+  
+  .search-bar button {
+    padding: 10px;
+    border: none;
+    background-color: #ccc;
+    border-radius: 0 3px 3px 0;
+    cursor: pointer;
+  }
+  
+  .search-bar button img {
+    width: 16px;
+    height: 16px;
+  }
   
   .class-details-form h1 {
     text-align: start;

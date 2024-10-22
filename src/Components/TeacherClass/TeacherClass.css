@@ -7,6 +7,53 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
   }
+
+  .window {
+    background-color: #e8eefb;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .button-window {
+    background-color: #d6e2f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+  }
+  
+  .teacher-search-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px 50px 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .search-button {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .search-button img {
+    width: 24px;
+    height: 24px;
+  }
   
   .teacher-class-table-title {
     font-size: 22px;
