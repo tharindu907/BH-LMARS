@@ -1,0 +1,105 @@
+.sl-student-list {
+    padding: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 25px;
+    background-color: #358dff;
+  }
+
+  .sl-window-search {
+    margin-bottom: 20px;
+    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
+    padding: 15px;
+    border-radius: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sl-window {
+    margin-bottom: 20px;
+    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
+    padding: 15px;
+    border-radius: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sl-search-bar {
+    display: flex;
+    align-items: center;
+
+  }
+  
+  .sl-search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+  }
+  
+  .sl-search-button {
+    background-color: #f9f9f9;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .sl-search-button img {
+    width: 20px;
+    height: 20px;
+    justify-self: center;
+  }
+
+  .sl-window-filter {
+    margin-bottom: 20px;
+    width: 142px;
+    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
+    padding: 15px;
+    border-radius: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sl-filters {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .sl-filter-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sl-filters select{
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: white;
+  }
+  
+  .sl-student-table {
+    width: 100%;
+  }
+
+  .sl-student-table table {
+    width: 100%;
+    border-radius: 15px;
+    background-color: white;
+    border: 1px solid #cccccc;
+  }
+  
+  .sl-student-table th, .sl-student-table td {
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #cccccc;
+    
+  }
+  
+  .sl-student-table th {
+    background-color: #E4F1FF;
+    border: 1px solid #cccccc;
+  }
+  
+  .sl-student-table td {
+    text-align: center;
+  }
+  

@@ -63,7 +63,7 @@ const AdminStudentPage = () => {
           <Route path="details" element={<StudentDetails />} />
           <Route path="payments" element={<StudentPayments />} />
           <Route path="class" element={<StudentClass />} />
-          <Route path="lsit" element={<StudentList />} />
+          <Route path="list" element={<StudentList />} />
         </Routes>
       </div>
     </div>
