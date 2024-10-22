@@ -7,6 +7,7 @@ router.get('/get/subjectnamesforallclasses', controller.getSubjectNamesOfAllClas
 router.get('/get/classdetails/:id', controller.getClass);
 router.get('/get/gradesforallclasses', controller.getGradesOfAllClasses);
 router.get('/get/allclassesforteacher/:id', controller.getAllClassesForTeacher);
+router.get('/get/classdetails', controller.getClassDetails);
 router.put('/update/classdetails/:id', controller.updateClassDetails);
 router.post('/get/classIdbyDetails', controller.getClassByDetails);
 

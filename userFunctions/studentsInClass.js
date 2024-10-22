@@ -192,6 +192,33 @@ const addNewStudenttoClass = async (req, res) => {
     }
   };
 
+const checkAllStudentPayments = async(req, res) => {
+    
+    try {
+        const {searchId, year, monthnumber} = req.body;
+
+        const classRecord = await studentsInClass.findOne({ _id: `${searchId}.${year}` });
+
+        if (!classRecord) {
+            return res.status(500).json({ message: `Class with ID ${searchId} for year ${year} not found.` });
+        }
+
+        const result = classRecord.studentsRegistered.map(student => {
+            const paymentRecord = student.payments.find(payment => payment.month === `${year}-${monthnumber}`);
+            
+            return {
+                studentId: student.studentId,
+                paymentStatus: paymentRecord ? paymentRecord.paymentStatus : false,
+                paymentDate: paymentRecord ? paymentRecord.paymentDate : null
+            };
+        });
+
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports = {
     getClassesForStudent,
     isStudentEnrolledToClass,
@@ -199,5 +226,6 @@ module.exports = {
     isPaymentDone,
     addStudentToClass,
     getStudentsByClassId,
-    addNewStudenttoClass
+    addNewStudenttoClass,
+    checkAllStudentPayments
 }

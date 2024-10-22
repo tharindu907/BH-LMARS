@@ -20,13 +20,13 @@ const addUser = async (req, res) => {
     } 
 }
 
-const getTeacher = async (req, res) => {
+const getUser = async (req, res) => {
     try {
-        const teacherId = req.params.id;
+        const userId = req.params.id;
 
-        const teacher = await User.findOne({ _id: teacherId, role: 'Teacher' });
+        const user = await User.findOne({ _id: userId});
 
-        res.json(teacher);
+        res.json(user);
     } catch (error) {
         // Handle server errors
         return res.status(500).json({ message: 'Server error', error: error.message });
@@ -109,6 +109,59 @@ const getTeacherNames = async (req, res) => {
     }
 }
 
+const getStaffDeatils = async (req, res) => {
+    try {
+        const users = await User.find({ role: { $ne: 'Teacher' } });
+
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const getTeacherDetails = async (req, res) => {
+    try {
+        const teachers = await User.find({ role: 'Teacher' });
+
+        res.status(200).json(teachers);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const updateUserDetails = async (req, res) => {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    try {
+        await User.findByIdAndUpdate(
+            id, 
+            {
+                $set: { 
+                    first_name: updatedData.firstname,
+                    last_name: updatedData.lastname,
+                    nic_no: updatedData.nic,
+                    date_of_birth: updatedData.dob,
+                    gender: updatedData.gender,
+                    email: updatedData.email,
+                    personal_number: updatedData.mobilenumber,
+                    whatsapp_number: updatedData.whatsappnumber,
+                    address: updatedData.address
+                }
+            }, 
+            {
+            new: true,
+            runValidators: true,
+          }
+        );
+
+        res.status(200).json({ message: 'User updated successfully'});
+    } catch (error) {
+        console.error('Error updating User:', error);
+        res.status(500).json({ message: 'Server error occurred' });
+    }
+}
+
 module.exports = {
     addUser,
     getAdmins,
@@ -117,5 +170,9 @@ module.exports = {
     getNameFromTeacherIdforBackend,
     getNameFromTeacherIdforFrontend,
     getTeacherNames,
-    getTeacher
+    getUser,
+    getStaffDeatils,
+    getTeacherDetails,
+    updateUserDetails
+    
 }

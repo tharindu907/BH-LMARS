@@ -76,6 +76,40 @@ const timetablehandlerfilter = async (req,res) => {
     }
 }
 
+const getTodayClassesWithDetails = async () => {
+    try {
+        const today = new Date().toISOString().split('T')[0];
+
+        const todaySchedule = await dailyClassSchedule.findOne({ _id: today });
+
+        if (!todaySchedule) {
+            return [];
+        }
+
+        // Extract all classIds from today's schedule
+        const classIds = todaySchedule.classes.map(c => c.classId);
+
+        // Fetch the class details for each classId
+        const classDetails = await Class.find({ _id: { $in: classIds } });
+
+        // Combine the class schedule and the class details
+        const result = todaySchedule.classes.map(classItem => {
+            const classDetail = classDetails.find(cd => cd._id === classItem.classId);
+            return {
+                schedule: classItem,
+                details: classDetail
+            };
+        });
+
+        // Return the combined result
+        return result;
+
+    } catch (error) {
+        console.error('Error fetching today\'s classes and their details:', error);
+        throw error;
+    }
+};
+
 
 module.exports = {
     updateDailyClassSchedule,

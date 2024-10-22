@@ -6,7 +6,7 @@ const dailyClassScheduleSchema = new mongoose.Schema({
         required: true
     },
     classes: [{
-        classCode:{ // "ESIN106.2024-08-28.1000"
+        classCode:{ // "ESIN106.2024-08-28.10:00" where "classid"+"."+"date"+"."+"Start time"
             type: String,
             required: true
         },

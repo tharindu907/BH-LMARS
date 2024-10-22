@@ -42,19 +42,19 @@ async function getDetialsForTimeTable({classIDs, subject = null, grade = null, t
             query.teacherid = await userFunctions.getTeacherIdFromName(teacher);
         }
 
-        const details = await Classes.find(query).select('_id subject grade teacherid');
+        const details = await Classes.find(query).select('_id subject grade teacherid medium');
 
         const results = await Promise.all(details.map(async cls => ({ //Promise.all to handle the asynchronous function inside the map function
             _id: cls._id,
             subject: cls.subject,
             grade: cls.grade,
+            medium: cls.medium,
             teacher: await userFunctions.getNameFromTeacherIdforBackend(cls.teacherid)
         })));
         return results;
 
     } catch (error) {
-        console.error('Error getting details for the classes:', error);
-        throw error;
+        res.status(500).json({ message: error.message });
     }
 }
 
@@ -66,9 +66,8 @@ const getSubjectNamesOfAllClasses = async (req, res) =>{
 
         res.json(subjects);
 
-    } catch (err) {
-        console.error('Error retrieving subjects:', err);
-        throw err;
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
 
@@ -185,6 +184,27 @@ const updateClassDetails = async(req, res) => {
     }
 }
 
+const getClassDetails = async (req, res) => {
+    try {
+        const classes = await Classes.find();
+
+        const classesWithTeacherNames = await Promise.all(
+            classes.map(async (singleClass) => {
+                const teacherName = await userFunctions.getNameFromTeacherIdforBackend(singleClass.teacherid);
+
+                return {
+                    ...singleClass.toObject(),  
+                    teacherName: teacherName,
+                };
+            })
+        );
+
+        res.status(200).json(classesWithTeacherNames);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }    
+}
+
 module.exports = {
     addClass,
     countClasses,
@@ -195,5 +215,6 @@ module.exports = {
     getClassByDetails,
     getClass,
     getAllClassesForTeacher,
-    updateClassDetails
+    updateClassDetails,
+    getClassDetails
 }
