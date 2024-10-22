@@ -17,6 +17,9 @@ class ScanPage extends StatefulWidget {
 class ScanPageState extends State<ScanPage> {
   MobileScannerController cameraController = MobileScannerController();
   BarcodeCapture? result;
+  final _formKey = GlobalKey<FormState>();
+  String? studentId;
+  bool isScanning = true;
 
   Future<void> _fetchStudentDetails(String studentId) async {
     try {
@@ -61,44 +64,106 @@ class ScanPageState extends State<ScanPage> {
     }
   }
 
+
+  void _toggleScanning() {
+    setState(() {
+      isScanning = !isScanning;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Scan QR Code')),
       body: Column(
-        children: <Widget>[
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
           Expanded(
-            flex: 5,
-            child: MobileScanner(
-              controller: cameraController,
-              onDetect: (BarcodeCapture capture) {
-                final List<Barcode> barcodes = capture.barcodes;
-                final barcode = barcodes.isNotEmpty ? barcodes.first : null;
-                if (barcode?.rawValue != null) {
-                  final String code = barcode!.rawValue!;
-                  _fetchStudentDetails(code);
-                  setState(() {
-                    result = capture;
-                  });
-                } else {
-                  _showErrorSnackbar('Failed to scan QR code');
-                }
-              },
-            ),
+            child: isScanning
+                ? Container(
+                    margin: const EdgeInsets.all(16.0),
+                    child: MobileScanner(
+                      controller: cameraController,
+                      onDetect: (BarcodeCapture capture) {
+                        final List<Barcode> barcodes = capture.barcodes;
+                        final barcode = barcodes.isNotEmpty ? barcodes.first : null;
+                        if (barcode?.rawValue != null) {
+                          final String code = barcode!.rawValue!;
+                          _fetchStudentDetails(code);
+                          setState(() {
+                            result = capture;
+                          });
+                        } else {
+                          _showErrorSnackbar('Failed to scan QR code');
+                        }
+                      },
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Please enter Student ID:', textAlign: TextAlign.center),
+                          const SizedBox(height: 20),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Student ID',
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter a student ID';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              studentId = value;
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(255, 3, 244, 87),
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                _fetchStudentDetails(studentId!);
+                              }
+                            },
+                            child: const Text('Submit'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
           ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: (result != null)
-                  ? Text('Scanned Data: ${result!.barcodes.first.rawValue}')
-                  : const Text('Scan a code'),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.lightBlue,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
             ),
+            onPressed: _toggleScanning,
+            child: Text(isScanning ? 'Enter Student ID' : 'Scan QR Code'),
           ),
+          const SizedBox(height: 20),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Toggle the torch
           cameraController.toggleTorch();
         },
         child: const Icon(Icons.flash_on),
