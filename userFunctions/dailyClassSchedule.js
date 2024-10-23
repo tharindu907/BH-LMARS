@@ -1,5 +1,7 @@
 let classFunctions = require('./classes');
 let dailyClassSchedule = require('../models/dailyClassSchedule.model');
+let Classes = require('../models/classes.model');
+const userFunctions = require('./user');
 
 async function updateDailyClassSchedule(date, { classId, startTime, endTime } = {}) { // '2024-08-26'
     try {     
@@ -76,8 +78,10 @@ const timetablehandlerfilter = async (req,res) => {
     }
 }
 
-const getTodayClassesWithDetails = async () => {
+const getTodayClassesWithDetails = async (req, res) => {
     try {
+        //const today = "2024-10-24";
+
         const today = new Date().toISOString().split('T')[0];
 
         const todaySchedule = await dailyClassSchedule.findOne({ _id: today });
@@ -86,32 +90,36 @@ const getTodayClassesWithDetails = async () => {
             return [];
         }
 
-        // Extract all classIds from today's schedule
         const classIds = todaySchedule.classes.map(c => c.classId);
 
-        // Fetch the class details for each classId
-        const classDetails = await Class.find({ _id: { $in: classIds } });
+        const classDetails = await Classes.find({ _id: { $in: classIds } });
 
-        // Combine the class schedule and the class details
-        const result = todaySchedule.classes.map(classItem => {
-            const classDetail = classDetails.find(cd => cd._id === classItem.classId);
-            return {
-                schedule: classItem,
-                details: classDetail
-            };
-        });
+        const result = await Promise.all(
+            todaySchedule.classes.map(async (classItem) => {
+                const classDetail = classDetails.find(cd => cd._id === classItem.classId);
+        
+                const teacherName = await userFunctions.getNameFromTeacherIdforBackend(classDetail.teacherid);
+        
+                return {
+                    schedule: classItem,
+                    details: {
+                        ...classDetail.toObject(),
+                        teacherName
+                    }
+                };
+            })
+        );
 
-        // Return the combined result
-        return result;
+        res.status(200).json(result);
 
     } catch (error) {
-        console.error('Error fetching today\'s classes and their details:', error);
-        throw error;
+        res.status(500).json({ message: error.message});
     }
 };
 
 
 module.exports = {
     updateDailyClassSchedule,
-    timetablehandlerfilter
+    timetablehandlerfilter,
+    getTodayClassesWithDetails
 }

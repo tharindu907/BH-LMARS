@@ -190,11 +190,10 @@ const getClassDetails = async (req, res) => {
 
         const classesWithTeacherNames = await Promise.all(
             classes.map(async (singleClass) => {
-                const teacherName = await userFunctions.getNameFromTeacherIdforBackend(singleClass.teacherid);
 
                 return {
                     ...singleClass.toObject(),  
-                    teacherName: teacherName,
+                    teacherName: await userFunctions.getNameFromTeacherIdforBackend(singleClass.teacherid)
                 };
             })
         );

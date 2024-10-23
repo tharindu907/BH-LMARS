@@ -1,7 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const func = require('./userFunctions/dailyClassSchedule');
-const func1 = require('./userFunctions/studentsInClass');
 const dbConnect = require('./config/dbConnect');
 dbConnect();
 
@@ -20,7 +18,7 @@ const loginRouter = require('./login');
 const dailyClassScheduleRouter = require('./routes/dailyClassSchedule');
 const studentsInClassRouter = require('./routes/studentsInClass');
 const classAttendanceRouter = require('./routes/classAttendance');
-
+const { getTodayClassesWithDetails } = require('./userFunctions/dailyClassSchedule');
 
 app.use('/login', loginRouter);
 app.use('/student', studentRouter);
