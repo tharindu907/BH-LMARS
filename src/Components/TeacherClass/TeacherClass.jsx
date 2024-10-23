@@ -18,7 +18,7 @@ const TeacherClass = () => {
   const handleSearch = async () => {
     try {
       if (searchId) {
-        const responseforsearchid = await axios.get(`http://localhost:5000/user/get/teacherdetails/${searchId}`);
+        const responseforsearchid = await axios.get(`http://localhost:5000/user/get/userdetails/${searchId}`);
         if (responseforsearchid.data === null) {
           setErrorMessage('Invalid TeacherID');
           setTeacher(defaultTeacher);

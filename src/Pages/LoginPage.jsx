@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import logoIcon from '../Components/Assets/bg.png';
+import logoIcon from '../Components/Assets/bgi.png';
 import './LoginPage.css';
 
 function LoginPage({ setIsLoggedIn, setUserType, setUsername, setProfilePic }) {

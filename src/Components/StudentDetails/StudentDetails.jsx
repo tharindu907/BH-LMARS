@@ -28,31 +28,36 @@ const StudentDetails = () => {
   
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/student/get/studentdetails/${searchId}`);
-      if (!response.data) {
-        setErrorMessage('Invalid StudentID');
-        setStudent(defaultStudent);
-
+      if(searchId) {
+        const response = await axios.get(`http://localhost:5000/student/get/studentdetails/${searchId}`);
+        if (!response.data) {
+          setErrorMessage('Invalid StudentID');
+          setStudent(defaultStudent);
+  
+        } else {
+          setErrorMessage('');
+          setStudent({
+            studentid: response.data._id,
+            firstName: response.data.first_name,
+            lastName: response.data.last_name,
+            mobileNumber: response.data.personal_number,
+            dob: response.data.date_of_birth.slice(0, 10),
+            gender: response.data.gender,
+            whatsappNumber: response.data.whatsapp_number,
+            address: response.data.address,
+            school: response.data.school,
+            grade: response.data.grade,
+            guardianName: response.data.guardian_name,
+            guardianContactNumber: response.data.guardian_number,
+            registeredDate: response.data.registered_date.slice(0, 10),
+            registeredBy: response.data.registered_by,
+            qrcode: response.data.qr_url
+          });
+        }
       } else {
-        setErrorMessage('');
-        setStudent({
-          studentid: response.data._id,
-          firstName: response.data.first_name,
-          lastName: response.data.last_name,
-          mobileNumber: response.data.personal_number,
-          dob: response.data.date_of_birth.slice(0, 10),
-          gender: response.data.gender,
-          whatsappNumber: response.data.whatsapp_number,
-          address: response.data.address,
-          school: response.data.school,
-          grade: response.data.grade,
-          guardianName: response.data.guardian_name,
-          guardianContactNumber: response.data.guardian_number,
-          registeredDate: response.data.registered_date.slice(0, 10),
-          registeredBy: response.data.registered_by,
-          qrcode: response.data.qr_url
-        });
+        setErrorMessage("Enter a StudentID");
       }
+
     } catch (error) {
       console.error('Error fetching student data:', error);
       setErrorMessage('Server error occurred');  // Handle server errors

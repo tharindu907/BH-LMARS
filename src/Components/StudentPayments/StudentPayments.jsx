@@ -283,10 +283,6 @@ const StudentPayments = () => {
           {/* Action Buttons Container */}
           <div className="button-window">
             <div className="action-buttons">
-              <Link to="/admin/student/attendance">
-                <button>View Attendance</button>
-              </Link>
-              <button>Free Card Activate</button>
               <button>Save Changes</button>
             </div>
           </div>

@@ -1,120 +1,130 @@
 import React, { useState, useEffect } from 'react';
 import './ClassList.css';
-import serchIcon from '../Assets/serchicon.png';
+import axios from 'axios';
+
+const gradeList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
 const ClassList = () => {
-  const [classes, setClasses] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedGrade, setSelectedGrade] = useState('All');
-  const [selectedTeacher, setSelectedTeacher] = useState('All');
+  const [classesList, setClassesList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
+  const [grade, setGrade] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = filteredList.slice(indexOfFirstRow, indexOfLastRow);
+  const totalPages = Math.ceil(filteredList.length / rowsPerPage);
 
   useEffect(() => {
-    // Fetch the list of classes from the backend
-    fetch('/api/classes') // Replace with the actual API endpoint
-      .then(res => res.json())
-      .then(data => setClasses(data))
-      .catch(err => console.error(err));
+    const fetchData = async () => {
+      try {
+        const responseforclasseslist =  await axios.get('http://localhost:5000/class/get/classdetails');
+        
+        setClassesList(responseforclasseslist.data);
+        setFilteredList(responseforclasseslist.data);
+
+      } catch (error) {
+        setErrorMessage('Server Error');
+        console.error('Error fetching data:', error);        
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
+  const handleViewClick = () => {
+    const filtered = classesList.filter((member) =>
+      (grade === '' || String(member.grade) === String(grade))
+      
+    );
+    setFilteredList(filtered);
+    setCurrentPage(1);
   };
 
-  const handleGradeFilter = (e) => {
-    setSelectedGrade(e.target.value);
+  const handleGradeChange = (e) => {
+    setGrade(e.target.value);
   };
 
-  const handleTeacherFilter = (e) => {
-    setSelectedTeacher(e.target.value);
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
-  // Filter classes based on search query, grade filter, and teacher filter
-  const filteredClasses = classes.filter(cl => {
-    const matchesSearch = cl.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesGrade = selectedGrade === 'All' || cl.grade === selectedGrade;
-    const matchesTeacher = selectedTeacher === 'All' || cl.teacherName === selectedTeacher;
-    return matchesSearch && matchesGrade && matchesTeacher;
-  });
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
-    <div className="cl-class-list">
-      {/* Search Bar */}
-      <div className="cl-window-search">
-        <div className="cl-search-bar">
-          <input
-            type="text"
-            className="cl-search-input"
-            placeholder="Search Class"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-          <button className="cl-search-button">
-            <img src={serchIcon} alt="Search" className="cl-search-img" />
-          </button>
+    <div className="members-list-container">
+
+      <div className="filter-box">
+
+        <div className="filter-item">
+          <label htmlFor="grade">Grade</label>
+          <select id="grade" value={grade} onChange={handleGradeChange}>
+            <option value="">All</option>
+            {gradeList.map((grade, index) => (
+              <option key={index} value={grade}>
+                {grade}
+              </option>
+            ))}
+          </select>
         </div>
+
+        <button className="view-btn" onClick={handleViewClick}>View</button>
       </div>
 
-      {/* Filters: Grade and Teacher */}
-      <div className="cl-window-filter">
-        <div className="cl-filters">
-          {/* Grade Filter */}
-          <div className="cl-filter-group">
-            <label htmlFor="cl-grade-filter">Grade</label>
-            <select id="cl-grade-filter" value={selectedGrade} onChange={handleGradeFilter}>
-              <option value="All">All</option>
-              <option value="6">Grade 6</option>
-              <option value="7">Grade 7</option>
-              <option value="8">Grade 8</option>
-              <option value="9">Grade 9</option>
-              <option value="10">Grade 10</option>
-              <option value="11">Grade 11</option>
-            </select>
-          </div>
-          {/* Teacher Filter */}
-          <div className="cl-filter-group">
-            <label htmlFor="cl-teacher-filter">Teacher</label>
-            <select id="cl-teacher-filter" value={selectedTeacher} onChange={handleTeacherFilter}>
-              <option value="All">All</option>
-              <option value="Mr. Smith">Mr. Nadeera Gunarathna</option>
-              <option value="Ms. Johnson">Ms. Kasuni Bhagya</option>
-              <option value="Mr. Lee">Mr. Tharindu Amarathunga</option>
-              <option value="Ms. Davis">Ms. Roshani Senanayake</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      {errorMessage && <div className="error">
+          {errorMessage}
+        </div>}
 
-      {/* Class List Table */}
-      <div className="cl-window">
-        <div className="cl-class-table">
-          <table>
+      {!errorMessage && (
+        <form>
+          <table className="table">
             <thead>
               <tr>
-                <th>Class ID</th>
-                <th>Class Name</th>
+                <th>ID</th>
+                <th>Subject</th>
                 <th>Grade</th>
-                <th>Teacher Name</th>
+                <th>Teacher</th>
+                <th>Medium</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredClasses.length > 0 ? (
-                filteredClasses.map(cl => (
-                  <tr key={cl.id}>
-                    <td>{cl.id}</td>
-                    <td>{cl.name}</td>
-                    <td>{cl.grade}</td>
-                    <td>{cl.teacherName}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="4">No classes found</td>
+              {currentRows.map((member, index) => (
+                <tr key={member.id}>
+                  <td>{member._id}</td>
+                  <td>{member.subject}</td>
+                  <td>{member.grade}</td>
+                  <td>{member.teacherName}</td>
+                  <td>{member.medium}</td>
+                  <td className="action-buttons">
+                    <button className="edit-btn">Edit</button>
+                  </td>
                 </tr>
-              )}
+              ))}
             </tbody>
           </table>
-        </div>
-      </div>
+
+          <div className="pagination">
+            <button onClick={handlePrevPage} disabled={currentPage === 1} className="prev-btn">
+              Previous
+            </button>
+            <span className="page-info">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button onClick={handleNextPage} disabled={currentPage === totalPages} className="next-btn">
+              Next
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };

@@ -77,6 +77,7 @@ const TimeTable = () => {
       <th>Subject</th>
       <th>Grade</th>
       <th>Teacher</th>
+      <th>Medium</th>
     </>
   );
 
@@ -87,7 +88,8 @@ const TimeTable = () => {
         <td>{item.endTime}</td>   
         <td>{item.subject}</td>
         <td>{item.grade}</td>     
-        <td>{item.teacher}</td>      
+        <td>{item.teacher}</td>  
+        <td>{item.medium}</td>    
       </tr>
     ));
   };

@@ -1,100 +1,146 @@
 import React, { useState, useEffect } from 'react';
 import './StudentList.css';
-import serchIcon from '../Assets/serchicon.png';
+import axios from 'axios';
+
+const gradeList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
 const StudentList = () => {
-  const [students, setStudents] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedGrade, setSelectedGrade] = useState('All');
+  const [studentList, setStudentList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
+  const [name, setName] = useState('');
+  const [grade, setGrade] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = filteredList.slice(indexOfFirstRow, indexOfLastRow);
+  const totalPages = Math.ceil(filteredList.length / rowsPerPage);
   
   useEffect(() => {
-    // Fetch the list of students from the backend
-    fetch('/api/students')  // Replace with the actual API endpoint
-      .then(res => res.json())
-      .then(data => setStudents(data))
-      .catch(err => console.error(err));
+    const fetchData = async () => {
+      try {
+        const responseforstudentlist =  await axios.get('http://localhost:5000/student/get/studentdetails');
+        
+        setStudentList(responseforstudentlist.data);
+        setFilteredList(responseforstudentlist.data);
+
+      } catch (error) {
+        setErrorMessage('Server Error');
+        console.error('Error fetching data:', error);        
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
+  const handleViewClick = () => {
+    const filtered = studentList.filter((member) =>
+      (name === '' || (member.first_name + ' ' + member.last_name).toLowerCase().includes(name.toLowerCase())) &&
+      (grade === '' || String(member.grade) === String(grade))
+      
+    );
+    setFilteredList(filtered);
+    setCurrentPage(1);
   };
 
-  const handleGradeFilter = (e) => {
-    setSelectedGrade(e.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
-  // Filter students based on search query and grade filter
-  const filteredStudents = students.filter(student => {
-    const matchesSearch = student.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesGrade = selectedGrade === 'All' || student.grade === selectedGrade;
-    return matchesSearch && matchesGrade;
-  });
+  const handleGradeChange = (e) => {
+    setGrade(e.target.value);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
-    <div className="sl-student-list">
-      {/* Search Bar */}
-      <div className="sl-window-search">
-        <div className="sl-search-bar">
+    <div className="members-list-container">
+
+      <div className="filter-box">
+
+        <div className="filter-item">
+          <label htmlFor="name">Name</label>
           <input
             type="text"
-            className="sl-search-input"
-            placeholder="Search Student"
-            value={searchQuery}
-            onChange={handleSearch}
+            id="name"
+            value={name}
+            onChange={handleNameChange}
+            placeholder="Enter Name"
           />
-          <button className="sl-search-button">
-            <img src={serchIcon} alt="Search" />
-          </button>
         </div>
+
+        <div className="filter-item">
+          <label htmlFor="grade">Grade</label>
+          <select id="grade" value={grade} onChange={handleGradeChange}>
+            <option value="">All</option>
+            {gradeList.map((grade, index) => (
+              <option key={index} value={grade}>
+                {grade}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button className="view-btn" onClick={handleViewClick}>View</button>
       </div>
 
-      {/* Filter by Grade */}
-      <div className="sl-window-filter">
-        <div className="sl-filters">
-          <div className="sl-filter-group">
-            <label htmlFor="sl-grade-filter">Grade</label>
-            <select id="sl-grade-filter" value={selectedGrade} onChange={handleGradeFilter}>
-              <option value="All">All</option>
-              <option value="6">Grade 6</option>
-              <option value="7">Grade 7</option>
-              <option value="8">Grade 8</option>
-              <option value="9">Grade 9</option>
-              <option value="10">Grade 10</option>
-              <option value="11">Grade 11</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      {errorMessage && <div className="error">
+          {errorMessage}
+        </div>}
 
-      {/* Student List Table */}
-      <div className="sl-window">
-        <div className="sl-student-table">
-          <table>
+      {!errorMessage && (
+        <form>
+          <table className="table">
             <thead>
               <tr>
-                <th>Student ID</th>
-                <th>Student Name</th>
+                <th>ID</th>
+                <th>Name</th>
                 <th>Grade</th>
+                <th>Gender</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredStudents.length > 0 ? (
-                filteredStudents.map(student => (
-                  <tr key={student.id}>
-                    <td>{student.id}</td>
-                    <td>{student.name}</td>
-                    <td>{student.grade}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="3">No students found</td>
+              {currentRows.map((member, index) => (
+                <tr key={member.id}>
+                  <td>{member._id}</td>
+                  <td>{member.first_name} {member.last_name}</td>
+
+                  <td>{member.grade}</td>
+                  <td>{member.gender}</td>
+                  <td className="action-buttons">
+                    <button className="edit-btn">Edit</button>
+                  </td>
                 </tr>
-              )}
+              ))}
             </tbody>
           </table>
-        </div>
-      </div>
+
+          <div className="pagination">
+            <button onClick={handlePrevPage} disabled={currentPage === 1} className="prev-btn">
+              Previous
+            </button>
+            <span className="page-info">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button onClick={handleNextPage} disabled={currentPage === totalPages} className="next-btn">
+              Next
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };

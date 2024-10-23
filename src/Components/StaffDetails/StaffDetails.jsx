@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import searchIcon from '../Assets/serchicon.png';
+import './StaffDetails.css';
 import axios from 'axios';
-import './TeacherDetails.css';
+import searchIcon from '../Assets/serchicon.png';
 
-const defaultTeacher = {
-  teacherid: '',
+const defaultStaff = {
+  staffid: '',
   firstname: '',
   lastname: '',
   nic: '',
   dob: '',
+  role: '',
   gender: '',
   email: '',
   mobilenumber: '',
@@ -18,24 +19,24 @@ const defaultTeacher = {
   registeredBy: ''
 };
 
-const TeacherDetails = () => {
-  const [teacher, setTeacher] = useState(defaultTeacher);
+const StaffDetails = () => {
+  const [staff, setStaff] = useState( defaultStaff );
   const [searchId, setSearchId] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [editEnabled, setEditEnabled] = useState(false);
 
   const handleSearch = async () => {
     try {
-      if (searchId) {
+      if (searchId){
         const response = await axios.get(`http://localhost:5000/user/get/userdetails/${searchId}`);
         if (!response.data) {
-          setErrorMessage('Invalid TeacherID');
-          setTeacher(defaultTeacher);
+          setErrorMessage('Invalid StaffID');
+          setStaff(defaultStaff);
 
         } else {
           setErrorMessage('');
-          setTeacher({
-            teacherid: response.data._id,
+          setStaff({
+            staffid: response.data._id,
             firstname: response.data.first_name,
             lastname: response.data.last_name,
             mobilenumber: response.data.personal_number,
@@ -44,25 +45,26 @@ const TeacherDetails = () => {
             whatsappnumber: response.data.whatsapp_number,
             address: response.data.address,
             email: response.data.email,
+            role: response.data.role,
             nic: response.data.nic_no,
             registeredDate: response.data.registered_date.slice(0, 10),
             registeredBy: response.data.registered_by,
           });
         }
       } else {
-        setErrorMessage('Enter a TeacherID');
+        setErrorMessage('Enter a StaffID');
       }
       
     } catch (error) {
-      console.error('Error fetching teacher data:', error);
+      console.error('Error fetching staff data:', error);
       setErrorMessage('Server error occurred');
-      setTeacher(defaultTeacher);
+      setStaff(defaultStaff);
     }
   };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setTeacher((prevState) => ({
+    setStaff((prevState) => ({
       ...prevState,
       [id]: value,
     }));
@@ -72,20 +74,20 @@ const TeacherDetails = () => {
     e.preventDefault();
 
     try {
-      const update = await axios.put(`http://localhost:5000/user/update/userdetails/${teacher.teacherid}`, {
-        firstname: teacher.firstname,
-        lastname: teacher.lastname,
-        nic: teacher.nic,
-        dob: teacher.dob,
-        gender: teacher.gender,
-        email: teacher.email,
-        mobilenumber: teacher.mobilenumber,
-        whatsappnumber: teacher.whatsappnumber,
-        address: teacher.address
+      const update = await axios.put(`http://localhost:5000/user/update/userdetails/${staff.staffid}`, {
+        firstname: staff.firstname,
+        lastname: staff.lastname,
+        nic: staff.nic,
+        dob: staff.dob,
+        gender: staff.gender,
+        email: staff.email,
+        mobilenumber: staff.mobilenumber,
+        whatsappnumber: staff.whatsappnumber,
+        address: staff.address
       });
 
       if (update.status === 200) {
-        alert('Teacher Updated Successfully');
+        alert('staff Updated Successfully');
         setEditEnabled(false);
         handleSearch();
       } else {
@@ -109,11 +111,11 @@ const TeacherDetails = () => {
   };
 
   return (
-    <div className="teacher-details-form">
+    <div className="staff-details-form">
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search Teacher..."
+          placeholder="Search staff..."
           value={searchId}
           onChange={(e) => setSearchId(e.target.value)}
         />
@@ -129,8 +131,8 @@ const TeacherDetails = () => {
           <div className="form-row">
 
             <div className="input-group">
-              <label>Teacher ID</label>
-              <div>{teacher.teacherid}</div>
+              <label>Staff ID</label>
+              <div>{staff.staffid}</div>
             </div>
 
             <div className="input-group">
@@ -139,7 +141,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="firstname"
-                  value={teacher.firstname}
+                  value={staff.firstname}
                   onChange={handleChange}
                   required
                 />
@@ -147,7 +149,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="firstname"
-                  value={teacher.firstname}
+                  value={staff.firstname}
                   readOnly
                 />
               )}
@@ -159,7 +161,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="lastname"
-                  value={teacher.lastname}
+                  value={staff.lastname}
                   onChange={handleChange}
                   required
                 />
@@ -167,7 +169,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="lastname"
-                  value={teacher.lastname}
+                  value={staff.lastname}
                   readOnly
                 />
               )}
@@ -182,7 +184,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="nic"
-                  value={teacher.nic}
+                  value={staff.nic}
                   onChange={handleChange}
                   required
                 />
@@ -190,7 +192,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="nic"
-                  value={teacher.nic}
+                  value={staff.nic}
                   readOnly
                 />
               )}
@@ -202,7 +204,7 @@ const TeacherDetails = () => {
                 <input
                   type="date"
                   id="dob"
-                  value={teacher.dob}
+                  value={staff.dob}
                   onChange={handleChange}
                   required
                 />
@@ -210,7 +212,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="dob"
-                  value={teacher.dob}
+                  value={staff.dob}
                   readOnly
                 />
               )}
@@ -222,7 +224,7 @@ const TeacherDetails = () => {
                 <select
                   type="text"
                   id="gender"
-                  value={teacher.gender}
+                  value={staff.gender}
                   onChange={handleChange}
                   required
                 >
@@ -233,7 +235,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="gender"
-                  value={teacher.gender}
+                  value={staff.gender}
                   readOnly
                 />
               )}
@@ -249,7 +251,7 @@ const TeacherDetails = () => {
                 <input
                   type="email"
                   id="email"
-                  value={teacher.email}
+                  value={staff.email}
                   onChange={handleChange}
                   required
                 />
@@ -257,7 +259,7 @@ const TeacherDetails = () => {
                 <input
                   type="email"
                   id="email"
-                  value={teacher.email}
+                  value={staff.email}
                   readOnly
                 />
               )}
@@ -269,7 +271,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="mobilenumber"
-                  value={teacher.mobilenumber}
+                  value={staff.mobilenumber}
                   onChange={handleChange}
                   required
                 />
@@ -277,7 +279,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="mobilenumber"
-                  value={teacher.mobilenumber}
+                  value={staff.mobilenumber}
                   readOnly
                 />
               )}
@@ -289,7 +291,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="whatsappnumber"
-                  value={teacher.whatsappnumber}
+                  value={staff.whatsappnumber}
                   onChange={handleChange}
                   required
                 />
@@ -297,7 +299,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="whatsappnumber"
-                  value={teacher.whatsappnumber}
+                  value={staff.whatsappnumber}
                   readOnly
                 />
               )}
@@ -313,7 +315,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="address"
-                  value={teacher.address}
+                  value={staff.address}
                   onChange={handleChange}
                   required
                 />
@@ -321,7 +323,7 @@ const TeacherDetails = () => {
                 <input
                   type="text"
                   id="address"
-                  value={teacher.address}
+                  value={staff.address}
                   readOnly
                 />
               )}
@@ -332,7 +334,7 @@ const TeacherDetails = () => {
               <input
                   type="text"
                   id="registeredBy"
-                  value={teacher.registeredBy}
+                  value={staff.registeredBy}
                   readOnly
               />
             </div>
@@ -342,11 +344,23 @@ const TeacherDetails = () => {
               <input
                   type="text"
                   id="registeredDate"
-                  value={teacher.registeredDate}
+                  value={staff.registeredDate}
                   readOnly
               />
             </div>
 
+          </div>
+
+          <div className="form-row">
+            <div className="input-group">
+              <label>Role</label>
+                <input
+                  type="text"
+                  id="role"
+                  value={staff.role}
+                  readOnly
+                />
+            </div>
           </div>
 
           <div className="form-buttons">
@@ -371,4 +385,4 @@ const TeacherDetails = () => {
   );
 };
 
-export default TeacherDetails;
+export default StaffDetails;

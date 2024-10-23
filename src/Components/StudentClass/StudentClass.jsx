@@ -93,6 +93,7 @@ const StudentClass = () => {
             <img src={searchIcon} alt="Search" />
           </button>
         </div>
+        
         <div className="class-search-bar">
           <label htmlFor="year">Year</label>
           <select

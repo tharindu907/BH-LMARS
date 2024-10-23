@@ -1,102 +1,148 @@
-.tl-teacher-list {
+.members-list-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
     padding: 20px;
-    margin-bottom: 20px;
-    padding: 15px;
-    border-radius: 25px;
-    background-color: #2B3499;
-}
-
-.tl-window-search {
-    margin-bottom: 20px;
-    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
-    padding: 15px;
-    border-radius: 25px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.tl-window {
-    margin-bottom: 20px;
-    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
-    padding: 15px;
-    border-radius: 25px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.tl-search-bar {
+    font-size: 13px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .table-title {
+    font-weight: 600;
+    color: #012970; /* Changed color */
+    margin: 0;
+  }
+  
+  .filter-box {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-}
-
-.tl-search-input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-}
-
-.tl-search-button {
-    background-color: #f9f9f9;
-    border: none;
-    border-radius: 25px;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.tl-search-button img {
-    width: 20px;
-    height: 20px;
-    justify-self: center;
-}
-
-.tl-window-filter {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     margin-bottom: 20px;
-    width: 180px;
-    background: linear-gradient(180deg, #eef1f6, rgb(224, 228, 243));
-    padding: 15px;
-    border-radius: 25px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.tl-filters {
-    display: flex;
-    gap: 10px;
-}
-
-.tl-filter-group {
+  }
+  
+  .filter-item {
     display: flex;
     flex-direction: column;
-}
-
-.tl-filters select {
-    padding: 10px;
-    border-radius: 15px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    background-color: white;
-}
-
-.tl-teacher-table {
+    gap: 5px;
+    font-weight: bold;
+  }
+  
+  .filter-item select {
+    padding: 5px;
+    width: 160px;
+  }
+  
+  .view-btn {
+    padding: 8px 20px;
+    border: none;
+    background-color: #4154f1;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+  }
+  
+  .view-btn:hover {
+    opacity: 0.9;
+  }
+  
+  .table {
     width: 100%;
-}
-
-.tl-teacher-table table {
-    width: 100%;
-    border-radius: 15px;
-    background-color: white;
-    border: 1px solid #cccccc;
-}
-
-.tl-teacher-table th, .tl-teacher-table td {
-    padding: 10px;
-    border-radius: 15px;
-    border: 1px solid #cccccc;
-}
-
-.tl-teacher-table th {
-    background-color: #E4F1FF;
-    border: 1px solid #cccccc;
-}
-
-.tl-teacher-table td {
-    text-align: center;
-}
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .table tr:hover {
+    background-color: #eaeaea;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .edit-btn,
+  .remove-btn {
+    font-size: 13px !important;
+    padding: 5px 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .edit-btn {
+    background-color: #4154f1;
+  }
+  
+  .remove-btn {
+    background-color: #f16b41;
+  }
+  
+  .edit-btn:hover,
+  .remove-btn:hover {
+    opacity: 0.9;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .prev-btn, .next-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .prev-btn:hover, .next-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .page-info {
+    font-weight: bold;
+  }
+  
+  .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+  }

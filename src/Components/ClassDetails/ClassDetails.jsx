@@ -86,12 +86,12 @@ const ClassDetails = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.put(`http://localhost:5000/class/update/classdetails/${formData.classId}`, {
+      const update = await axios.put(`http://localhost:5000/class/update/classdetails/${formData.classId}`, {
         fee: formData.fee,
         schedule: times
       });
 
-      if (response.status === 200) {
+      if (update.status === 200) {
         alert('Class Updated Successfully');
         setEditEnabled(false);
         handleSearch(); // Re-fetch the updated class details
@@ -132,205 +132,208 @@ const ClassDetails = () => {
         </button>
       </div>
 
-      <form>
-        {/* First Row */}
-        <div className="class-details-row">
-          <div className="class-details-input-details-group">
-              <label htmlFor="subjectId">ClassID</label>
+      {errorMessage && <div className="error">{errorMessage}</div>}
+      {!errorMessage && (
+        <form>
+          {/* First Row */}
+          <div className="class-details-row">
+            <div className="class-details-input-details-group">
+                <label htmlFor="subjectId">ClassID</label>
+                <input 
+                  type="text" 
+                  id="subjectId" 
+                  value={formData.classId} 
+                  readOnly />
+            </div>
+
+            <div className="class-details-input-details-group">
+              <label htmlFor="teacherName">Teacher Name</label>
+              <input
+                  type="text"
+                  id="teacherName"
+                  value={formData.teacherName}
+                  readOnly
+                />
+            </div>
+
+            <div className="class-details-input-details-group">
+              <label htmlFor="teacherId">TeacherID</label>
               <input 
                 type="text" 
-                id="subjectId" 
-                value={formData.classId} 
-                readOnly />
-          </div>
-
-          <div className="class-details-input-details-group">
-            <label htmlFor="teacherName">Teacher Name</label>
-            <input
-                type="text"
-                id="teacherName"
-                value={formData.teacherName}
-                readOnly
+                id="teacherId" 
+                value={formData.teacherId} 
+                readOnly 
               />
+            </div>
+
           </div>
 
-          <div className="class-details-input-details-group">
-            <label htmlFor="teacherId">TeacherID</label>
-            <input 
-              type="text" 
-              id="teacherId" 
-              value={formData.teacherId} 
-              readOnly 
-            />
-          </div>
-
-        </div>
-
-        {/* Second Row */}
-        <div className="class-details-row">
-
-          <div className="class-details-input-details-group">
-              <label htmlFor="subject">Subject</label>
-              <input
-                  type="text"
-                  id="subject"
-                  value={formData.subject}
-                  readOnly
-              />
-          </div>
-
-          <div className="class-details-input-details-group">
-            <label htmlFor="grade">Grade</label>
-            <input
-                type="text"
-                id="grade"
-                value={formData.grade}
-                readOnly
-             />
-          </div>
-
-          <div className="class-details-input-details-group">
-            <label htmlFor="fee">Fee (Rs.)</label>
-            {editEnabled ? (
-              <input
-                type="number"
-                id="fee"
-                value={formData.fee}
-                onChange={handleChange}
-                required
-              />
-            ) : (
-              <input
-                type="text"
-                id="fee"
-                value={formData.fee}
-                readOnly
-              />
-            )}
-          </div>
-        </div>
-
-        {/* Third Row */}
-        <div className="class-details-row">
-
-          <div className="class-details-input-details-group">
-            <label htmlFor="registeredBy">Registered By</label>
-            <input 
-              type="text" 
-              id="registeredBy" 
-              value={formData.registeredBy} 
-              readOnly 
-            />
-          </div>
-
-          <div className="class-details-input-details-group">
-            <label htmlFor="registeredDate">Registered Date</label>
-            <input
-              type="date"
-              id="registeredDate"
-              value={formData.registeredDate}
-              readOnly
-            />
-          </div>
-        </div>
-
-        {/* Time Slots */}
-        {times.map((time, index) => (
-          <div key={index} className="class-details-row">
+          {/* Second Row */}
+          <div className="class-details-row">
 
             <div className="class-details-input-details-group">
-              <label htmlFor={`day-${index}`}>Day</label>
-              {editEnabled ? (
-                <select
-                  value={time.day}
-                  onChange={(e) => handleTimeChange(index, 'day', e.target.value)}
-                  required
-                >
-                  <option value="" disabled>Select Day</option>
-                  {days.map((day) => (
-                    <option key={day} value={day}>{day}</option>
-                  ))}
-                </select>
-              ) : (
+                <label htmlFor="subject">Subject</label>
                 <input
-                  type="text"
-                  id={`day-${index}`}
-                  value={time.day}
-                  readOnly
+                    type="text"
+                    id="subject"
+                    value={formData.subject}
+                    readOnly
                 />
-              )}
             </div>
 
             <div className="class-details-input-details-group">
-              <label htmlFor={`from-${index}`}>From</label>
+              <label htmlFor="grade">Grade</label>
+              <input
+                  type="text"
+                  id="grade"
+                  value={formData.grade}
+                  readOnly
+              />
+            </div>
+
+            <div className="class-details-input-details-group">
+              <label htmlFor="fee">Fee (Rs.)</label>
               {editEnabled ? (
                 <input
-                  type="time"
-                  value={time.from}
-                  onChange={(e) => handleTimeChange(index, 'from', e.target.value)}
+                  type="number"
+                  id="fee"
+                  value={formData.fee}
+                  onChange={handleChange}
                   required
                 />
               ) : (
                 <input
                   type="text"
-                  id={`from-${index}`}
-                  value={time.from}
-                  readOnly
-                />
-              )}
-            </div>
-
-            <div className="class-details-input-details-group">
-              <label htmlFor={`to-${index}`}>To</label>
-              {editEnabled ? (
-                <input
-                  type="time"
-                  value={time.to}
-                  onChange={(e) => handleTimeChange(index, 'to', e.target.value)}
-                  required
-                />
-              ) : (
-                <input
-                  type="text"
-                  id={`to-${index}`}
-                  value={time.to}
+                  id="fee"
+                  value={formData.fee}
                   readOnly
                 />
               )}
             </div>
           </div>
-        ))}
 
-        {/* Add Time Slot Button */}
-        {editEnabled && (
-          <button
-            type="button"
-            className="class-details-add-time-slot-button"
-            onClick={addTimeSlot}
-          >
-            Add Time Slot
-          </button>
-        )}
+          {/* Third Row */}
+          <div className="class-details-row">
 
-        {/* Form Buttons */}
-        <div className="class-details-form-buttons">
-          {editEnabled ? (
-            <>
-              <button type="submit" className="class-details-save-button" onClick={handleSubmit}>
-                Save
-              </button>
-              <button type="button" className="class-details-cancel-button" onClick={handleCancel}>
-                Cancel
-              </button>
-            </>
-          ) : (
-            <button type="button" className="class-details-edit-button" onClick={toggleEditMode}>
-              Edit
+            <div className="class-details-input-details-group">
+              <label htmlFor="registeredBy">Registered By</label>
+              <input 
+                type="text" 
+                id="registeredBy" 
+                value={formData.registeredBy} 
+                readOnly 
+              />
+            </div>
+
+            <div className="class-details-input-details-group">
+              <label htmlFor="registeredDate">Registered Date</label>
+              <input
+                type="date"
+                id="registeredDate"
+                value={formData.registeredDate}
+                readOnly
+              />
+            </div>
+          </div>
+
+          {/* Time Slots */}
+          {times.map((time, index) => (
+            <div key={index} className="class-details-row">
+
+              <div className="class-details-input-details-group">
+                <label htmlFor={`day-${index}`}>Day</label>
+                {editEnabled ? (
+                  <select
+                    value={time.day}
+                    onChange={(e) => handleTimeChange(index, 'day', e.target.value)}
+                    required
+                  >
+                    <option value="" disabled>Select Day</option>
+                    {days.map((day) => (
+                      <option key={day} value={day}>{day}</option>
+                    ))}
+                  </select>
+                ) : (
+                  <input
+                    type="text"
+                    id={`day-${index}`}
+                    value={time.day}
+                    readOnly
+                  />
+                )}
+              </div>
+
+              <div className="class-details-input-details-group">
+                <label htmlFor={`from-${index}`}>From</label>
+                {editEnabled ? (
+                  <input
+                    type="time"
+                    value={time.from}
+                    onChange={(e) => handleTimeChange(index, 'from', e.target.value)}
+                    required
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    id={`from-${index}`}
+                    value={time.from}
+                    readOnly
+                  />
+                )}
+              </div>
+
+              <div className="class-details-input-details-group">
+                <label htmlFor={`to-${index}`}>To</label>
+                {editEnabled ? (
+                  <input
+                    type="time"
+                    value={time.to}
+                    onChange={(e) => handleTimeChange(index, 'to', e.target.value)}
+                    required
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    id={`to-${index}`}
+                    value={time.to}
+                    readOnly
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+
+          {/* Add Time Slot Button */}
+          {editEnabled && (
+            <button
+              type="button"
+              className="class-details-add-time-slot-button"
+              onClick={addTimeSlot}
+            >
+              Add Time Slot
             </button>
           )}
 
-        </div>
-      </form>
+          {/* Form Buttons */}
+          <div className="class-details-form-buttons">
+            {editEnabled ? (
+              <>
+                <button type="submit" className="class-details-save-button" onClick={handleSubmit}>
+                  Save
+                </button>
+                <button type="button" className="class-details-cancel-button" onClick={handleCancel}>
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <button type="button" className="class-details-edit-button" onClick={toggleEditMode}>
+                Edit
+              </button>
+            )}
+
+          </div>
+        </form>
+      )}
     </div>
   );
 };

@@ -1,75 +1,148 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './StaffList.css';
-import serchIcon from '../Assets/serchicon.png';
 
-const StaffList = () => {
-  const [staff, setStaff] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+const MembersList = () => {
+  const [formData, setFormData] = useState([]);
+  const [filteredForm, setFilteredForm] = useState([]);
+  const [name, setName] = useState('');
+  const [role, setRole] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = filteredForm.slice(indexOfFirstRow, indexOfLastRow);
+
+  const totalPages = Math.ceil(filteredForm.length / rowsPerPage);
 
   useEffect(() => {
-    // Fetch the list of staff from the backend
-    fetch('/api/staff') // Replace with the actual API endpoint
-      .then(res => res.json())
-      .then(data => setStaff(data))
-      .catch(err => console.error(err));
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/user/get/staffdetails');
+
+        setFormData(response.data);
+        setFilteredForm(response.data);
+
+      } catch (error) {
+        setErrorMessage('Server Error');
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
+  const handleViewClick = () => {
+    const filtered = formData.filter((member) =>
+      (name === '' || (member.first_name + ' ' + member.last_name).toLowerCase().includes(name.toLowerCase())) &&
+      (role === '' || member.role === role)
+    );
+    setFilteredForm(filtered);
+    setCurrentPage(1); // Reset to the first page after filtering
   };
 
-  // Filter staff based on search query
-  const filteredStaff = staff.filter(staffMember => 
-    staffMember.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleRoleChange = (e) => {
+    setRole(e.target.value);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
-    <div className="stl-staff-list">
-      {/* Search Bar */}
-      <div className="stl-window-search">
-        <div className="stl-search-bar">
+    <div className="members-list-container">
+
+      <div className="filter-box">
+
+        <div className="filter-item">
+          <label htmlFor="name">Name</label>
           <input
             type="text"
-            className="stl-search-input"
-            placeholder="Search Staff"
-            value={searchQuery}
-            onChange={handleSearch}
+            id="name"
+            value={name}
+            onChange={handleNameChange}
+            placeholder="Enter Name"
+
           />
-          <button className="stl-search-button">
-            <img src={serchIcon} alt="Search" className="stl-search-img" />
-          </button>
         </div>
+
+        <div className="filter-item">
+
+          <label htmlFor="role">Role</label>
+          <select id="role" value={role} onChange={handleRoleChange}>
+            <option value="">All</option>
+            <option value="Admin">Admin</option>
+            <option value="Cashier">Cashier</option>
+
+            <option value="Accountant">Accountant</option>
+          </select>
+        </div>
+
+        <button className="view-btn" onClick={handleViewClick}>View</button>
       </div>
 
-      {/* Staff List Table */}
-      <div className="stl-window">
-        <div className="stl-staff-table">
-          <table>
+      {errorMessage && <div className="error">
+          {errorMessage}
+        </div>}
+
+      {!errorMessage && (
+        <form>
+          <table className="table">
             <thead>
               <tr>
-                <th>Staff ID</th>
-                <th>Staff Name</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredStaff.length > 0 ? (
-                filteredStaff.map(staffMember => (
-                  <tr key={staffMember.id}>
-                    <td>{staffMember.id}</td>
-                    <td>{staffMember.name}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="2">No staff members found</td>
+              {currentRows.map((member, index) => (
+                <tr key={member.id}>
+                  <td>{member._id}</td>
+                  <td>{member.first_name} {member.last_name}</td>
+                  <td>{member.role}</td>
+                  <td>{member.username}</td>
+                  <td>{member.password}</td>
+                  <td className="action-buttons">
+                    <button className="edit-btn">Edit</button>
+                  </td>
                 </tr>
-              )}
+              ))}
             </tbody>
           </table>
-        </div>
-      </div>
+
+          <div className="pagination">
+            <button onClick={handlePrevPage} disabled={currentPage === 1} className="prev-btn">
+              Previous
+            </button>
+            <span className="page-info">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button onClick={handleNextPage} disabled={currentPage === totalPages} className="next-btn">
+              Next
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };
 
-export default StaffList;
+export default MembersList;

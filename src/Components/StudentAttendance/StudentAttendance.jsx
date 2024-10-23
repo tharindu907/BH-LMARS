@@ -311,9 +311,6 @@ const StudentAttendance = () => {
         {/* Action Buttons Window */}
         <div className="button-window">
           <div className="action-buttons">
-            <Link to="/admin/student/payments">
-              <button>View Payments</button>
-            </Link>
             <button>Save Changes</button>
           </div>
         </div>
