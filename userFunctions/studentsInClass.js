@@ -20,21 +20,21 @@ async function getClassesForStudent(studentID) { // this will return the classes
 };
 
 const isStudentEnrolledToClass = async (req, res) => {
-    const { classId, student, year } = req.body;
+    const { searchClass, searchStudent, year } = req.body;
 
     try {
-        const isClassExists = await studentsInClass.findOne({ _id: `${classId}.${year}`});
+        const isClassExists = await studentsInClass.findOne({ _id: `${searchClass}.${year}`});
 
         if (!isClassExists) {
-            return res.json({ isStudentEnrolled: false, paymentsInfo: null });
+            return res.json({ isClassExist: false, isStudentEnrolled: false, paymentsInfo: null });
         }
 
         const isStudentEnrolled = isClassExists.studentsRegistered.find(
-            stu => stu.studentId === student.studentid
+            stu => stu.studentId === searchStudent
         );
 
         if (!isStudentEnrolled) {
-            return res.json({ isStudentEnrolled: false, paymentsInfo: null });
+            return res.json({ isClassExist: true, isStudentEnrolled: false, paymentsInfo: null });
         }
 
         const paymentsInfo = isStudentEnrolled.payments.map(payment => ({
@@ -43,7 +43,7 @@ const isStudentEnrolledToClass = async (req, res) => {
             paymentDate: payment.paymentDate
         }));
 
-        res.json({ isStudentEnrolled: true, paymentsInfo: paymentsInfo });
+        res.json({ isClassExist: true, isStudentEnrolled: true, paymentsInfo: paymentsInfo });
     } catch (err) {
         console.error("Error checking student enrollment:", err);
     }
@@ -89,57 +89,6 @@ async function isPaymentDone(classID, studentID, paymentMonth) {
     } catch (error) {
         console.error('Error checking payment status:', error);
         throw error; // Handle the error as needed
-    }
-}
-
-async function addStudentToClass(classId, studentId) {
-    try {
-        const currentDate = new Date();
-
-        // Attempt to find the class document
-        const classDocument = await studentsInClass.findById(classId);
-
-        if (!classDocument) {
-            // If the class does not exist, create a new class document
-            await studentsInClass.create({
-                _id: classId,
-                studentsRegistered: [{
-                    studentId: studentId,
-                    registeredDate: currentDate,
-                    payments: []
-                }]
-            });
-
-            console.log(`Class ${classId} created and student ${studentId} registered as the first student.`);
-        } else {
-            // Check if the student is already registered
-            const isStudentRegistered = classDocument.studentsRegistered.find(
-                student => student.studentId === studentId
-            );
-
-
-            if (isStudentRegistered) {
-                console.log(`Student ${studentId} is already registered to class ${classId}.`);
-                return; // Exit the function since the student is already registered
-            }
-            // If the student is not registered, proceed to add the
-            await studentsInClass.findOneAndUpdate(
-                { _id: classId },
-                {
-                    $push: {
-                        studentsRegistered: {
-                            studentId: studentId,
-                            registeredDate: currentDate,
-                            payments: []
-                        }
-                    }
-                }
-            );
-
-            console.log(`Student ${studentId} successfully registered to class ${classId}.`);
-        }
-    } catch (error) {
-        console.error('Error registering student to class:', error);
     }
 }
 
@@ -224,7 +173,6 @@ module.exports = {
     isStudentEnrolledToClass,
     addMonthlyPayment,
     isPaymentDone,
-    addStudentToClass,
     getStudentsByClassId,
     addNewStudenttoClass,
     checkAllStudentPayments

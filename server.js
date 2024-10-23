@@ -18,7 +18,6 @@ const loginRouter = require('./login');
 const dailyClassScheduleRouter = require('./routes/dailyClassSchedule');
 const studentsInClassRouter = require('./routes/studentsInClass');
 const classAttendanceRouter = require('./routes/classAttendance');
-const { getTodayClassesWithDetails } = require('./userFunctions/dailyClassSchedule');
 
 app.use('/login', loginRouter);
 app.use('/student', studentRouter);

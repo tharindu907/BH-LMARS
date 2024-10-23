@@ -5,7 +5,6 @@ const userFunctions = require('./user');
 
 async function updateDailyClassSchedule(date, { classId, startTime, endTime } = {}) { // '2024-08-26'
     try {     
-        // Check if the date exists in the database
         const result = await dailyClassSchedule.findOneAndUpdate(
             { _id: date },
             {},
@@ -14,7 +13,7 @@ async function updateDailyClassSchedule(date, { classId, startTime, endTime } = 
 
         if (result.classes.length === 0) {
             
-            const day = new Date(date).toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+            const day = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
             const classSchedule = await classFunctions.getClassesForDay(date, day);
             await dailyClassSchedule.updateOne(
                 { _id: date },
@@ -71,6 +70,17 @@ const timetablehandlerfilter = async (req,res) => {
             };
         });
 
+        enrichedFilter.sort((a, b) => {
+            const [aHour, aMinute] = a.startTime.split(":").map(Number);
+            const [bHour, bMinute] = b.startTime.split(":").map(Number);
+
+            if (aHour !== bHour) {
+                return aHour - bHour;
+            } else {
+                return aMinute - bMinute;
+            }
+        });
+
         res.json(enrichedFilter);
 
     } catch (error) {
@@ -80,9 +90,9 @@ const timetablehandlerfilter = async (req,res) => {
 
 const getTodayClassesWithDetails = async (req, res) => {
     try {
-        //const today = "2024-10-24";
+        const today = "2024-10-24";
 
-        const today = new Date().toISOString().split('T')[0];
+        //const today = new Date().toISOString().split('T')[0];
 
         const todaySchedule = await dailyClassSchedule.findOne({ _id: today });
 
@@ -101,14 +111,25 @@ const getTodayClassesWithDetails = async (req, res) => {
                 const teacherName = await userFunctions.getNameFromTeacherIdforBackend(classDetail.teacherid);
         
                 return {
-                    schedule: classItem,
-                    details: {
-                        ...classDetail.toObject(),
-                        teacherName
-                    }
-                };
+                    grade: classDetail.grade,
+                    subject: classDetail.subject,
+                    medium: classDetail.medium,
+                    teacher: teacherName,
+                    time: classItem.startTime
+                }
             })
         );
+
+        result.sort((a, b) => {
+            const [aHour, aMinute] = a.time.split(":").map(Number);
+            const [bHour, bMinute] = b.time.split(":").map(Number);
+
+            if (aHour !== bHour) {
+                return aHour - bHour;
+            } else {
+                return aMinute - bMinute;
+            }
+        });
 
         res.status(200).json(result);
 
@@ -117,8 +138,7 @@ const getTodayClassesWithDetails = async (req, res) => {
     }
 };
 
-
-module.exports = {
+module.exports = { 
     updateDailyClassSchedule,
     timetablehandlerfilter,
     getTodayClassesWithDetails

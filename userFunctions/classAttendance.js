@@ -1,45 +1,46 @@
 let classAttendance = require('../models/classAttendance.model');
 const studentsInClass = require('../models/studentsInClass.model');
 
-async function addAttendee(classId, studentId, currentMonth) { // "YYYY-MM-DD"
+const addAttendee = async (req,res) => {
+    const {classId, studentId, date, startTime} = req.body; //date: "YYYY-MM-DD", startTime: "HH:MM"
+
     try {
 
-        const paymentDone = await studentsInClass.isPaymentDone(classId, studentId, currentMonth);
-        
-        if (!paymentDone) {
-            console.log('Payment not done for the month, attendance not marked');
-            return;
+        const existingAttendance = await classAttendance.findOne({
+            _id: `${classId}.${date}.${startTime}`,
+            "attendees.studentId": studentId
+        });
+
+        if (existingAttendance) {
+            return res.status(200).json({isMarked: true, success: false});
         }
 
-        const currentTime = new Date().toTimeString().split(' ')[0].replace(/:/g, '').substring(0, 6); // "HHMM"
-
         await classAttendance.findOneAndUpdate(
-            { _id: classId },
+            { _id: `${classId}.${date}.${startTime}` },
             {
                 $push: {
                     attendees: {
                         studentId: studentId,
-                        timeAttended: currentTime
+                        timeAttended: new Date().toTimeString().split(' ')[0] // "HH:MM:SS"
                     }
                 }
             },
             { 
                 new: true, 
-                upsert: true // If the class document doesn't exist, create a new one
+                upsert: true
             }
         );
         
-        console.log('Attendee added');
+        res.status(200).json({isMarked: false, success: true});
     } catch (error) {
-        console.error('Error adding attendee:', error);
-        throw error;
+        res.status(500).json({message: error.message});
     }
 }
 
 const getStudentAttendance = async (req, res) => {
     try {
         
-        const { student, classId, year, month } = req.body;
+        const { searchStudent, searchClass, year, month } = req.body;
         
         const months = {
             "January": "01",
@@ -59,7 +60,7 @@ const getStudentAttendance = async (req, res) => {
         const monthNumber = months[month];
 
         // Construct the regex to match the classID and the year-month
-        const regex = new RegExp(`^${classId}.${year}-${monthNumber}.*$`);
+        const regex = new RegExp(`^${searchClass}.${year}-${monthNumber}.*$`);
 
         const classRecords = await classAttendance.find({ _id: { $regex: regex } });
 
@@ -68,7 +69,7 @@ const getStudentAttendance = async (req, res) => {
         classRecords.forEach(record => {
             const date = record._id.split('.')[1]; // Extract the date (YYYY-MM-DD) from _id
 
-            const studentAttendance = record.attendees.find(attendee => attendee.studentId === student);
+            const studentAttendance = record.attendees.find(attendee => attendee.studentId === searchStudent);
 
             attendanceDetails.push({
                 date: date,
