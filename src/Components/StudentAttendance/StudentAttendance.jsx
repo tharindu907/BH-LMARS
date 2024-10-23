@@ -145,12 +145,25 @@ const StudentAttendance = () => {
       {/* Student Details Bar Window */}
       <div className="window">
         <div className="student-details-bar">
-          <span className="student-info">Student ID: {student.studentid} | Student name: {student.firstName} {student.lastName}</span>
-          <Link to="/admin/student/details" className="view-details-button">
-            More Details
-          </Link>
+          {/* Left side: Student information */}
+          <div className="student-info-section">
+            <span className="student-id">
+              Student ID: {student.studentid}
+            </span>
+            <span className="student-name">
+              Student Name: {student.firstName} {student.lastName}
+            </span>
+          </div>
+          
+          {/* Right side: View Details button */}
+          <div className="details-button-section">
+            <Link to="/admin/student/details" className="view-details-button">
+              More Details
+            </Link>
+          </div>
         </div>
       </div>
+
 
       {/* Filters Window */}
       <div className="window">

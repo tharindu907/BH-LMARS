@@ -57,15 +57,35 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #f1f1f1;
+  background-color: #dfe0f8;
   border-radius: 10px;
 }
 
-.student-details-bar .student-info {
-  font-weight: bold;
+.student-info-section {
+  /* Styling for the student info section */
+  flex-grow: 1;
+  display: flex;
+  gap: 50px; /* Space between student ID and student name */
 }
 
-.student-details-bar .view-details-button {
+.student-id {
+  font-weight: bold;
+  color: #333;
+  /* Add custom styles for Student ID */
+}
+
+.student-name {
+  font-weight: bold;
+  color: #333;
+  /* Add custom styles for Student Name */
+}
+
+.details-button-section {
+  /* Styling for the details button section */
+  margin-left: 20px;
+}
+
+.view-details-button {
   background-color: #007bff;
   color: white;
   padding: 10px 20px;
@@ -73,9 +93,10 @@
   text-decoration: none;
 }
 
-.student-details-bar .view-details-button:hover {
+.view-details-button:hover {
   background-color: #0056b3;
 }
+
 
 .filters {
   display: flex;

@@ -1,0 +1,152 @@
+/* General Teacher Page Styles */
+.teacher-page {
+    display: flex;
+    width: 100%;
+    background-color: #e9f1f7;
+    min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
+    margin-top: 40px;
+}
+
+.t-content {
+    margin-left: 250px; /* Same width as the sidebar */
+    margin-right: 70px;
+    padding: 20px;
+    width: 100%; /* Ensure content takes up the remaining space */
+    box-sizing: border-box;
+    background-color: #e9f1f7;
+}
+
+.t-content h1 {
+    margin-top: 0;
+}
+
+.t-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    margin-top: 30px;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.t-summary-card {
+    background: linear-gradient(180deg, #f0f4fa, rgb(219, 233, 246));
+    padding: 20px;
+    height: 30vh;
+    box-shadow: 0 10px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    align-content: center;
+    text-align: center;
+}
+
+.t-summary-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.t-main-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: rgb(71, 106, 155);
+}
+
+.t-sub-title {
+    font-size: 1.2em;
+    color: rgb(35, 50, 78);
+    margin-left: 5px; /* Add space between the main title and the sub title */
+}
+
+.t-summary-number {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Responsive Styles */
+
+/* Adjust layout for tablets and smaller screens */
+@media (max-width: 1024px) {
+    .t-content {
+        margin-left: 250px;
+        margin-right: 40px;
+        padding: 15px;
+    }
+
+    .t-summary-grid {
+        grid-template-columns: 1fr; /* Stack grid items vertically */
+        grid-gap: 15px;
+        margin-left: 0;
+    }
+
+    .t-summary-card {
+        height: auto; /* Allow height to adjust based on content */
+    }
+}
+
+/* Adjust layout for mobile devices */
+@media (max-width: 768px) {
+    .t-content {
+        margin-left: 0;
+        margin-right: 20px;
+        padding: 10px;
+    }
+
+    .t-summary-grid {
+        grid-template-columns: 1fr; /* Keep grid items stacked */
+        grid-gap: 10px;
+    }
+
+    .t-summary-card {
+        padding: 15px;
+        height: auto;
+    }
+
+    .t-main-title {
+        font-size: 1.6em;
+    }
+
+    .t-sub-title {
+        font-size: 1em;
+    }
+
+    .t-summary-number {
+        font-size: 1.6em;
+    }
+}
+
+/* Extra small screens (mobile phones) */
+@media (max-width: 480px) {
+    .t-content {
+        margin-left: 0;
+        margin-right: 10px;
+        padding: 10px;
+    }
+
+    .t-summary-grid {
+        grid-gap: 10px;
+    }
+
+    .t-summary-card {
+        padding: 10px;
+    }
+
+    .t-main-title {
+        font-size: 1.4em;
+    }
+
+    .t-summary-number {
+        font-size: 1.4em;
+    }
+
+    /* Hide the sidebar for small screens */
+    .sidebar {
+        display: none;
+    }
+
+    /* Adjust content width when sidebar is hidden */
+    .t-content {
+        width: 100%;
+        margin-left: 0;
+    }
+}
